@@ -28,8 +28,8 @@ internal object NotificationInterlop {
         val key = NotifyExtender.getKey(notification)
         var id = Utils.getRandomInt()
 
-        if (!key.isNullOrEmpty()) {
-            id = Utils.simpleHash(key.toString())
+        if (key != null) {
+            id = key.hashCode()
             NotificationManagerCompat.from(context).notify(key.toString(), id, notification.build())
         } else {
             NotificationManagerCompat.from(context).notify(id, notification.build())
@@ -62,13 +62,9 @@ internal object NotificationInterlop {
 
         groupedNotifications
                 // We only want the notifications that are stackable
-                .filter {
-                    it.stackable
-                }
+                .filter { it.stackable }
                 // and that match the required key id
-                .filter {
-                    it.stackKey == payload.stackable.key
-                }
+                .filter { it.stackKey == payload.stackable.key }
                 // Then we proceed to rebuild the notification.
                 .forEach {
                     // Handle case where we already have a stacked notification.
@@ -88,7 +84,6 @@ internal object NotificationInterlop {
         lines.add(payload.stackable.summaryContent.toString())
 
         val style = NotificationCompat.InboxStyle()
-                // .setText(payload.stackable.summaryTitle?.invoke(lines.size))
                 // Finally we update the notifications title to be that of the summary.
                 .setBigContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
                 .also { style ->
@@ -101,10 +96,18 @@ internal object NotificationInterlop {
                 // Sets the first line of the 'collapsed' RawNotification.
                 .setContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
                 // Sets the second line of the 'collapsed' RawNotification.
-                .setContentText(payload.stackable.summaryDescription?.invoke(lines.size))
+                .setContentText(Utils.getAsSecondaryFormattedText(
+                        payload.stackable.summaryDescription?.invoke(lines.size)
+                                ?: ""))
                 .extend(
                         NotifyExtender().setStacked(true)
                 )
+
+        // Clear the current set of actions and re-apply the stackable actions.
+        builder.mActions.clear()
+        payload.stackable.stackableActions?.forEach {
+            builder.addAction(it)
+        }
 
         return style
     }
@@ -115,6 +118,7 @@ internal object NotificationInterlop {
                 .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
+                // Dismiss the notification on click?
                 .setAutoCancel(payload.meta.cancelOnClick)
                 // Set the click handler for the notifications
                 .setContentIntent(payload.meta.clickIntent)
@@ -127,6 +131,11 @@ internal object NotificationInterlop {
             builder.setContentTitle(payload.content.title)
                     // THis is the text of the 'collapsed' RawNotification.
                     .setContentText(payload.content.text)
+        }
+
+        // Attach all the actions.
+        payload.actions?.forEach {
+            builder.addAction(it)
         }
 
         payload.run {
@@ -161,9 +170,8 @@ internal object NotificationInterlop {
                 }
                 is Payload.Content.BigText -> {
                     // Override the behavior of the second line.
-                    builder.setContentText(Html.fromHtml("<font color='#3D3D3D'>" + (content.text
-                            ?: "")
-                            .toString() + "</font>"))
+                    builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
+                            ?: "").toString()))
 
                     val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.expandedText
                             ?: content.title
@@ -184,6 +192,7 @@ internal object NotificationInterlop {
                             .setSummaryText(content.expandedText ?: content.text)
                             // This is the picture below.
                             .bigPicture(content.image)
+
                 }
                 is Payload.Content.Message -> {
                     NotificationCompat.MessagingStyle(content.userDisplayName)

@@ -46,4 +46,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation "com.android.support:support-compat:$support_version"
+
+    // android.support.v4.media.app.NotificationCompat.MediaStyle()
+    // implementation "com.android.support:support-media-compat:$support_version"
 }

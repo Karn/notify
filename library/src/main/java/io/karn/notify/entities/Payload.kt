@@ -78,6 +78,7 @@ sealed class Payload {
             var clickIntent: PendingIntent? = null,
             var summaryContent: CharSequence? = null,
             var summaryTitle: ((count: Int) -> String)? = null,
-            var summaryDescription: ((count: Int) -> String)? = null
+            var summaryDescription: ((count: Int) -> String)? = null,
+            var stackableActions: ArrayList<Action>? = null
     )
 }

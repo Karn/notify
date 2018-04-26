@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import android.content.Intent
+import io.karn.notify.entities.Action
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
@@ -10,9 +10,8 @@ class Creator(private val notify: Notify, config: NotifyConfig = NotifyConfig())
     private var meta = Payload.Meta()
     private var header = config.header
     private var content: Payload.Content = Payload.Content.Default()
+    private var actions: ArrayList<Action>? = null
     private var stackable: Payload.Stackable? = null
-
-    private var clickHandler: Intent? = null
 
     fun meta(meta: Payload.Meta.() -> Unit): Creator {
         meta(this.meta)
@@ -56,19 +55,20 @@ class Creator(private val notify: Notify, config: NotifyConfig = NotifyConfig())
         return this
     }
 
+    fun actions(block: ArrayList<Action>.() -> Unit): Creator {
+        this.actions = ArrayList()
+        block(this.actions as ArrayList<Action>)
+        return this
+    }
+
     fun stackable(block: Payload.Stackable.() -> Unit): Creator {
         this.stackable = Payload.Stackable()
         block(this.stackable as Payload.Stackable)
         return this
     }
 
-    fun clickHandler(clickHandler: Intent?): Creator {
-        this.clickHandler = clickHandler
-        return this
-    }
-
     fun send(): Int {
-        notify.send(RawNotification(meta, header, content, stackable))
+        notify.send(RawNotification(meta, header, content, stackable, actions))
         return -1
     }
 }

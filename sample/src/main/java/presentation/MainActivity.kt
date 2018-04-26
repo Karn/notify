@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
+import io.karn.notify.entities.Action
 import io.karn.notify.entities.MessageItem
 import io.karn.sample.R
 import java.util.*
@@ -33,6 +34,13 @@ class MainActivity : AppCompatActivity() {
                     summaryTitle = { count -> "Summary title" }
                     summaryDescription = { count -> count.toString() + " new notifications." }
                 }
+                .actions {
+                    add(Action(
+                            R.drawable.ic_app_icon,
+                            "Action Item",
+                            null
+                    ))
+                }
                 .send()
     }
 
@@ -45,11 +53,6 @@ class MainActivity : AppCompatActivity() {
                             "New! OREO Dream Dessert.")
                     title = "New menu items!"
                     text = lines.size.toString() + " new dessert menu items found."
-                }.stackable {
-                    key = "test_key"
-                    summaryContent = "Big title summary content."
-                    summaryTitle = { count -> "Summary title" }
-                    summaryDescription = { count -> count.toString() + " new notifications." }
                 }
                 .send()
 

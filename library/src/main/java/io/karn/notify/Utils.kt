@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.text.Html
 import java.util.concurrent.ThreadLocalRandom
 
 internal object Utils {
@@ -14,4 +15,7 @@ internal object Utils {
         return out.toString().substring(0, 6).toInt()
     }
 
+    fun getAsSecondaryFormattedText(str: String): CharSequence {
+        return Html.fromHtml("<font color='#3D3D3D'>$str</font>")
+    }
 }
