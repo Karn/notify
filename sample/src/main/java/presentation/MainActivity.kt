@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
+                .stackable {
+                    key = "test_key"
+                    summaryContent = "test summary content"
+                    summaryTitle = { count -> "Summary title" }
+                    summaryDescription = { count -> count.toString() + " new notifications." }
+                }
                 .send()
     }
 
@@ -39,6 +45,11 @@ class MainActivity : AppCompatActivity() {
                             "New! OREO Dream Dessert.")
                     title = "New menu items!"
                     text = lines.size.toString() + " new dessert menu items found."
+                }.stackable {
+                    key = "test_key"
+                    summaryContent = "Big title summary content."
+                    summaryTitle = { count -> "Summary title" }
+                    summaryDescription = { count -> count.toString() + " new notifications." }
                 }
                 .send()
 

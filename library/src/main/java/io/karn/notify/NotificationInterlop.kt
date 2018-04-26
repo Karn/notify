@@ -2,60 +2,37 @@ package io.karn.notify
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
-import java.util.concurrent.ThreadLocalRandom
 
 internal object NotificationInterlop {
 
-    private const val IS_STACKABLE = "is_stackable"
-    private const val IS_STACKED = "is_stacked"
-    private const val STACKABLE_KEY = "stack_key"
-    private const val SUMMARY_TEXT = "summary_text"
-
-    private const val BACKGROUND_TASK_NOTIFICATION_CHANNEL_NAME = "Background Task Notifications"
-    private const val BACKGROUND_TASK_NOTIFICATION_CHANNEL = "background_task_notification"
-
-    private fun getRandomInt(): Int {
-        return ThreadLocalRandom.current().nextInt(0, Int.MAX_VALUE)
-    }
-
-    private fun simpleHash(str: String): Int {
-        val out = StringBuilder()
-        str.toCharArray().map { out.append(it.toByte()) }
-
-        return out.toString().substring(0, 6).toInt()
-    }
-
-
-    fun registerChannel(context: Context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return
-        }
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        val channel = NotificationChannel(BACKGROUND_TASK_NOTIFICATION_CHANNEL, BACKGROUND_TASK_NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-        channel.description = "Handle local notifications that result from the background notifications."
+        val channel = NotificationChannel(channelKey, channelName, importance)
+        channel.description = channelDescription
         // Register the channel with the system
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 
     fun showNotification(context: Context, notification: NotificationCompat.Builder): Int {
-        val notification = notification.build()
-        var id = getRandomInt()
-        if (!notification.group.isNullOrEmpty()) {
-            id = simpleHash(notification.group)
-            NotificationManagerCompat.from(context).notify(notification.group, id, notification)
+        val key = NotifyExtender.getKey(notification)
+        var id = Utils.getRandomInt()
+
+        if (!key.isNullOrEmpty()) {
+            id = Utils.simpleHash(key.toString())
+            NotificationManagerCompat.from(context).notify(key.toString(), id, notification.build())
         } else {
-            NotificationManagerCompat.from(context).notify(id, notification)
+            NotificationManagerCompat.from(context).notify(id, notification.build())
         }
 
         return id
@@ -65,41 +42,46 @@ internal object NotificationInterlop {
         NotificationManagerCompat.from(context).cancel(notificationId)
     }
 
-    private fun buildStackedNotification(context: Context, builder: NotificationCompat.Builder, payload: RawNotification): NotificationCompat.InboxStyle? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || payload.stackable == null) {
-            return null
+    private fun getActiveNotifications(context: Context): List<NotifyExtender> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return ArrayList()
         }
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return notificationManager.activeNotifications
+                .map { NotifyExtender(it) }
+                .filter { it.isValid }
+    }
 
-        // Get all the notifications that are relevant.
-        val groupedNotifications = notificationManager.activeNotifications
-        // Timber.d("Notifications: %s", groupedNotifications.toString())
+    private fun buildStackedNotification(groupedNotifications: List<NotifyExtender>, builder: NotificationCompat.Builder, payload: RawNotification): NotificationCompat.InboxStyle? {
+        if (payload.stackable == null) {
+            return null
+        }
 
         val lines: ArrayList<CharSequence> = ArrayList()
 
         groupedNotifications
                 // We only want the notifications that are stackable
-                .filter { it.notification.extras.getBoolean(IS_STACKABLE, false) }
+                .filter {
+                    it.stackable
+                }
                 // and that match the required key id
-                .filter { it.notification.extras.getCharSequence(STACKABLE_KEY, "") == payload.stackable.key }
+                .filter {
+                    it.stackKey == payload.stackable.key
+                }
                 // Then we proceed to rebuild the notification.
                 .forEach {
                     // Handle case where we already have a stacked notification.
-                    val isStacked = it.notification.extras.getBoolean(IS_STACKED, false)
-                    if (isStacked) {
-                        // Timber.d("Found stacked notification")
-                        it.notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES)?.forEach {
+                    if (it.stacked) {
+
+                        it.stackItems?.forEach {
                             lines.add(it.toString())
                         }
 
                         return@forEach
                     }
 
-                    // This means that we are seeing a notification for the first time. And need to add its summary to the
-                    val template = it.notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE)
-                    // Timber.d("Found notification with template: %s. Adding summary to new notification.", template)
-                    lines.add(it.notification.extras.getCharSequence(SUMMARY_TEXT))
+                    it.summaryContent?.let { lines.add(it) }
                 }
 
         if (lines.size == 0) return null
@@ -116,24 +98,28 @@ internal object NotificationInterlop {
 
         // Update the summary for the builder.
         builder.setStyle(style)
-
-        builder.extras.putBoolean(IS_STACKED, true)
-
-        // Sets the first line of the 'collapsed' RawNotification.
-        builder.setContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
-        // Sets the second line of the 'collapsed' RawNotification.
-        builder.setContentText(payload.stackable.summaryDescription?.invoke(lines.size))
+                // Sets the first line of the 'collapsed' RawNotification.
+                .setContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
+                // Sets the second line of the 'collapsed' RawNotification.
+                .setContentText(payload.stackable.summaryDescription?.invoke(lines.size))
+                .extend(
+                        NotifyExtender().setStacked(true)
+                )
 
         return style
     }
 
-    fun buildNotification(context: Context, payload: RawNotification): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(context, BACKGROUND_TASK_NOTIFICATION_CHANNEL)
+    fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
+        val builder = NotificationCompat.Builder(notify.context, payload.header.channel)
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
-                .setColor(context.resources.getColor(payload.header.color))
+                .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
                 .setAutoCancel(payload.meta.cancelOnClick)
+                // Set the click handler for the notifications
+                .setContentIntent(payload.meta.clickIntent)
+                // Set the handler in the event that the notification is dismissed.
+                .setDeleteIntent(payload.meta.clearIntent)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -143,19 +129,24 @@ internal object NotificationInterlop {
                     .setContentText(payload.content.text)
         }
 
-        payload.meta.clickIntent?.let { intent ->
-            builder.setContentIntent(intent)
-        }
-
         payload.run {
-            var style: NotificationCompat.Style? = null
+            var style: NotificationCompat.Style?
 
-            payload.stackable?.let {
-                style = buildStackedNotification(context, builder, payload)
-            }
+            if (stackable != null) {
+                builder.setContentIntent(stackable.clickIntent)
+                        .extend(NotifyExtender()
+                                .setKey(stackable.key)
+                                .setStackable(true)
+                                .setSummaryText(stackable.summaryContent))
 
-            if (style != null) {
-                return@run
+                val activeNotifications = getActiveNotifications(notify.context)
+                if (activeNotifications.isNotEmpty()) {
+                    style = buildStackedNotification(activeNotifications, builder, payload)
+
+                    if (style != null) {
+                        return@run
+                    }
+                }
             }
 
             style = when (this.content) {
@@ -204,17 +195,6 @@ internal object NotificationInterlop {
             }
 
             builder.setStyle(style)
-        }
-
-        payload.stackable?.let {
-            builder.setGroup(payload.stackable.key)
-            builder.setContentIntent(PendingIntent.getActivity(context.applicationContext,
-                    0,
-                    it.clickIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-            ))
-            builder.extras.putBoolean(IS_STACKABLE, true)
-            builder.extras.putCharSequence(SUMMARY_TEXT, it.summaryContent)
         }
 
         return builder

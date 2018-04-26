@@ -2,7 +2,7 @@
 
 
 ## Notify
-Clean app notifications for Android.
+Simplified notifications for Android.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.2.21-blue.svg?style=flat-square)](http://kotlinlang.org)
 [![RxJava](https://img.shields.io/badge/Support-27.1.0-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
@@ -36,7 +36,7 @@ The most basic case is as follows:
 ``` kotlin
 Notify
     .with(context)
-    .content { // this: Notify.Content.Default
+    .content { // this: Payload.Content.Default
         title = "New dessert menu"
         text = "The Cheesecake Factory has a new dessert for you to try!"
     }
