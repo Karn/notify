@@ -1,4 +1,4 @@
-## Contributing to Bonfire.
+## Contributing.
 
 ###### LEGAL FORMALITIES
 By creating a pull request (which may or may not be approved) you are agreeing that you have sole owenership of the intellectual property rights of the submission of code, image assets, data or any variant thereof and that you are not making submissions in the course of work for your employer who may prohibit the sharing of material that is created while under their employment.

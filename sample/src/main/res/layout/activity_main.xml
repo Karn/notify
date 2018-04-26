@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="presentation.MainActivity">
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyDefault"
+        android:text="Notify default!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyTextList"
+        android:text="Notify text list!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyBigText"
+        android:text="Notify big text!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyBigPicture"
+        android:text="Notify big picture!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyMessage"
+        android:text="Notify messages!" />
+</LinearLayout>

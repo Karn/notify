@@ -1,0 +1,94 @@
+package presentation
+
+import android.graphics.BitmapFactory
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.View
+import io.karn.notify.Notify
+import io.karn.notify.entities.MessageItem
+import io.karn.sample.R
+import java.util.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        Notify.defaultConfig {
+            it.header.color = R.color.colorAccent
+        }
+    }
+
+    fun notifyDefault(view: View) {
+        Notify
+                .with(this)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .send()
+    }
+
+    fun notifyTextList(view: View) {
+        Notify
+                .with(this)
+                .asTextList {
+                    lines = Arrays.asList("New! Fresh Strawberry Cheesecake.",
+                            "New! Salted Caramel Cheesecake.",
+                            "New! OREO Dream Dessert.")
+                    title = "New menu items!"
+                    text = lines.size.toString() + " new dessert menu items found."
+                }
+                .send()
+
+    }
+
+    fun notifyBigText(view: View) {
+        Notify
+                .with(this)
+                .asBigText {
+                    title = "Chocolate brownie sundae"
+                    text = "Try our newest dessert option!"
+                    expandedText = "Try our newest dessert option!"
+                    bigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
+                            "\n" +
+                            "Come try this delicious new dessert and get two for the price of one!"
+                }
+                .send()
+    }
+
+    fun notifyBigPicture(view: View) {
+        Notify
+                .with(this)
+                .asBigPicture {
+                    title = "Chocolate brownie sundae"
+                    text = "Get a look at this amazing dessert!"
+                    image = BitmapFactory.decodeResource(this@MainActivity.resources, R.drawable.chocolate_brownie_sundae)
+                }
+                .send()
+    }
+
+    fun notifyMessage(view: View) {
+        Notify
+                .with(this)
+                .asMessage {
+                    userDisplayName = "Karn"
+                    conversationTitle = "Sundae chat"
+                    messages = Arrays.asList(
+                            MessageItem("Are you guys ready to try the Strawberry sundae?",
+                                    System.currentTimeMillis() - (6 * 60 * 1000), // 6 Mins ago
+                                    "Karn"),
+                            MessageItem("Yeah! I've heard great things about this place.",
+                                    System.currentTimeMillis() - (5 * 60 * 1000), // 5 Mins ago
+                                    "Nitish"
+                            ),
+                            MessageItem("What time are you getting there Karn?",
+                                    System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
+                                    "Moez"
+                            )
+                    )
+                }
+                .send()
+    }
+}

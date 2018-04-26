@@ -1,0 +1,38 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="DefaultTheme.Button" parent="TextAppearance.AppCompat.Button">
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/default_button_outline</item>
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="DefaultTheme.TextButton.Colored" parent="DefaultTheme.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/default_button_filled</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
+
+</resources>
