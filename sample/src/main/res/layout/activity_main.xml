@@ -7,6 +7,13 @@
     android:padding="16dp"
     tools:context="presentation.MainActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_notify_logo" />
+
     <TextView
         style="@style/DefaultTheme.TextButton.Colored"
         android:layout_width="match_parent"

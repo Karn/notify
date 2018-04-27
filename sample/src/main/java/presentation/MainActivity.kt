@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
+import io.karn.notify.entities.Action
 import io.karn.notify.entities.MessageItem
 import io.karn.sample.R
 import java.util.*
@@ -26,6 +27,19 @@ class MainActivity : AppCompatActivity() {
                 .content {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .stackable {
+                    key = "test_key"
+                    summaryContent = "test summary content"
+                    summaryTitle = { count -> "Summary title" }
+                    summaryDescription = { count -> count.toString() + " new notifications." }
+                }
+                .actions {
+                    add(Action(
+                            R.drawable.ic_app_icon,
+                            "Action Item",
+                            null
+                    ))
                 }
                 .send()
     }

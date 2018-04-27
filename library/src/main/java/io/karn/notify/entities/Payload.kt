@@ -1,7 +1,6 @@
 package io.karn.notify.entities
 
 import android.app.PendingIntent
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.support.annotation.ColorRes
@@ -24,7 +23,8 @@ sealed class Payload {
             @DrawableRes var icon: Int = R.drawable.ic_app_icon,
             var appName: CharSequence? = null,
             @ColorRes var color: Int = R.color.notification_header_color,
-            var headerText: CharSequence? = null
+            var headerText: CharSequence? = null,
+            var channel: String = ""
     )
 
     sealed class Content {
@@ -75,9 +75,10 @@ sealed class Payload {
 
     data class Stackable(
             var key: String = "",
-            var clickIntent: Intent? = null,
-            var summaryContent: String? = null,
+            var clickIntent: PendingIntent? = null,
+            var summaryContent: CharSequence? = null,
             var summaryTitle: ((count: Int) -> String)? = null,
-            var summaryDescription: ((count: Int) -> String)? = null
+            var summaryDescription: ((count: Int) -> String)? = null,
+            var stackableActions: ArrayList<Action>? = null
     )
 }
