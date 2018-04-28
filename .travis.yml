@@ -1,4 +1,3 @@
 language: android
-android:
-  licenses:
-    - 'android-sdk-license-.+'
+before_install:
+- yes | sdkmanager "platforms;android-27"
