@@ -2,11 +2,11 @@ package presentation
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
 import io.karn.notify.entities.Action
-import io.karn.notify.entities.MessageItem
 import io.karn.sample.R
 import java.util.*
 
@@ -90,17 +90,15 @@ class MainActivity : AppCompatActivity() {
                     userDisplayName = "Karn"
                     conversationTitle = "Sundae chat"
                     messages = Arrays.asList(
-                            MessageItem("Are you guys ready to try the Strawberry sundae?",
+                            NotificationCompat.MessagingStyle.Message("Are you guys ready to try the Strawberry sundae?",
                                     System.currentTimeMillis() - (6 * 60 * 1000), // 6 Mins ago
                                     "Karn"),
-                            MessageItem("Yeah! I've heard great things about this place.",
+                            NotificationCompat.MessagingStyle.Message("Yeah! I've heard great things about this place.",
                                     System.currentTimeMillis() - (5 * 60 * 1000), // 5 Mins ago
-                                    "Nitish"
-                            ),
-                            MessageItem("What time are you getting there Karn?",
+                                    "Nitish"),
+                            NotificationCompat.MessagingStyle.Message("What time are you getting there Karn?",
                                     System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
-                                    "Moez"
-                            )
+                                    "Moez")
                     )
                 }
                 .send()

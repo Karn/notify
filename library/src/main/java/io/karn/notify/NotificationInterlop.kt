@@ -198,7 +198,7 @@ internal object NotificationInterlop {
                     NotificationCompat.MessagingStyle(content.userDisplayName)
                             .setConversationTitle(content.conversationTitle)
                             .also { s ->
-                                content.messages.forEach { s.addMessage(it.message, it.timestamp, it.sender) }
+                                content.messages.forEach { s.addMessage(it.text, it.timestamp, it.sender) }
                             }
                 }
             }

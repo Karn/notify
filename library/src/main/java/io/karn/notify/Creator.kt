@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.Action
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
@@ -67,8 +68,11 @@ class Creator(private val notify: Notify, config: NotifyConfig = NotifyConfig())
         return this
     }
 
+    fun getBuilder(): NotificationCompat.Builder {
+        return notify.getBuilder(RawNotification(meta, header, content, stackable, actions))
+    }
+
     fun send(): Int {
-        notify.send(RawNotification(meta, header, content, stackable, actions))
-        return -1
+        return notify.send(getBuilder())
     }
 }

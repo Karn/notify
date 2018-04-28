@@ -1,0 +1,204 @@
+package io.karn.notify
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Bundle
+import android.os.Parcelable
+import android.support.v4.app.NotificationCompat
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import java.util.*
+
+@RunWith(RobolectricTestRunner::class)
+class NotificationContentTest {
+
+    private val context: Context = RuntimeEnvironment.application
+
+    companion object {
+
+        private const val KEY_TEXT = "text"
+        private const val KEY_TIMESTAMP = "time"
+        private const val KEY_SENDER = "sender"
+        private const val KEY_DATA_MIME_TYPE = "type"
+        private const val KEY_DATA_URI = "uri"
+        private const val KEY_EXTRAS_BUNDLE = "extras"
+
+        private fun getMessagesFromBundleArray(bundles: Array<Parcelable>): List<NotificationCompat.MessagingStyle.Message> {
+            val messages = ArrayList<NotificationCompat.MessagingStyle.Message>(bundles.size)
+            bundles.indices
+                    .filter { bundles[it] is Bundle }
+                    .mapNotNullTo(messages) { getMessageFromBundle(bundles[it] as Bundle) }
+            return messages
+        }
+
+        private fun getMessageFromBundle(bundle: Bundle): NotificationCompat.MessagingStyle.Message? {
+            try {
+                return if (!bundle.containsKey(KEY_TEXT) || !bundle.containsKey(KEY_TIMESTAMP)) {
+                    null
+                } else {
+                    val message = NotificationCompat.MessagingStyle.Message(bundle.getCharSequence(KEY_TEXT),
+                            bundle.getLong(KEY_TIMESTAMP), bundle.getCharSequence(KEY_SENDER))
+                    if (bundle.containsKey(KEY_DATA_MIME_TYPE) && bundle.containsKey(KEY_DATA_URI)) {
+                        message.setData(bundle.getString(KEY_DATA_MIME_TYPE),
+                                bundle.getParcelable<Parcelable>(KEY_DATA_URI) as Uri)
+                    }
+                    if (bundle.containsKey(KEY_EXTRAS_BUNDLE)) {
+                        message.extras.putAll(bundle.getBundle(KEY_EXTRAS_BUNDLE))
+                    }
+                    message
+                }
+            } catch (e: ClassCastException) {
+                return null
+            }
+
+        }
+    }
+
+    @Test
+    fun defaultNotification() {
+        val testTitle = "New dessert menu"
+        val testText = "The Cheesecake Factory has a new dessert for you to try!"
+
+        val builder = Notify.with(this.context)
+                .content {
+                    title = testTitle
+                    text = testText
+                }
+                .getBuilder()
+                .build()
+
+        Assert.assertNull(builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE))
+        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+    }
+
+    @Test
+    fun textListNotification() {
+        val testLines = ArrayList<CharSequence>()
+                .apply {
+                    add("New! Fresh Strawberry Cheesecake.")
+                    add("New! Salted Caramel Cheesecake.")
+                    add("New! OREO Dream Dessert.")
+                }
+
+        val testTitle = "New menu items!"
+        val testText = testLines.size.toString() + " new dessert menu items found."
+
+        val builder = Notify.with(this.context)
+                .asTextList {
+                    lines = testLines
+                    title = testTitle
+                    text = testText
+                }
+                .getBuilder()
+                .build()
+
+        Assert.assertEquals("android.app.Notification\$InboxStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+
+        Assert.assertEquals(testLines, builder.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
+    }
+
+    @Test
+    fun bigTextNotification() {
+        val testTitle = "Chocolate brownie sundae"
+        val testText = "Try our newest dessert option!"
+        val testExpandedText = "Try our newest dessert option!"
+        val testBigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
+                "\n" +
+                "Come try this delicious new dessert and get two for the price of one!"
+
+        val builder = Notify.with(this.context)
+                .asBigText {
+                    title = testTitle
+                    text = testText
+                    expandedText = testExpandedText
+                    bigText = testBigText
+                }
+                .getBuilder()
+                .build()
+
+        Assert.assertEquals("android.app.Notification\$BigTextStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+
+        Assert.assertEquals(testExpandedText + "\n" + testBigText, builder.extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).toString())
+    }
+
+    @Test
+    fun bigPictureNotification() {
+        val testTitle = "Chocolate brownie sundae"
+        val testText = "Get a look at this amazing dessert!"
+        val testImage = BitmapFactory.decodeResource(context.resources, R.drawable.notification_tile_bg)
+        Assert.assertNotNull(testImage)
+
+        val builder = Notify.with(this.context)
+                .asBigPicture {
+                    title = testTitle
+                    text = testText
+                    image = testImage
+                }
+                .getBuilder()
+                .build()
+
+        Assert.assertEquals("android.app.Notification\$BigPictureStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+
+        val actualImage: Bitmap = builder.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
+        Assert.assertNotNull(actualImage)
+
+        Assert.assertEquals(testImage, actualImage)
+    }
+
+    @Test
+    fun messageNotification() {
+        val testUserDisplayName = "Karn"
+        val testConversationTitle = "Sundae chat"
+        val testMessages = ArrayList<NotificationCompat.MessagingStyle.Message>()
+                .apply {
+
+                    add(NotificationCompat.MessagingStyle.Message("Are you guys ready to try the Strawberry sundae?",
+                            System.currentTimeMillis() - (6 * 60 * 1000), // 6 Mins ago
+                            "Karn"))
+
+                    add(NotificationCompat.MessagingStyle.Message("Yeah! I've heard great things about this place.",
+                            System.currentTimeMillis() - (5 * 60 * 1000), // 5 Mins ago
+                            "Nitish"))
+
+                    add(NotificationCompat.MessagingStyle.Message("What time are you getting there Karn?",
+                            System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
+                            "Moez"))
+                }
+
+        val builder = Notify.with(this.context)
+                .asMessage {
+                    userDisplayName = testUserDisplayName
+                    conversationTitle = testConversationTitle
+                    messages = testMessages
+                }
+                .getBuilder()
+                .build()
+
+        Assert.assertEquals("android.app.Notification\$MessagingStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testUserDisplayName, builder.extras.getCharSequence(NotificationCompat.EXTRA_SELF_DISPLAY_NAME))
+        Assert.assertEquals(testConversationTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE))
+
+        val actualMessages = getMessagesFromBundleArray(builder.extras.getParcelableArray(NotificationCompat.EXTRA_MESSAGES))
+        Assert.assertEquals(testMessages.size, actualMessages.size)
+
+        actualMessages.forEach { message ->
+            testMessages[actualMessages.indexOf(message)].let {
+                Assert.assertEquals(message.text, it.text)
+                Assert.assertEquals(message.timestamp, it.timestamp)
+                Assert.assertEquals(message.sender, it.sender)
+            }
+        }
+    }
+}

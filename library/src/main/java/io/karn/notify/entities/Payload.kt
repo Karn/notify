@@ -69,7 +69,7 @@ sealed class Payload {
         data class Message(
                 var conversationTitle: CharSequence? = null,
                 var userDisplayName: CharSequence = "",
-                var messages: kotlin.collections.List<MessageItem> = ArrayList()
+                var messages: List<NotificationCompat.MessagingStyle.Message> = ArrayList()
         ) : Content()
     }
 
