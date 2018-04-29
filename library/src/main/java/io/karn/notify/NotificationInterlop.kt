@@ -118,6 +118,8 @@ internal object NotificationInterlop {
                 .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
+                // The text that is visible to the right of the app name in the notification header.
+                .setSubText(payload.header.headerText)
                 // Dismiss the notification on click?
                 .setAutoCancel(payload.meta.cancelOnClick)
                 // Set the click handler for the notifications

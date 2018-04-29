@@ -21,7 +21,6 @@ sealed class Payload {
 
     data class Header(
             @DrawableRes var icon: Int = R.drawable.ic_app_icon,
-            var appName: CharSequence? = null,
             @ColorRes var color: Int = R.color.notification_header_color,
             var headerText: CharSequence? = null,
             var channel: String = ""

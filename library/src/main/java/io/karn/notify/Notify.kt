@@ -9,6 +9,11 @@ import io.karn.notify.entities.RawNotification
 class Notify internal constructor(internal var context: Context) {
 
     companion object {
+        internal const val DEFAULT_CHANNEL_KEY = "application_notification"
+        internal const val DEFAULT_CHANNEL_NAME = "Application notifications."
+        internal const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
+
+        
         private var defaultConfig = NotifyConfig()
 
         fun defaultConfig(block: (NotifyConfig) -> Unit) {

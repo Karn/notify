@@ -15,7 +15,7 @@ import org.robolectric.RuntimeEnvironment
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
-class NotificationContentTest {
+class NotifyContentTest {
 
     private val context: Context = RuntimeEnvironment.application
 
@@ -64,7 +64,7 @@ class NotificationContentTest {
         val testTitle = "New dessert menu"
         val testText = "The Cheesecake Factory has a new dessert for you to try!"
 
-        val builder = Notify.with(this.context)
+        val notification = Notify.with(this.context)
                 .content {
                     title = testTitle
                     text = testText
@@ -72,9 +72,9 @@ class NotificationContentTest {
                 .getBuilder()
                 .build()
 
-        Assert.assertNull(builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE))
-        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
-        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+        Assert.assertNull(notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE))
+        Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
     }
 
     @Test
@@ -89,7 +89,7 @@ class NotificationContentTest {
         val testTitle = "New menu items!"
         val testText = testLines.size.toString() + " new dessert menu items found."
 
-        val builder = Notify.with(this.context)
+        val notification = Notify.with(this.context)
                 .asTextList {
                     lines = testLines
                     title = testTitle
@@ -98,11 +98,11 @@ class NotificationContentTest {
                 .getBuilder()
                 .build()
 
-        Assert.assertEquals("android.app.Notification\$InboxStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
-        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
-        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+        Assert.assertEquals("android.app.Notification\$InboxStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
 
-        Assert.assertEquals(testLines, builder.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
+        Assert.assertEquals(testLines, notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
     }
 
     @Test
@@ -114,7 +114,7 @@ class NotificationContentTest {
                 "\n" +
                 "Come try this delicious new dessert and get two for the price of one!"
 
-        val builder = Notify.with(this.context)
+        val notification = Notify.with(this.context)
                 .asBigText {
                     title = testTitle
                     text = testText
@@ -124,11 +124,11 @@ class NotificationContentTest {
                 .getBuilder()
                 .build()
 
-        Assert.assertEquals("android.app.Notification\$BigTextStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
-        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
-        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+        Assert.assertEquals("android.app.Notification\$BigTextStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
 
-        Assert.assertEquals(testExpandedText + "\n" + testBigText, builder.extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).toString())
+        Assert.assertEquals(testExpandedText + "\n" + testBigText, notification.extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).toString())
     }
 
     @Test
@@ -138,7 +138,7 @@ class NotificationContentTest {
         val testImage = BitmapFactory.decodeResource(context.resources, R.drawable.notification_tile_bg)
         Assert.assertNotNull(testImage)
 
-        val builder = Notify.with(this.context)
+        val notification = Notify.with(this.context)
                 .asBigPicture {
                     title = testTitle
                     text = testText
@@ -147,11 +147,11 @@ class NotificationContentTest {
                 .getBuilder()
                 .build()
 
-        Assert.assertEquals("android.app.Notification\$BigPictureStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
-        Assert.assertEquals(testTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
-        Assert.assertEquals(testText, builder.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+        Assert.assertEquals("android.app.Notification\$BigPictureStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
+        Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
 
-        val actualImage: Bitmap = builder.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
+        val actualImage: Bitmap = notification.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
         Assert.assertNotNull(actualImage)
 
         Assert.assertEquals(testImage, actualImage)
@@ -177,7 +177,7 @@ class NotificationContentTest {
                             "Moez"))
                 }
 
-        val builder = Notify.with(this.context)
+        val notification = Notify.with(this.context)
                 .asMessage {
                     userDisplayName = testUserDisplayName
                     conversationTitle = testConversationTitle
@@ -186,11 +186,11 @@ class NotificationContentTest {
                 .getBuilder()
                 .build()
 
-        Assert.assertEquals("android.app.Notification\$MessagingStyle", builder.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
-        Assert.assertEquals(testUserDisplayName, builder.extras.getCharSequence(NotificationCompat.EXTRA_SELF_DISPLAY_NAME))
-        Assert.assertEquals(testConversationTitle, builder.extras.getCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE))
+        Assert.assertEquals("android.app.Notification\$MessagingStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals(testUserDisplayName, notification.extras.getCharSequence(NotificationCompat.EXTRA_SELF_DISPLAY_NAME))
+        Assert.assertEquals(testConversationTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE))
 
-        val actualMessages = getMessagesFromBundleArray(builder.extras.getParcelableArray(NotificationCompat.EXTRA_MESSAGES))
+        val actualMessages = getMessagesFromBundleArray(notification.extras.getParcelableArray(NotificationCompat.EXTRA_MESSAGES))
         Assert.assertEquals(testMessages.size, actualMessages.size)
 
         actualMessages.forEach { message ->

@@ -1,3 +1,7 @@
 language: android
 before_install:
 - yes | sdkmanager "platforms;android-27"
+branches:
+  only:
+  - master
+  - develop
