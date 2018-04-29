@@ -74,6 +74,9 @@ tasks.withType(Test) {
     jvmArgs "-Xmx1024m"
 }
 
+/**
+ * Adapted from https://medium.com/@rafael_toledo/unified-code-coverage-for-android-revisited-44789c9b722f
+ */
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
@@ -112,21 +115,3 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     ])
     executionData = fileTree(dir: project.buildDir, includes: ['jacoco/testDebugUnitTest.exec'])
 }
-
-//task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-//
-//    reports {
-//        xml.enabled = true
-//        html.enabled = true
-//    }
-//
-//    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-//    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-//    def mainSrc = "$project.projectDir/src/main/kotlin"
-//
-//    sourceDirectories = files([mainSrc])
-//    classDirectories = files([debugTree])
-//    executionData = fileTree(dir: project.buildDir, includes: [
-//            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-//    ])
-//}
