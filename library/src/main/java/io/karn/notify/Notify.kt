@@ -2,12 +2,18 @@ package io.karn.notify
 
 import android.content.Context
 import android.os.Build
+import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.RawNotification
 
 class Notify internal constructor(internal var context: Context) {
 
     companion object {
+        internal const val DEFAULT_CHANNEL_KEY = "application_notification"
+        internal const val DEFAULT_CHANNEL_NAME = "Application notifications."
+        internal const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
+
+        
         private var defaultConfig = NotifyConfig()
 
         fun defaultConfig(block: (NotifyConfig) -> Unit) {
@@ -31,9 +37,12 @@ class Notify internal constructor(internal var context: Context) {
         }
     }
 
+    internal fun getBuilder(payload: RawNotification): NotificationCompat.Builder {
+        return NotificationInterlop.buildNotification(this, payload)
+    }
+
     // Terminal
-    internal fun send(payload: RawNotification): Int {
-        val n = NotificationInterlop.buildNotification(this, payload)
-        return NotificationInterlop.showNotification(context, n)
+    internal fun send(builder: NotificationCompat.Builder): Int {
+        return NotificationInterlop.showNotification(context, builder)
     }
 }

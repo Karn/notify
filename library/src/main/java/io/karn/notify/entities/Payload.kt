@@ -21,7 +21,6 @@ sealed class Payload {
 
     data class Header(
             @DrawableRes var icon: Int = R.drawable.ic_app_icon,
-            var appName: CharSequence? = null,
             @ColorRes var color: Int = R.color.notification_header_color,
             var headerText: CharSequence? = null,
             var channel: String = ""
@@ -69,7 +68,7 @@ sealed class Payload {
         data class Message(
                 var conversationTitle: CharSequence? = null,
                 var userDisplayName: CharSequence = "",
-                var messages: kotlin.collections.List<MessageItem> = ArrayList()
+                var messages: List<NotificationCompat.MessagingStyle.Message> = ArrayList()
         ) : Content()
     }
 

@@ -118,6 +118,8 @@ internal object NotificationInterlop {
                 .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
+                // The text that is visible to the right of the app name in the notification header.
+                .setSubText(payload.header.headerText)
                 // Dismiss the notification on click?
                 .setAutoCancel(payload.meta.cancelOnClick)
                 // Set the click handler for the notifications
@@ -198,7 +200,7 @@ internal object NotificationInterlop {
                     NotificationCompat.MessagingStyle(content.userDisplayName)
                             .setConversationTitle(content.conversationTitle)
                             .also { s ->
-                                content.messages.forEach { s.addMessage(it.message, it.timestamp, it.sender) }
+                                content.messages.forEach { s.addMessage(it.text, it.timestamp, it.sender) }
                             }
                 }
             }

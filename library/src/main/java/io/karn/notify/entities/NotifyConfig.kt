@@ -1,8 +1,10 @@
 package io.karn.notify.entities
 
+import io.karn.notify.Notify
+
 data class NotifyConfig(
-        val defaultChannelName: String = "Application notifications.",
-        val defaultChannelKey: String = "application_notification",
-        val defaultChannelDescription: String = "Standard application notifications",
+        val defaultChannelKey: String = Notify.DEFAULT_CHANNEL_KEY,
+        val defaultChannelName: String = Notify.DEFAULT_CHANNEL_NAME,
+        val defaultChannelDescription: String = Notify.DEFAULT_CHANNEL_DESCRIPTION,
         val header: Payload.Header = Payload.Header(channel = defaultChannelKey)
 )
