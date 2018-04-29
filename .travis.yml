@@ -1,6 +1,14 @@
 language: android
+
+script:
+- ./gradlew build jacocoTestReport
+- ./gradlew connectedCheck
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+
 before_install:
 - yes | sdkmanager "platforms;android-27"
+
 branches:
   only:
   - master
