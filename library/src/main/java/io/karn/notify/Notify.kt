@@ -6,20 +6,43 @@ import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.RawNotification
 
+/**
+ * Simplified Notification delivery for Android.
+ */
 class Notify internal constructor(internal var context: Context) {
 
     companion object {
-        internal const val DEFAULT_CHANNEL_KEY = "application_notification"
-        internal const val DEFAULT_CHANNEL_NAME = "Application notifications."
-        internal const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
+        /**
+         * The default CHANNEL_ID for a notification on Android O.
+         */
+        const val DEFAULT_CHANNEL_KEY = "application_notification"
+        /**
+         * The default CHANNEL_NAME for a notification on Android O.
+         */
+        const val DEFAULT_CHANNEL_NAME = "Application notifications."
+        /**
+         * The default CHANNEL_DESCRIPTION for a notification on Android O.
+         */
+        const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
 
-        
+        // This is the initial configuration of the Notify Creator.
         private var defaultConfig = NotifyConfig()
 
+        /**
+         * Modify the default configuration.
+         *
+         * Takes a receiver with the NotifyConfig immutable object which has mutable fields.
+         */
         fun defaultConfig(block: (NotifyConfig) -> Unit) {
             block(defaultConfig)
         }
 
+        /**
+         * A new {@see Notify} and {@see Creator} instance.
+         *
+         * This object is automatically initialized with the singleton default configuration which
+         * can be modified using {@see Notify#defaultConfig((NotifyConfig) -> Unit)}.
+         */
         fun with(context: Context): Creator {
             return Creator(Notify(context), defaultConfig)
         }
@@ -29,7 +52,7 @@ class Notify internal constructor(internal var context: Context) {
         this.context = context.applicationContext
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationInterlop.registerChannel(
+            NotificationInterop.registerChannel(
                     this.context,
                     defaultConfig.defaultChannelKey,
                     defaultConfig.defaultChannelName,
@@ -37,12 +60,24 @@ class Notify internal constructor(internal var context: Context) {
         }
     }
 
-    internal fun getBuilder(payload: RawNotification): NotificationCompat.Builder {
-        return NotificationInterlop.buildNotification(this, payload)
+    /**
+     * Return the standard {@see NotificationCompat.Builder} after applying fluent API
+     * transformations (if any) from the {@see Creator} builder object.
+     */
+    internal fun asBuilder(payload: RawNotification): NotificationCompat.Builder {
+        return NotificationInterop.buildNotification(this, payload)
     }
 
-    // Terminal
-    internal fun send(builder: NotificationCompat.Builder): Int {
-        return NotificationInterlop.showNotification(context, builder)
+    /**
+     * Delegate a {@see Notification.Builder} object to the Notify NotificationInterop class which
+     * builds and displays the notification.
+     *
+     * This is a terminal operation.
+     *
+     * @return An integer corresponding to the ID of the system notification. Any updates should use
+     * this returned integer to make updates or to cancel the notification.
+     */
+    internal fun show(builder: NotificationCompat.Builder): Int {
+        return NotificationInterop.showNotification(context, builder)
     }
 }

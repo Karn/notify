@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                             null
                     ))
                 }
-                .send()
+                .show()
     }
 
     fun notifyTextList(view: View) {
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     title = "New menu items!"
                     text = lines.size.toString() + " new dessert menu items found."
                 }
-                .send()
+                .show()
 
     }
 
@@ -64,12 +64,12 @@ class MainActivity : AppCompatActivity() {
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
-                    expandedText = "Try our newest dessert option!"
+                    collapsedText = "Try our newest dessert option!"
                     bigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
                             "\n" +
                             "Come try this delicious new dessert and get two for the price of one!"
                 }
-                .send()
+                .show()
     }
 
     fun notifyBigPicture(view: View) {
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                     text = "Get a look at this amazing dessert!"
                     image = BitmapFactory.decodeResource(this@MainActivity.resources, R.drawable.chocolate_brownie_sundae)
                 }
-                .send()
+                .show()
     }
 
     fun notifyMessage(view: View) {
@@ -101,6 +101,6 @@ class MainActivity : AppCompatActivity() {
                                     "Moez")
                     )
                 }
-                .send()
+                .show()
     }
 }

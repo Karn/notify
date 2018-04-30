@@ -21,7 +21,7 @@ class NotifyHeaderTest {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals(Icon.createWithResource(this.context, R.drawable.ic_app_icon).describeContents(), notification.smallIcon.describeContents())
@@ -48,7 +48,7 @@ class NotifyHeaderTest {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals(Icon.createWithResource(this.context, testIcon).describeContents(), notification.smallIcon.describeContents())

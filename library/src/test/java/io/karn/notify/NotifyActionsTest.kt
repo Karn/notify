@@ -19,7 +19,7 @@ class NotifyActionsTest {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertNull(notification.actions)
@@ -39,7 +39,7 @@ class NotifyActionsTest {
                             null
                     ))
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertNotNull(notification.actions)

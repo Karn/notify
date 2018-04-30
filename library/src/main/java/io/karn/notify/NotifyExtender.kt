@@ -13,7 +13,7 @@ import android.support.v4.app.NotificationCompat
  * {@code NotifyExtender(Notification)} constructor, and then using property access to get the
  * values.
  */
-class NotifyExtender : NotificationCompat.Extender {
+internal class NotifyExtender : NotificationCompat.Extender {
 
     companion object {
         /**

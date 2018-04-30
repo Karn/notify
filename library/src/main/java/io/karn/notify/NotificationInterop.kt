@@ -11,7 +11,7 @@ import android.text.Html
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
 
-internal object NotificationInterlop {
+internal object NotificationInterop {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
@@ -126,6 +126,11 @@ internal object NotificationInterlop {
                 .setContentIntent(payload.meta.clickIntent)
                 // Set the handler in the event that the notification is dismissed.
                 .setDeleteIntent(payload.meta.clearIntent)
+                // The category of the notification which allows android to prioritize the
+                // notification as required.
+                .setCategory(payload.meta.category)
+                // Manual specification of the priority.
+                .setPriority(payload.meta.priority)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -144,6 +149,11 @@ internal object NotificationInterlop {
             var style: NotificationCompat.Style?
 
             if (stackable != null) {
+                if (stackable.key.isBlank()) {
+                    throw IllegalArgumentException("Specified a stackable notification but did" +
+                            " not provide a valid stack key.")
+                }
+
                 builder.setContentIntent(stackable.clickIntent)
                         .extend(NotifyExtender()
                                 .setKey(stackable.key)
@@ -175,7 +185,7 @@ internal object NotificationInterlop {
                     builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
                             ?: "").toString()))
 
-                    val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.expandedText
+                    val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
                             ?: content.title
                             ?: "")
                             .toString() + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
@@ -191,7 +201,7 @@ internal object NotificationInterlop {
 
                     NotificationCompat.BigPictureStyle()
                             // This is the second line in the 'expanded' notification.
-                            .setSummaryText(content.expandedText ?: content.text)
+                            .setSummaryText(content.collapsedText ?: content.text)
                             // This is the picture below.
                             .bigPicture(content.image)
 
