@@ -69,7 +69,7 @@ class NotifyContentTest {
                     title = testTitle
                     text = testText
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertNull(notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE))
@@ -95,7 +95,7 @@ class NotifyContentTest {
                     title = testTitle
                     text = testText
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals("android.app.Notification\$InboxStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
@@ -121,7 +121,7 @@ class NotifyContentTest {
                     collapsedText = testExpandedText
                     bigText = testBigText
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals("android.app.Notification\$BigTextStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
@@ -144,7 +144,7 @@ class NotifyContentTest {
                     text = testText
                     image = testImage
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals("android.app.Notification\$BigPictureStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
@@ -183,7 +183,7 @@ class NotifyContentTest {
                     conversationTitle = testConversationTitle
                     messages = testMessages
                 }
-                .getBuilder()
+                .asBuilder()
                 .build()
 
         Assert.assertEquals("android.app.Notification\$MessagingStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())

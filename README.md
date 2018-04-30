@@ -48,6 +48,7 @@ Notify
 
 ![Basic usecase](./docs/assets/default.svg)
 
+If you run into a case in which the library does not provide the requisite builder functions you can get the `NotificationCompat.Builder` object and continue to use it as you would normally by calling `Creator#asBuilder()`.
 
 ###### NOTIFICATION ANATOMY
 
@@ -56,7 +57,7 @@ Notify
 | ID   | Name         | Description                                                                                             |
 | ---- | ------------ | ------------------------------------------------------------------------------------------------------- |
 | 1    | Icon         | Set using the `Header#icon` field.                                                                      |
-| 2    | App Name     | Application Icon, immutable.                                                                            |
+| 2    | App Name     | Application name, immutable.                                                                            |
 | 3    | Header Text  | Optional description text. Set using the `Header#headerText` field.                                     |
 | 4    | Timestamp    | Timestamp of the notification.                                                                          |
 | 5    | Expand Icon  | Indicates that the notification is expandable.                                                          |

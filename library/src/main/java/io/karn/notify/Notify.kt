@@ -31,8 +31,7 @@ class Notify internal constructor(internal var context: Context) {
         /**
          * Modify the default configuration.
          *
-         * Takes a function that receives a lambda with the NotifyConfig immutable object which has
-         * mutable fields.
+         * Takes a receiver with the NotifyConfig immutable object which has mutable fields.
          */
         fun defaultConfig(block: (NotifyConfig) -> Unit) {
             block(defaultConfig)
@@ -78,7 +77,7 @@ class Notify internal constructor(internal var context: Context) {
      * @return An integer corresponding to the ID of the system notification. Any updates should use
      * this returned integer to make updates or to cancel the notification.
      */
-    internal fun send(builder: NotificationCompat.Builder): Int {
+    internal fun show(builder: NotificationCompat.Builder): Int {
         return NotificationInterop.showNotification(context, builder)
     }
 }

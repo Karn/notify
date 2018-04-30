@@ -21,8 +21,8 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * Scoped function for modifying the Metadata of a notification, such as click intents,
      * notification category, and priority among other options.
      */
-    fun meta(meta: Payload.Meta.() -> Unit): Creator {
-        meta(this.meta)
+    fun meta(init: Payload.Meta.() -> Unit): Creator {
+        this.meta.init()
 
         return this
     }
@@ -32,8 +32,8 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * modification of the notificationIcon, color, the headerText (optional text next to the
      * appName), and finally the channel of the notification if targeting Android O.
      */
-    fun header(header: Payload.Header.() -> Unit): Creator {
-        header(this.header)
+    fun header(init: Payload.Header.() -> Unit): Creator {
+        this.header.init()
 
         return this
     }
@@ -41,45 +41,45 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     /**
      * Scoped function for modifying the content of a 'Default' notification.
      */
-    fun content(block: Payload.Content.Default.() -> Unit): Creator {
+    fun content(init: Payload.Content.Default.() -> Unit): Creator {
         this.content = Payload.Content.Default()
-        block(this.content as Payload.Content.Default)
+        (this.content as Payload.Content.Default).init()
         return this
     }
 
     /**
      * Scoped function for modifying the content of a 'TextList' notification.
      */
-    fun asTextList(block: Payload.Content.TextList.() -> Unit): Creator {
+    fun asTextList(init: Payload.Content.TextList.() -> Unit): Creator {
         this.content = Payload.Content.TextList()
-        block(this.content as Payload.Content.TextList)
+        (this.content as Payload.Content.TextList).init()
         return this
     }
 
     /**
      * Scoped function for modifying the content of a 'BigText' notification.
      */
-    fun asBigText(block: Payload.Content.BigText.() -> Unit): Creator {
+    fun asBigText(init: Payload.Content.BigText.() -> Unit): Creator {
         this.content = Payload.Content.BigText()
-        block(this.content as Payload.Content.BigText)
+        (this.content as Payload.Content.BigText).init()
         return this
     }
 
     /**
      * Scoped function for modifying the content of a 'BigPicture' notification.
      */
-    fun asBigPicture(block: Payload.Content.BigPicture.() -> Unit): Creator {
+    fun asBigPicture(init: Payload.Content.BigPicture.() -> Unit): Creator {
         this.content = Payload.Content.BigPicture()
-        block(this.content as Payload.Content.BigPicture)
+        (this.content as Payload.Content.BigPicture).init()
         return this
     }
 
     /**
      * Scoped function for modifying the content of a 'Message' notification.
      */
-    fun asMessage(block: Payload.Content.Message.() -> Unit): Creator {
+    fun asMessage(init: Payload.Content.Message.() -> Unit): Creator {
         this.content = Payload.Content.Message()
-        block(this.content as Payload.Content.Message)
+        (this.content as Payload.Content.Message).init()
         return this
     }
 
@@ -87,9 +87,9 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * Scoped function for modifying the 'Actions' of a notification. The transformation
      * relies on adding standard notification Action objects.
      */
-    fun actions(block: ArrayList<Action>.() -> Unit): Creator {
+    fun actions(init: ArrayList<Action>.() -> Unit): Creator {
         this.actions = ArrayList()
-        block(this.actions as ArrayList<Action>)
+        (this.actions as ArrayList<Action>).init()
         return this
     }
 
@@ -97,9 +97,9 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * Scoped function for modifying the behaviour of 'Stacked' notifications. The transformation
      * relies on the 'summaryText' of a stackable notification.
      */
-    fun stackable(block: Payload.Stackable.() -> Unit): Creator {
+    fun stackable(init: Payload.Stackable.() -> Unit): Creator {
         this.stackable = Payload.Stackable()
-        block(this.stackable as Payload.Stackable)
+        (this.stackable as Payload.Stackable).init()
         return this
     }
 
@@ -107,7 +107,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * Return the standard {@see NotificationCompat.Builder} after applying fluent API
      * transformations (if any) from the {@see Creator} builder object.
      */
-    fun getBuilder(): NotificationCompat.Builder {
+    fun asBuilder(): NotificationCompat.Builder {
         return notify.asBuilder(RawNotification(meta, header, content, stackable, actions))
     }
 
@@ -120,7 +120,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * @return An integer corresponding to the ID of the system notification. Any updates should use
      * this returned integer to make updates or to cancel the notification.
      */
-    fun send(): Int {
-        return notify.send(getBuilder())
+    fun show(): Int {
+        return notify.show(asBuilder())
     }
 }
