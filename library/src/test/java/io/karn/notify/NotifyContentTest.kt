@@ -118,7 +118,7 @@ class NotifyContentTest {
                 .asBigText {
                     title = testTitle
                     text = testText
-                    expandedText = testExpandedText
+                    collapsedText = testExpandedText
                     bigText = testBigText
                 }
                 .getBuilder()

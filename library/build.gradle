@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'jacoco'
@@ -114,4 +115,16 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             "$project.projectDir/src/main/java"
     ])
     executionData = fileTree(dir: project.buildDir, includes: ['jacoco/testDebugUnitTest.exec'])
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+
+    // Use to include or exclude non public members.
+    includeNonPublic = false
+
+    // Do not create index pages for empty packages
+    skipEmptyPackages = true
+    noStdlibLink = true
 }

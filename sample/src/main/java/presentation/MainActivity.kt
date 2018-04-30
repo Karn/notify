@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
-                    expandedText = "Try our newest dessert option!"
+                    collapsedText = "Try our newest dessert option!"
                     bigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
                             "\n" +
                             "Come try this delicious new dessert and get two for the price of one!"
