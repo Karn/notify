@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -8,9 +9,13 @@ import android.os.Parcelable
 import android.support.v4.app.NotificationCompat
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import java.util.*
 
-class NotifyContentTest : NotifyTest() {
+@RunWith(RobolectricTestRunner::class)
+class NotifyContentTest {
 
     companion object {
 
@@ -51,6 +56,8 @@ class NotifyContentTest : NotifyTest() {
 
         }
     }
+
+    private val context: Application = RuntimeEnvironment.application
 
     @Test
     fun defaultNotification() {

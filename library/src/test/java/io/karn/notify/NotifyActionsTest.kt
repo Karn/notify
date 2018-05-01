@@ -1,10 +1,17 @@
 package io.karn.notify
 
+import android.app.Application
 import io.karn.notify.utils.Action
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
-class NotifyActionsTest : NotifyTest() {
+@RunWith(RobolectricTestRunner::class)
+class NotifyActionsTest {
+
+    private val context: Application = RuntimeEnvironment.application
 
     @Test
     fun defaultActionsTest() {

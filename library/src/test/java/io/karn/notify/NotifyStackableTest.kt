@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
 import android.provider.Settings
@@ -7,8 +8,14 @@ import android.support.v4.app.NotificationCompat
 import io.karn.notify.utils.Action
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
-class NotifyStackableTest : NotifyTest() {
+@RunWith(RobolectricTestRunner::class)
+class NotifyStackableTest {
+
+    private val context: Application = RuntimeEnvironment.application
 
     @Test
     fun defaultStackableTest() {
