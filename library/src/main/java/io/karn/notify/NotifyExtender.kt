@@ -2,6 +2,7 @@ package io.karn.notify
 
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
+import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 
 /**
@@ -25,18 +26,22 @@ internal class NotifyExtender : NotificationCompat.Extender {
         private const val VALID = "notify_valid"
 
         // Keys within EXTRA_NOTIFY_EXTENSIONS for synthetic notification options.
-        private const val STACKABLE = "stackable"
-        private const val STACKED = "stacked"
-        private const val STACK_KEY = "stack_key"
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val STACKABLE = "stackable"
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val STACKED = "stacked"
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val STACK_KEY = "stack_key"
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val SUMMARY_CONTENT = "summary_content"
 
-        private const val SUMMARY_CONTENT = "summary_content"
-
-        private fun getExtensions(builder: NotificationCompat.Builder): Bundle {
-            return builder.extras.getBundle(EXTRA_NOTIFY_EXTENSIONS) ?: Bundle()
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal fun getExtensions(extras: Bundle): Bundle {
+            return extras.getBundle(EXTRA_NOTIFY_EXTENSIONS) ?: Bundle()
         }
 
-        internal fun getKey(builder: NotificationCompat.Builder): CharSequence? {
-            return getExtensions(builder).getCharSequence(STACK_KEY, null)
+        internal fun getKey(extras: Bundle): CharSequence? {
+            return getExtensions(extras).getCharSequence(STACK_KEY, null)
         }
     }
 
@@ -137,7 +142,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
         return this
     }
 
-    internal fun setKey(key: CharSequence): NotifyExtender {
+    internal fun setKey(key: CharSequence?): NotifyExtender {
         this.stackKey = key
         return this
     }

@@ -3,12 +3,12 @@ package io.karn.notify.entities
 import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.R
+import io.karn.notify.utils.Action
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.
@@ -173,7 +173,7 @@ sealed class Payload {
             /**
              * The key which defines the stack as well as the corresponding notification ID.
              */
-            var key: String = "",
+            var key: String? = null,
             /**
              * The click intent of the stacked notification.
              */
@@ -202,6 +202,16 @@ sealed class Payload {
              * The actions associated with the stackable notification when it is stacked. These
              * actions override the actions for the individual notification.
              */
-            var stackableActions: ArrayList<Action>? = null
-    )
+            internal var stackableActions: ArrayList<Action>? = null
+    ) {
+
+        /**
+         * Scoped function for modifying the behaviour of the actions associated with the 'Stacked'
+         * notification.
+         */
+        fun actions(init: ArrayList<Action>.() -> Unit) {
+            this.stackableActions = ArrayList()
+            this.stackableActions?.init()
+        }
+    }
 }

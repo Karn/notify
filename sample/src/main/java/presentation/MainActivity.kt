@@ -6,7 +6,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
-import io.karn.notify.entities.Action
+import io.karn.notify.utils.Action
 import io.karn.notify.sample.R
 import java.util.*
 

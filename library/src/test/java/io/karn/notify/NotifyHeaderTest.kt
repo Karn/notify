@@ -1,18 +1,11 @@
 package io.karn.notify
 
-import android.content.Context
 import android.graphics.drawable.Icon
 import android.support.v4.app.NotificationCompat
 import junit.framework.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
-@RunWith(RobolectricTestRunner::class)
-class NotifyHeaderTest {
-
-    private val context: Context = RuntimeEnvironment.application
+class NotifyHeaderTest : NotifyTest() {
 
     @Test
     fun defaultHeaderTest() {

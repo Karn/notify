@@ -25,7 +25,7 @@ internal object NotificationInterop {
     }
 
     fun showNotification(context: Context, notification: NotificationCompat.Builder): Int {
-        val key = NotifyExtender.getKey(notification)
+        val key = NotifyExtender.getKey(notification.extras)
         var id = Utils.getRandomInt()
 
         if (key != null) {
@@ -99,6 +99,8 @@ internal object NotificationInterop {
                 .setContentText(Utils.getAsSecondaryFormattedText(
                         payload.stackable.summaryDescription?.invoke(lines.size)
                                 ?: ""))
+                // Attach the stack click handler.
+                .setContentIntent(payload.stackable.clickIntent)
                 .extend(
                         NotifyExtender().setStacked(true)
                 )
@@ -149,16 +151,15 @@ internal object NotificationInterop {
             var style: NotificationCompat.Style?
 
             if (stackable != null) {
-                if (stackable.key.isBlank()) {
+                if (stackable.key.isNullOrBlank()) {
                     throw IllegalArgumentException("Specified a stackable notification but did" +
                             " not provide a valid stack key.")
                 }
 
-                builder.setContentIntent(stackable.clickIntent)
-                        .extend(NotifyExtender()
-                                .setKey(stackable.key)
-                                .setStackable(true)
-                                .setSummaryText(stackable.summaryContent))
+                builder.extend(NotifyExtender()
+                        .setKey(stackable.key)
+                        .setStackable(true)
+                        .setSummaryText(stackable.summaryContent))
 
                 val activeNotifications = getActiveNotifications(notify.context)
                 if (activeNotifications.isNotEmpty()) {
