@@ -9,6 +9,7 @@ import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.R
 import io.karn.notify.utils.Action
+import java.util.*
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.
@@ -41,7 +42,16 @@ sealed class Payload {
             /**
              * Manual specification of the priority of the notification.
              */
-            var priority: Int = NotificationCompat.PRIORITY_DEFAULT
+            var priority: Int = NotificationCompat.PRIORITY_DEFAULT,
+            /**
+             * Set whether or not this notification is only relevant to the current device.
+             */
+            var localOnly: Boolean = false,
+            /**
+             * Indicates whether the notification is sticky. If enabled, the notification is not
+             * affected by the clear all and is not dismissible.
+             */
+            var sticky: Boolean = false
     )
 
     /**
@@ -135,10 +145,6 @@ sealed class Payload {
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
                 override var collapsedText: CharSequence? = null,
-                /**
-                 * The small icon of the image that appears to the right of the notification.
-                 */
-                var icon: Bitmap? = null,
                 /**
                  * The large image that appears when the notification is expanded.s
                  */

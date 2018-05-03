@@ -2,11 +2,11 @@ package presentation
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
-import io.karn.notify.utils.Action
 import io.karn.notify.sample.R
 import java.util.*
 
@@ -17,31 +17,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Notify.defaultConfig {
-            it.header.color = R.color.colorAccent
+            it.header.color = R.color.colorPrimaryDark
         }
     }
 
     fun notifyDefault(view: View) {
-        Notify
-                .with(this)
-                .content {
-                    title = "New dessert menu"
-                    text = "The Cheesecake Factory has a new dessert for you to try!"
-                }
-                .stackable {
-                    key = "test_key"
-                    summaryContent = "test summary content"
-                    summaryTitle = { count -> "Summary title" }
-                    summaryDescription = { count -> count.toString() + " new notifications." }
-                }
-                .actions {
-                    add(Action(
-                            R.drawable.ic_app_icon,
-                            "Action Item",
-                            null
-                    ))
-                }
-                .show()
+
+        val handler = Handler()
+        handler.postDelayed({
+            //Do something after 100ms
+            Notify
+                    .with(this)
+                    .content {
+                        title = "New dessert menu"
+                        text = "The Cheesecake Factory has a new dessert for you to try!"
+                    }
+                    .stackable {
+                        key = "test_key"
+                        summaryContent = "test summary content"
+                        summaryTitle = { count -> "Summary title" }
+                        summaryDescription = { count -> count.toString() + " new notifications." }
+                    }
+                    .show()
+        }, 3000)
+
+
     }
 
     fun notifyTextList(view: View) {

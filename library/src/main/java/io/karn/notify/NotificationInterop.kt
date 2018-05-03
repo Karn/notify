@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
@@ -42,7 +43,8 @@ internal object NotificationInterop {
         NotificationManagerCompat.from(context).cancel(notificationId)
     }
 
-    private fun getActiveNotifications(context: Context): List<NotifyExtender> {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun getActiveNotifications(context: Context): List<NotifyExtender> {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return ArrayList()
         }
@@ -133,6 +135,10 @@ internal object NotificationInterop {
                 .setCategory(payload.meta.category)
                 // Manual specification of the priority.
                 .setPriority(payload.meta.priority)
+                // Set whether or not this notification is only relevant to the current device.
+                .setLocalOnly(payload.meta.localOnly)
+                // Set whether this notification is sticky.
+                .setOngoing(payload.meta.sticky)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -147,78 +153,73 @@ internal object NotificationInterop {
             builder.addAction(it)
         }
 
-        payload.run {
-            var style: NotificationCompat.Style?
+        var style: NotificationCompat.Style? = null
 
-            if (stackable != null) {
-                if (stackable.key.isNullOrBlank()) {
-                    throw IllegalArgumentException("Specified a stackable notification but did" +
-                            " not provide a valid stack key.")
-                }
+        payload.stackable?.let {
+            builder.extend(NotifyExtender()
+                    .setKey(it.key)
+                    .setStackable(true)
+                    .setSummaryText(it.summaryContent))
 
-                builder.extend(NotifyExtender()
-                        .setKey(stackable.key)
-                        .setStackable(true)
-                        .setSummaryText(stackable.summaryContent))
-
-                val activeNotifications = getActiveNotifications(notify.context)
-                if (activeNotifications.isNotEmpty()) {
-                    style = buildStackedNotification(activeNotifications, builder, payload)
-
-                    if (style != null) {
-                        return@run
-                    }
-                }
+            val activeNotifications = getActiveNotifications(notify.context)
+            if (activeNotifications.isNotEmpty()) {
+                style = buildStackedNotification(activeNotifications, builder, payload)
             }
-
-            style = when (this.content) {
-                is Payload.Content.Default -> {
-                    // Nothing to do here. There is no expanded text.
-                    null
-                }
-                is Payload.Content.TextList -> {
-                    NotificationCompat.InboxStyle().also { style ->
-                        content.lines.forEach { style.addLine(it) }
-                    }
-                }
-                is Payload.Content.BigText -> {
-                    // Override the behavior of the second line.
-                    builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
-                            ?: "").toString()))
-
-                    val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
-                            ?: content.title
-                            ?: "")
-                            .toString() + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
-
-                    NotificationCompat.BigTextStyle()
-                            .bigText(bigText)
-                }
-                is Payload.Content.BigPicture -> {
-                    // Document these by linking to resource with labels. (1), (2), etc.
-
-                    // This large icon is show in both expanded and collapsed views. Might consider creating a custom view for this.
-                    // builder.setLargeIcon(content.image)
-
-                    NotificationCompat.BigPictureStyle()
-                            // This is the second line in the 'expanded' notification.
-                            .setSummaryText(content.collapsedText ?: content.text)
-                            // This is the picture below.
-                            .bigPicture(content.image)
-
-                }
-                is Payload.Content.Message -> {
-                    NotificationCompat.MessagingStyle(content.userDisplayName)
-                            .setConversationTitle(content.conversationTitle)
-                            .also { s ->
-                                content.messages.forEach { s.addMessage(it.text, it.timestamp, it.sender) }
-                            }
-                }
-            }
-
-            builder.setStyle(style)
         }
 
+        if (style == null) {
+            style = setStyle(builder, payload.content)
+        }
+
+        builder.setStyle(style)
+
         return builder
+    }
+
+    private fun setStyle(builder: NotificationCompat.Builder, content: Payload.Content): NotificationCompat.Style? {
+        return when (content) {
+            is Payload.Content.Default -> {
+                // Nothing to do here. There is no expanded text.
+                null
+            }
+            is Payload.Content.TextList -> {
+                NotificationCompat.InboxStyle().also { style ->
+                    content.lines.forEach { style.addLine(it) }
+                }
+            }
+            is Payload.Content.BigText -> {
+                // Override the behavior of the second line.
+                builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
+                        ?: "").toString()))
+
+                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
+                        ?: content.title
+                        ?: "")
+                        .toString() + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
+
+                NotificationCompat.BigTextStyle()
+                        .bigText(bigText)
+            }
+            is Payload.Content.BigPicture -> {
+                // Document these by linking to resource with labels. (1), (2), etc.
+
+                // This large icon is show in both expanded and collapsed views. Might consider creating a custom view for this.
+                // builder.setLargeIcon(content.image)
+
+                NotificationCompat.BigPictureStyle()
+                        // This is the second line in the 'expanded' notification.
+                        .setSummaryText(content.collapsedText ?: content.text)
+                        // This is the picture below.
+                        .bigPicture(content.image)
+
+            }
+            is Payload.Content.Message -> {
+                NotificationCompat.MessagingStyle(content.userDisplayName)
+                        .setConversationTitle(content.conversationTitle)
+                        .also { s ->
+                            content.messages.forEach { s.addMessage(it.text, it.timestamp, it.sender) }
+                        }
+            }
+        }
     }
 }

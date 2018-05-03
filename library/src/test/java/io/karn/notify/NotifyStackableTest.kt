@@ -6,6 +6,7 @@ import android.content.Intent
 import android.provider.Settings
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.utils.Action
+import io.karn.notify.utils.Errors
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,6 +37,32 @@ class NotifyStackableTest {
         Assert.assertNull(notification.contentIntent)
         Assert.assertNull(NotifyExtender.getExtensions(notification.extras).getCharSequence(NotifyExtender.SUMMARY_CONTENT))
         Assert.assertNull(notification.actions)
+    }
+
+    @Test
+    fun invalidStackKeyTest() {
+        val testTitle = "New dessert menu"
+        val testText = "The Cheesecake Factory has a new dessert for you to try!"
+
+        var exceptionThrown: IllegalArgumentException? = null
+
+        try {
+            Notify.with(this.context)
+                    .content {
+                        title = testTitle
+                        text = testText
+                    }
+                    .stackable {
+                        this.summaryContent = "Invalid summary"
+                    }
+                    .asBuilder()
+                    .build()
+        } catch (e: IllegalArgumentException) {
+            exceptionThrown = e
+        }
+
+        Assert.assertNotNull(exceptionThrown)
+        Assert.assertEquals(Errors.INVALID_STACK_KEY_ERROR, exceptionThrown?.message)
     }
 
     @Test
