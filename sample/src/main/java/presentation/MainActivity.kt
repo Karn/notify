@@ -2,7 +2,6 @@ package presentation
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -22,24 +21,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyDefault(view: View) {
-
-        val handler = Handler()
-        handler.postDelayed({
-            //Do something after 100ms
-            Notify
-                    .with(this)
-                    .content {
-                        title = "New dessert menu"
-                        text = "The Cheesecake Factory has a new dessert for you to try!"
-                    }
-                    .stackable {
-                        key = "test_key"
-                        summaryContent = "test summary content"
-                        summaryTitle = { count -> "Summary title" }
-                        summaryDescription = { count -> count.toString() + " new notifications." }
-                    }
-                    .show()
-        }, 3000)
+        Notify
+                .with(this)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .stackable {
+                    key = "test_key"
+                    summaryContent = "test summary content"
+                    summaryTitle = { count -> "Summary title" }
+                    summaryDescription = { count -> count.toString() + " new notifications." }
+                }
+                .show()
     }
 
     fun notifyTextList(view: View) {
