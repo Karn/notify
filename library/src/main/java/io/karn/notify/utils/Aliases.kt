@@ -1,4 +1,4 @@
-package io.karn.notify.entities
+package io.karn.notify.utils
 
 import android.support.v4.app.NotificationCompat
 

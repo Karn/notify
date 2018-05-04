@@ -6,7 +6,6 @@ import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
-import io.karn.notify.entities.Action
 import io.karn.notify.sample.R
 import java.util.*
 
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Notify.defaultConfig {
-            it.header.color = R.color.colorAccent
+            it.header.color = R.color.colorPrimaryDark
         }
     }
 
@@ -33,13 +32,6 @@ class MainActivity : AppCompatActivity() {
                     summaryContent = "test summary content"
                     summaryTitle = { count -> "Summary title" }
                     summaryDescription = { count -> count.toString() + " new notifications." }
-                }
-                .actions {
-                    add(Action(
-                            R.drawable.ic_app_icon,
-                            "Action Item",
-                            null
-                    ))
                 }
                 .show()
     }

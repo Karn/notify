@@ -43,7 +43,7 @@ Notify
         title = "New dessert menu"
         text = "The Cheesecake Factory has a new dessert for you to try!"
     }
-    .send()
+    .show()
 ```
 
 ![Basic usecase](./docs/assets/default.svg)

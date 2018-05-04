@@ -1,14 +1,17 @@
 package io.karn.notify
 
 import android.support.v4.app.NotificationCompat
-import io.karn.notify.entities.Action
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
+import io.karn.notify.utils.Action
+import io.karn.notify.utils.Errors
+import io.karn.notify.utils.NotifyScopeMarker
 
 /**
  * Fluent API for creating a Notification object.
  */
+@NotifyScopeMarker
 class Creator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
 
     private var meta = Payload.Meta()
@@ -100,6 +103,13 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     fun stackable(init: Payload.Stackable.() -> Unit): Creator {
         this.stackable = Payload.Stackable()
         (this.stackable as Payload.Stackable).init()
+
+        this.stackable.also {
+            it?.key.isNullOrBlank().let {
+                if (it) throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
+            }
+        }
+
         return this
     }
 

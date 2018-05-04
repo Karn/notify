@@ -46,6 +46,13 @@ class Notify internal constructor(internal var context: Context) {
         fun with(context: Context): Creator {
             return Creator(Notify(context), defaultConfig)
         }
+
+        /**
+         * Cancel an existing notification.
+         */
+        fun cancel(context: Context, id: Int) {
+            return NotificationInterop.cancelNotification(context, id)
+        }
     }
 
     init {

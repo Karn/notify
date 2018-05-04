@@ -3,12 +3,13 @@ package io.karn.notify.entities
 import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.R
+import io.karn.notify.utils.Action
+import java.util.*
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.
@@ -41,7 +42,16 @@ sealed class Payload {
             /**
              * Manual specification of the priority of the notification.
              */
-            var priority: Int = NotificationCompat.PRIORITY_DEFAULT
+            var priority: Int = NotificationCompat.PRIORITY_DEFAULT,
+            /**
+             * Set whether or not this notification is only relevant to the current device.
+             */
+            var localOnly: Boolean = false,
+            /**
+             * Indicates whether the notification is sticky. If enabled, the notification is not
+             * affected by the clear all and is not dismissible.
+             */
+            var sticky: Boolean = false
     )
 
     /**
@@ -136,10 +146,6 @@ sealed class Payload {
                 override var text: CharSequence? = null,
                 override var collapsedText: CharSequence? = null,
                 /**
-                 * The small icon of the image that appears to the right of the notification.
-                 */
-                var icon: Bitmap? = null,
-                /**
                  * The large image that appears when the notification is expanded.s
                  */
                 var image: Bitmap? = null
@@ -173,7 +179,7 @@ sealed class Payload {
             /**
              * The key which defines the stack as well as the corresponding notification ID.
              */
-            var key: String = "",
+            var key: String? = null,
             /**
              * The click intent of the stacked notification.
              */
@@ -202,6 +208,16 @@ sealed class Payload {
              * The actions associated with the stackable notification when it is stacked. These
              * actions override the actions for the individual notification.
              */
-            var stackableActions: ArrayList<Action>? = null
-    )
+            internal var stackableActions: ArrayList<Action>? = null
+    ) {
+
+        /**
+         * Scoped function for modifying the behaviour of the actions associated with the 'Stacked'
+         * notification.
+         */
+        fun actions(init: ArrayList<Action>.() -> Unit) {
+            this.stackableActions = ArrayList()
+            this.stackableActions?.init()
+        }
+    }
 }
