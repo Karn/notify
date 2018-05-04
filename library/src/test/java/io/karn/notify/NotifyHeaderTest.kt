@@ -1,7 +1,6 @@
 package io.karn.notify
 
 import android.app.Application
-import android.graphics.drawable.Icon
 import android.support.v4.app.NotificationCompat
 import junit.framework.Assert
 import org.junit.Test
@@ -23,9 +22,9 @@ class NotifyHeaderTest {
                 }
                 .asBuilder()
                 .build()
-
-        Assert.assertEquals(Icon.createWithResource(this.context, R.drawable.ic_app_icon).describeContents(), notification.smallIcon.describeContents())
-        Assert.assertEquals(context.resources.getColor(R.color.notification_header_color), notification.color)
+        
+        Assert.assertEquals(context.resources.getDrawable(R.drawable.ic_app_icon, context.theme), notification.smallIcon.loadDrawable(context))
+        Assert.assertEquals(context.resources.getColor(R.color.notification_header_color, context.theme), notification.color)
         Assert.assertEquals(null, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(Notify.DEFAULT_CHANNEL_KEY, notification.channelId)
     }
@@ -51,8 +50,8 @@ class NotifyHeaderTest {
                 .asBuilder()
                 .build()
 
-        Assert.assertEquals(Icon.createWithResource(this.context, testIcon).describeContents(), notification.smallIcon.describeContents())
-        Assert.assertEquals(context.resources.getColor(testColor), notification.color)
+        Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), notification.smallIcon.loadDrawable(context))
+        Assert.assertEquals(context.resources.getColor(testColor, context.theme), notification.color)
         Assert.assertEquals(testHeaderText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(testChannel, notification.channelId)
     }

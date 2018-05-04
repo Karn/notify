@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     .show()
         }, 3000)
-
-
     }
 
     fun notifyTextList(view: View) {
