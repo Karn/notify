@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1804px" height="899px" viewBox="0 0 1804 899" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notificationParent" transform="translate(137.000000, 161.000000)">
+            <g id="actions" transform="translate(1430.000000, 97.000000)">
+                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                <text id="Actions" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                    <tspan x="26" y="24">Actions</tspan>
+                </text>
+            </g>
+            <g id="primaryContentParent" transform="translate(0.000000, 97.000000)">
+                <path d="M54,68 L54,98" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                <path d="M208,68 L208,98" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                <path d="M131,38 L131,68" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                <path d="M54.4014974,68 L208,68" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                <g id="headerParent" transform="translate(0.000000, 98.000000)">
+                    <path d="M54,38 L54,162.525098" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                    <g id="headerItems" transform="translate(0.000000, 68.000000)">
+                        <g id="color" transform="translate(4.000000, 80.000000)">
+                            <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                            <text id="Color" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                <tspan x="33" y="24">Color</tspan>
+                            </text>
+                        </g>
+                        <g id="headerText" transform="translate(0.000000, 40.000000)">
+                            <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="108" height="38" rx="3"></rect>
+                            <text id="Header-Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                <tspan x="16" y="24">Header Text</tspan>
+                            </text>
+                        </g>
+                        <g id="icon" transform="translate(4.000000, 0.000000)">
+                            <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                            <text id="Icon" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                <tspan x="36" y="24">Icon</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g id="header" transform="translate(4.000000, 0.000000)">
+                        <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                        <text id="Header" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                            <tspan x="27" y="24">Header</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="contentParent" transform="translate(158.000000, 98.000000)">
+                    <g id="payloadParent" transform="translate(150.000000, 98.000000)">
+                        <g id="messageParent" transform="translate(952.000000, 69.000000)">
+                            <path d="M60.5,0.5 L60.5,180.537494" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="messages" transform="translate(10.000000, 177.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Messages" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="18" y="24">Messages</tspan>
+                                </text>
+                            </g>
+                            <g id="displayName" transform="translate(0.000000, 137.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="120" height="38" rx="3"></rect>
+                                <text id="Display-Name" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="16" y="24">Display Name</tspan>
+                                </text>
+                            </g>
+                            <g id="conversationTitle" transform="translate(10.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Conv.-Title" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="17" y="24">Conv. Title</tspan>
+                                </text>
+                            </g>
+                            <g id="message" transform="translate(10.000000, 29.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Message" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="21" y="24">Message</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="mediaParent" transform="translate(802.000000, 70.000000)">
+                            <path d="M50.5,0 L50.5,184.537494" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="actions" transform="translate(0.000000, 176.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Actions" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="26" y="24">Actions</tspan>
+                                </text>
+                            </g>
+                            <g id="image" transform="translate(0.000000, 136.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Image" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="30" y="24">Image</tspan>
+                                </text>
+                            </g>
+                            <g id="text" transform="translate(0.000000, 96.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="media" transform="translate(0.000000, 28.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Media" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="30" y="24">Media</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="progressParent" transform="translate(652.000000, 69.000000)">
+                            <path d="M51.5,0.489191695 L51.5,185.537494" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="eta" transform="translate(0.000000, 177.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="ETA" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="37" y="24">ETA</tspan>
+                                </text>
+                            </g>
+                            <g id="amount" transform="translate(0.000000, 137.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Amount" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="25" y="24">Amount</tspan>
+                                </text>
+                            </g>
+                            <g id="text" transform="translate(0.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="progress" transform="translate(0.000000, 29.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Progress" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="22" y="24">Progress</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="bigPictureParent" transform="translate(476.000000, 69.000000)">
+                            <path d="M62.5,0.402747975 L62.5,185.537494" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="image" transform="translate(12.000000, 177.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Image" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="30" y="24">Image</tspan>
+                                </text>
+                            </g>
+                            <g id="collapsedText" transform="translate(0.000000, 137.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="126" height="38" rx="3"></rect>
+                                <text id="Collapsed-Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="16" y="24">Collapsed Text</tspan>
+                                </text>
+                            </g>
+                            <g id="text" transform="translate(12.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="bigPicture" transform="translate(12.000000, 29.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="101" height="38" rx="3"></rect>
+                                <text id="Big-Picture" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="16" y="24">Big Picture</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="bigTextParent" transform="translate(300.000000, 69.000000)">
+                            <path d="M63.5,0.5 L63.5,185.537494" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="mbigText" transform="translate(13.000000, 177.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Big-Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="25" y="24">Big Text</tspan>
+                                </text>
+                            </g>
+                            <g id="collapsedText" transform="translate(0.000000, 137.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="126" height="38" rx="3"></rect>
+                                <text id="Collapsed-Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="16" y="24">Collapsed Text</tspan>
+                                </text>
+                            </g>
+                            <g id="text" transform="translate(13.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="bigText" transform="translate(13.000000, 29.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Big-Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="25" y="24">Big Text</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="textListParent" transform="translate(150.000000, 69.000000)">
+                            <path d="M50.5,0.5 L50.5,146.506173" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="lines" transform="translate(0.000000, 137.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Lines" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="33" y="24">Lines</tspan>
+                                </text>
+                            </g>
+                            <g id="text" transform="translate(0.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="textList" transform="translate(0.000000, 29.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text-List" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="23" y="24">Text List</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="defaultParent" transform="translate(0.000000, 69.000000)">
+                            <path d="M50.5,0.495238095 L50.5,103.621873" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                            <g id="text" transform="translate(0.000000, 97.000000)">
+                                <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                                <text id="Text" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="36" y="24">Text</tspan>
+                                </text>
+                            </g>
+                            <g id="default" transform="translate(0.000000, 30.000000)">
+                                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="-3.55271368e-15" width="100" height="38" rx="3"></rect>
+                                <text id="Default" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                    <tspan x="27" y="24">Default</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <path d="M50.5,69.5 L1011.50052,69.5" id="Line-2" stroke="#00324C" stroke-linecap="square"></path>
+                        <path d="M532,38.1957085 L532,69.5039928" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                        <g id="payload" transform="translate(481.000000, 0.000000)">
+                            <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                            <text id="Payload" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                                <tspan x="25" y="24">Payload</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <path d="M682,68.1957085 L682,98.1957085" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                    <path d="M50,37.4814078 L50,97.4814078" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                    <path d="M682,68 L51,68" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+                    <g id="title" transform="translate(0.000000, 98.000000)">
+                        <rect id="Rectangle-3" fill="#FAF0F7" x="0" y="0" width="100" height="38" rx="3"></rect>
+                        <text id="Title" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                            <tspan x="36" y="24">Title</tspan>
+                        </text>
+                    </g>
+                    <g id="content">
+                        <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="100" height="38" rx="3"></rect>
+                        <text id="Content" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                            <tspan x="25" y="24">Content</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="primaryContent" transform="translate(63.000000, 0.000000)">
+                    <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="135" height="38" rx="3"></rect>
+                    <text id="Primary-Content" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                        <tspan x="16" y="24">Primary Content</tspan>
+                    </text>
+                </g>
+            </g>
+            <path d="M131,67 L131,97" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+            <path d="M1480,67 L1480,97" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+            <path d="M1480,67 L131.499907,67" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+            <path d="M805,36 L805,66" id="Line" stroke="#00324C" stroke-linecap="square"></path>
+            <g id="notification" transform="translate(752.000000, 0.000000)">
+                <rect id="Rectangle-3" fill="#F0F5FA" x="0" y="0" width="106" height="38" rx="3"></rect>
+                <text id="Notification" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.76">
+                    <tspan x="16" y="24">Notification</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
