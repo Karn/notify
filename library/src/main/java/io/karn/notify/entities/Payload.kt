@@ -70,7 +70,7 @@ sealed class Payload {
             /**
              * The duration of time in milliseconds after which the notification is automatically dismissed.
              */
-            var timeout: Long = Long.MAX_VALUE
+            var timeout: Long = 0L
     )
 
     /**
