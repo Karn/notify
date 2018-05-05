@@ -1,10 +1,8 @@
 package io.karn.notify
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
@@ -13,17 +11,6 @@ import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
 
 internal object NotificationInterop {
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        val channel = NotificationChannel(channelKey, channelName, importance)
-        channel.description = channelDescription
-        // Register the channel with the system
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
 
     fun showNotification(context: Context, notification: NotificationCompat.Builder): Int {
         val key = NotifyExtender.getKey(notification.extras)
@@ -124,6 +111,8 @@ internal object NotificationInterop {
                 .setSmallIcon(payload.header.icon)
                 // The text that is visible to the right of the app name in the notification header.
                 .setSubText(payload.header.headerText)
+                // Show the relative timestamp next to the application name.
+                .setShowWhen(payload.header.showTimestamp)
                 // Dismiss the notification on click?
                 .setAutoCancel(payload.meta.cancelOnClick)
                 // Set the click handler for the notifications
@@ -139,6 +128,10 @@ internal object NotificationInterop {
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
                 .setOngoing(payload.meta.sticky)
+                // The visibility of the notification on the lockscreen.
+                .setVisibility(payload.alerting.lockScreenVisibility)
+                // The duration of time after which the notification is automatically dismissed.
+                .setTimeoutAfter(payload.alerting.timeout)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {

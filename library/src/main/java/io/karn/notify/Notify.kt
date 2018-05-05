@@ -59,7 +59,7 @@ class Notify internal constructor(internal var context: Context) {
         this.context = context.applicationContext
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationInterop.registerChannel(
+            NotifyChannel.registerChannel(
                     this.context,
                     defaultConfig.defaultChannelKey,
                     defaultConfig.defaultChannelName,

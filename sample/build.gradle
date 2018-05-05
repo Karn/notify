@@ -24,3 +24,10 @@ dependencies {
 
     implementation project(path: ':library')
 }
+
+// Skip teting and linting.
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint") || task.name.contains("Test")) {
+        task.enabled = false
+    }
+}

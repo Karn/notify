@@ -12,7 +12,7 @@ Simplified notification delivery for Android.
 ](./../../releases)
 
 
-###### GETTING STARTED
+#### GETTING STARTED
 You can install Notify using Jitpack while it is still in development.
 
 As such there currently are pre-releases available until test coverage is improved.
@@ -33,10 +33,10 @@ dependencies {
 ```
 
 
-###### USAGE
+#### USAGE
 The most basic case is as follows:
 
-``` kotlin
+```Kotlin
 Notify
     .with(context)
     .content { // this: Payload.Content.Default
@@ -50,7 +50,7 @@ Notify
 
 If you run into a case in which the library does not provide the requisite builder functions you can get the `NotificationCompat.Builder` object and continue to use it as you would normally by calling `Creator#asBuilder()`.
 
-###### NOTIFICATION ANATOMY
+#### NOTIFICATION ANATOMY
 
 ![Anatory](./docs/assets/anatomy.svg)
 
@@ -64,7 +64,7 @@ If you run into a case in which the library does not provide the requisite build
 | 6    | Content      | The "meat" of the notification set using of of the `Creator#as[Type]((Type) -> Unit)` scoped functions. |
 | 7    | Actions      | Set using the `Creator#actions((ArrayList<Action>) -> Unit)` scoped function.                           |
 
-###### CONTRIBUTING
+#### CONTRIBUTING
 There are many ways to [contribute](./.github/CONTRIBUTING.md), you can
 - submit bugs,
 - help track issues,

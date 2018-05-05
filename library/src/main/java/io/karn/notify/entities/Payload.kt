@@ -55,6 +55,25 @@ sealed class Payload {
     )
 
     /**
+     * Defines the alerting configuration for a particular notification. This includes notification
+     * visibility, sounds, vibrations, etc.
+     *
+     * This configuration system may not work as expected on all devices. Refer to the Wiki for more
+     * information.
+     */
+    data class Alerts(
+            /**
+             * The visibility of the notification as it appears on the lockscreen. By default it is
+             * hidden.
+             */
+            @NotificationCompat.NotificationVisibility var lockScreenVisibility: Int = NotificationCompat.VISIBILITY_PRIVATE,
+            /**
+             * The duration of time in milliseconds after which the notification is automatically dismissed.
+             */
+            var timeout: Long = Long.MAX_VALUE
+    )
+
+    /**
      * Contains configuration that is specific to the header of a notification.
      */
     data class Header(
@@ -73,7 +92,12 @@ sealed class Payload {
             /**
              * Manual override of channel on which this notification is broadcasted.
              */
-            @TargetApi(Build.VERSION_CODES.O) var channel: String = ""
+            @TargetApi(Build.VERSION_CODES.O) var channel: String = "",
+            /**
+             * Setting this field to false results in the timestamp (now, 5m, ...) next to the
+             * application name to be hidden.
+             */
+            var showTimestamp: Boolean = true
     )
 
     /**
