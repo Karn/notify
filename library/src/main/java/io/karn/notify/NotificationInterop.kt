@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
+import io.karn.notify.utils.Utils
 
 internal object NotificationInterop {
 
@@ -85,9 +86,7 @@ internal object NotificationInterop {
                 // Sets the first line of the 'collapsed' RawNotification.
                 .setContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
                 // Sets the second line of the 'collapsed' RawNotification.
-                .setContentText(Utils.getAsSecondaryFormattedText(
-                        payload.stackable.summaryDescription?.invoke(lines.size)
-                                ?: ""))
+                .setContentText(Utils.getAsSecondaryFormattedText(payload.stackable.summaryDescription?.invoke(lines.size)))
                 // Attach the stack click handler.
                 .setContentIntent(payload.stackable.clickIntent)
                 .extend(
@@ -186,9 +185,7 @@ internal object NotificationInterop {
                         ?: "").toString()))
 
                 val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
-                        ?: content.title
-                        ?: "")
-                        .toString() + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
+                        ?: content.title) + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
 
                 NotificationCompat.BigTextStyle()
                         .bigText(bigText)

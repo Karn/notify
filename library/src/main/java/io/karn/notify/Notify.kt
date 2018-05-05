@@ -2,6 +2,7 @@ package io.karn.notify
 
 import android.content.Context
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.RawNotification
@@ -58,13 +59,11 @@ class Notify internal constructor(internal var context: Context) {
     init {
         this.context = context.applicationContext
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotifyChannel.registerChannel(
-                    this.context,
-                    defaultConfig.defaultChannelKey,
-                    defaultConfig.defaultChannelName,
-                    defaultConfig.defaultChannelDescription)
-        }
+        NotifyChannel.registerChannel(
+                this.context,
+                defaultConfig.defaultChannelKey,
+                defaultConfig.defaultChannelName,
+                defaultConfig.defaultChannelDescription)
     }
 
     /**

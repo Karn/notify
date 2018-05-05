@@ -10,9 +10,9 @@ import android.os.Build
  */
 internal object NotifyChannel {
 
-    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
+    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return
+            return false
         }
 
         // Create the NotificationChannel, but only on API 26+ because
@@ -23,6 +23,7 @@ internal object NotifyChannel {
         // Register the channel with the system
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-    }
 
+        return true
+    }
 }
