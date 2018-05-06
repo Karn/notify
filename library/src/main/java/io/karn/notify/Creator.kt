@@ -144,4 +144,8 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     fun show(): Int {
         return notify.show(asBuilder())
     }
+
+    fun cancel(id: Int) {
+        return notify.cancel(id)
+    }
 }

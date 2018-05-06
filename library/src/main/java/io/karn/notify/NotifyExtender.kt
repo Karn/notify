@@ -16,7 +16,7 @@ import android.support.v4.app.NotificationCompat
  */
 internal class NotifyExtender : NotificationCompat.Extender {
 
-    companion object {
+    internal companion object {
         /**
          * Identifies the bundle that is associated
          */
@@ -45,7 +45,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
         }
     }
 
-    var isValid: Boolean = false
+    var valid: Boolean = false
         internal set(value) {
             field = value
         }
@@ -73,7 +73,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
         }
 
     constructor() {
-        this.isValid = true
+        this.valid = true
     }
 
     /**
@@ -90,8 +90,8 @@ internal class NotifyExtender : NotificationCompat.Extender {
         val notifyExtensions = builder.extras.getBundle(EXTRA_NOTIFY_EXTENSIONS) ?: Bundle()
         loadConfigurationFromBundle(notifyExtensions)
 
-        if (isValid) {
-            notifyExtensions.putBoolean(VALID, isValid)
+        if (valid) {
+            notifyExtensions.putBoolean(VALID, valid)
         }
 
         if (stackable) {
@@ -122,7 +122,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
 
     private fun loadConfigurationFromBundle(bundle: Bundle) {
         // Perform an update if exists on all properties.
-        isValid = bundle.getBoolean(VALID, isValid)
+        valid = bundle.getBoolean(VALID, valid)
 
         stackable = bundle.getBoolean(STACKABLE, stackable)
         stacked = bundle.getBoolean(STACKED, stacked)

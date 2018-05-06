@@ -1,11 +1,9 @@
 package io.karn.notify
 
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
@@ -13,34 +11,33 @@ import io.karn.notify.utils.Utils
 
 internal object NotificationInterop {
 
-    fun showNotification(context: Context, notification: NotificationCompat.Builder): Int {
+    fun showNotification(notificationManager: NotificationManager, notification: NotificationCompat.Builder): Int {
         val key = NotifyExtender.getKey(notification.extras)
         var id = Utils.getRandomInt()
 
         if (key != null) {
             id = key.hashCode()
-            NotificationManagerCompat.from(context).notify(key.toString(), id, notification.build())
+            notificationManager.notify(key.toString(), id, notification.build())
         } else {
-            NotificationManagerCompat.from(context).notify(id, notification.build())
+            notificationManager.notify(id, notification.build())
         }
 
         return id
     }
 
-    fun cancelNotification(context: Context, notificationId: Int) {
-        NotificationManagerCompat.from(context).cancel(notificationId)
+    fun cancelNotification(notificationManager: NotificationManager, notificationId: Int) {
+        notificationManager.cancel(notificationId)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun getActiveNotifications(context: Context): List<NotifyExtender> {
+    internal fun getActiveNotifications(notificationManager: NotificationManager): List<NotifyExtender> {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return ArrayList()
         }
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         return notificationManager.activeNotifications
                 .map { NotifyExtender(it) }
-                .filter { it.isValid }
+                .filter { it.valid }
     }
 
     private fun buildStackedNotification(groupedNotifications: List<NotifyExtender>, builder: NotificationCompat.Builder, payload: RawNotification): NotificationCompat.InboxStyle? {
@@ -104,6 +101,8 @@ internal object NotificationInterop {
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
         val builder = NotificationCompat.Builder(notify.context, payload.header.channel)
+                // Ensures that this notification is marked as a Notify notification.
+                .extend(NotifyExtender())
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
                 .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
@@ -153,7 +152,7 @@ internal object NotificationInterop {
                     .setStackable(true)
                     .setSummaryText(it.summaryContent))
 
-            val activeNotifications = getActiveNotifications(notify.context)
+            val activeNotifications = getActiveNotifications(Notify.defaultConfig.notificationManager!!)
             if (activeNotifications.isNotEmpty()) {
                 style = buildStackedNotification(activeNotifications, builder, payload)
             }
