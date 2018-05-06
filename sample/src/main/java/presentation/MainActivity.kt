@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigPicture {
                     title = "Chocolate brownie sundae"
                     text = "Get a look at this amazing dessert!"
+                    collapsedText = "The delicious brownie sundae now available."
                     image = BitmapFactory.decodeResource(this@MainActivity.resources, R.drawable.chocolate_brownie_sundae)
                 }
                 .show()

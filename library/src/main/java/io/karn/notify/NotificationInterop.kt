@@ -1,58 +1,43 @@
 package io.karn.notify
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.text.Html
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
+import io.karn.notify.utils.Utils
 
 internal object NotificationInterop {
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        val channel = NotificationChannel(channelKey, channelName, importance)
-        channel.description = channelDescription
-        // Register the channel with the system
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    fun showNotification(context: Context, notification: NotificationCompat.Builder): Int {
+    fun showNotification(notificationManager: NotificationManager, notification: NotificationCompat.Builder): Int {
         val key = NotifyExtender.getKey(notification.extras)
         var id = Utils.getRandomInt()
 
         if (key != null) {
             id = key.hashCode()
-            NotificationManagerCompat.from(context).notify(key.toString(), id, notification.build())
+            notificationManager.notify(key.toString(), id, notification.build())
         } else {
-            NotificationManagerCompat.from(context).notify(id, notification.build())
+            notificationManager.notify(id, notification.build())
         }
 
         return id
     }
 
-    fun cancelNotification(context: Context, notificationId: Int) {
-        NotificationManagerCompat.from(context).cancel(notificationId)
+    fun cancelNotification(notificationManager: NotificationManager, notificationId: Int) {
+        notificationManager.cancel(notificationId)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal fun getActiveNotifications(context: Context): List<NotifyExtender> {
+    internal fun getActiveNotifications(notificationManager: NotificationManager): List<NotifyExtender> {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return ArrayList()
         }
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         return notificationManager.activeNotifications
                 .map { NotifyExtender(it) }
-                .filter { it.isValid }
+                .filter { it.valid }
     }
 
     private fun buildStackedNotification(groupedNotifications: List<NotifyExtender>, builder: NotificationCompat.Builder, payload: RawNotification): NotificationCompat.InboxStyle? {
@@ -71,15 +56,10 @@ internal object NotificationInterop {
                 .forEach {
                     // Handle case where we already have a stacked notification.
                     if (it.stacked) {
-
-                        it.stackItems?.forEach {
-                            lines.add(it.toString())
-                        }
-
-                        return@forEach
+                        it.stackItems?.forEach { lines.add(it.toString()) }
+                    } else {
+                        it.summaryContent?.let { lines.add(it) }
                     }
-
-                    it.summaryContent?.let { lines.add(it) }
                 }
 
         if (lines.size == 0) return null
@@ -98,9 +78,7 @@ internal object NotificationInterop {
                 // Sets the first line of the 'collapsed' RawNotification.
                 .setContentTitle(payload.stackable.summaryTitle?.invoke(lines.size))
                 // Sets the second line of the 'collapsed' RawNotification.
-                .setContentText(Utils.getAsSecondaryFormattedText(
-                        payload.stackable.summaryDescription?.invoke(lines.size)
-                                ?: ""))
+                .setContentText(Utils.getAsSecondaryFormattedText(payload.stackable.summaryDescription?.invoke(lines.size)))
                 // Attach the stack click handler.
                 .setContentIntent(payload.stackable.clickIntent)
                 .extend(
@@ -118,12 +96,16 @@ internal object NotificationInterop {
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
         val builder = NotificationCompat.Builder(notify.context, payload.header.channel)
+                // Ensures that this notification is marked as a Notify notification.
+                .extend(NotifyExtender())
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
                 .setColor(notify.context.resources.getColor(payload.header.color))
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
                 // The text that is visible to the right of the app name in the notification header.
                 .setSubText(payload.header.headerText)
+                // Show the relative timestamp next to the application name.
+                .setShowWhen(payload.header.showTimestamp)
                 // Dismiss the notification on click?
                 .setAutoCancel(payload.meta.cancelOnClick)
                 // Set the click handler for the notifications
@@ -139,6 +121,10 @@ internal object NotificationInterop {
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
                 .setOngoing(payload.meta.sticky)
+                // The visibility of the notification on the lockscreen.
+                .setVisibility(payload.alerting.lockScreenVisibility)
+                // The duration of time after which the notification is automatically dismissed.
+                .setTimeoutAfter(payload.alerting.timeout)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -161,7 +147,7 @@ internal object NotificationInterop {
                     .setStackable(true)
                     .setSummaryText(it.summaryContent))
 
-            val activeNotifications = getActiveNotifications(notify.context)
+            val activeNotifications = getActiveNotifications(Notify.defaultConfig.notificationManager!!)
             if (activeNotifications.isNotEmpty()) {
                 style = buildStackedNotification(activeNotifications, builder, payload)
             }
@@ -193,9 +179,7 @@ internal object NotificationInterop {
                         ?: "").toString()))
 
                 val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
-                        ?: content.title
-                        ?: "")
-                        .toString() + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
+                        ?: content.title) + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
 
                 NotificationCompat.BigTextStyle()
                         .bigText(bigText)

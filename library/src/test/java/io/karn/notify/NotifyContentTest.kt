@@ -127,7 +127,6 @@ class NotifyContentTest {
         Assert.assertEquals("android.app.Notification\$BigTextStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
         Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
         Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
-
         Assert.assertEquals(testExpandedText + "\n" + testBigText, notification.extras.getCharSequence(NotificationCompat.EXTRA_BIG_TEXT).toString())
     }
 
@@ -135,6 +134,7 @@ class NotifyContentTest {
     fun bigPictureNotification() {
         val testTitle = "Chocolate brownie sundae"
         val testText = "Get a look at this amazing dessert!"
+        val testCollapsedText = "The delicious brownie sundae now available."
         val testImage = BitmapFactory.decodeResource(context.resources, R.drawable.notification_tile_bg)
         Assert.assertNotNull(testImage)
 
@@ -143,6 +143,7 @@ class NotifyContentTest {
                     title = testTitle
                     text = testText
                     image = testImage
+                    collapsedText = testCollapsedText
                 }
                 .asBuilder()
                 .build()
@@ -150,7 +151,9 @@ class NotifyContentTest {
         Assert.assertEquals("android.app.Notification\$BigPictureStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
         Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
         Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
-
+        // This is an example of Notifications vague methods. The Builder#setSummaryText is
+        // different from the Style#setSummaryText.
+        Assert.assertEquals(testCollapsedText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUMMARY_TEXT))
         val actualImage: Bitmap = notification.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
         Assert.assertNotNull(actualImage)
 

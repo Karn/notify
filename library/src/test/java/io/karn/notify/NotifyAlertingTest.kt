@@ -1,16 +1,16 @@
 package io.karn.notify
 
-import io.karn.notify.utils.Action
+import android.support.v4.app.NotificationCompat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class NotifyActionsTest : NotifyTestBase() {
+class NotifyAlertingTest : NotifyTestBase() {
 
     @Test
-    fun defaultActionsTest() {
+    fun defaultAlertingTest() {
         val notification = Notify.with(this.context)
                 .content {
                     title = "New dessert menu"
@@ -19,27 +19,28 @@ class NotifyActionsTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
-        Assert.assertNull(notification.actions)
+        Assert.assertEquals(0, notification.visibility)
+        Assert.assertEquals(0, notification.timeoutAfter)
     }
 
     @Test
-    fun modifiedActionsTest() {
+    fun modifiedAlertingTest() {
+        val testVisibility = NotificationCompat.VISIBILITY_PUBLIC
+        val testTimeout = 5000L
+
         val notification = Notify.with(this.context)
+                .alerting {
+                    lockScreenVisibility = testVisibility
+                    timeout = testTimeout
+                }
                 .content {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
-                .actions {
-                    add(Action(
-                            R.drawable.ic_android_black,
-                            "Action",
-                            null
-                    ))
-                }
                 .asBuilder()
                 .build()
 
-        Assert.assertNotNull(notification.actions)
-        Assert.assertEquals(1, notification.actions.size)
+        Assert.assertEquals(testVisibility, notification.visibility)
+        Assert.assertEquals(testTimeout, notification.timeoutAfter)
     }
 }

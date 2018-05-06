@@ -1,7 +1,7 @@
 package io.karn.notify
 
+import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.RawNotification
@@ -26,7 +26,7 @@ class Notify internal constructor(internal var context: Context) {
         const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
 
         // This is the initial configuration of the Notify Creator.
-        private var defaultConfig = NotifyConfig()
+        internal var defaultConfig = NotifyConfig()
 
         /**
          * Modify the default configuration.
@@ -46,25 +46,21 @@ class Notify internal constructor(internal var context: Context) {
         fun with(context: Context): Creator {
             return Creator(Notify(context), defaultConfig)
         }
-
-        /**
-         * Cancel an existing notification.
-         */
-        fun cancel(context: Context, id: Int) {
-            return NotificationInterop.cancelNotification(context, id)
-        }
     }
 
     init {
         this.context = context.applicationContext
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationInterop.registerChannel(
-                    this.context,
-                    defaultConfig.defaultChannelKey,
-                    defaultConfig.defaultChannelName,
-                    defaultConfig.defaultChannelDescription)
+        // Initialize notification manager instance.
+        if (Companion.defaultConfig.notificationManager == null) {
+            Companion.defaultConfig.notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
+
+        NotifyChannel.registerChannel(
+                Companion.defaultConfig.notificationManager!!,
+                defaultConfig.defaultChannelKey,
+                defaultConfig.defaultChannelName,
+                defaultConfig.defaultChannelDescription)
     }
 
     /**
@@ -85,6 +81,13 @@ class Notify internal constructor(internal var context: Context) {
      * this returned integer to make updates or to cancel the notification.
      */
     internal fun show(builder: NotificationCompat.Builder): Int {
-        return NotificationInterop.showNotification(context, builder)
+        return NotificationInterop.showNotification(Notify.defaultConfig.notificationManager!!, builder)
+    }
+
+    /**
+     * Cancel an existing notification with a particular id.
+     */
+    internal fun cancel(id: Int) {
+        return NotificationInterop.cancelNotification(Notify.defaultConfig.notificationManager!!, id)
     }
 }

@@ -16,7 +16,7 @@ import android.support.v4.app.NotificationCompat
  */
 internal class NotifyExtender : NotificationCompat.Extender {
 
-    companion object {
+    internal companion object {
         /**
          * Identifies the bundle that is associated
          */
@@ -45,7 +45,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
         }
     }
 
-    var isValid: Boolean = false
+    var valid: Boolean = false
         internal set(value) {
             field = value
         }
@@ -73,7 +73,7 @@ internal class NotifyExtender : NotificationCompat.Extender {
         }
 
     constructor() {
-        this.isValid = true
+        this.valid = true
     }
 
     /**
@@ -81,8 +81,13 @@ internal class NotifyExtender : NotificationCompat.Extender {
      */
     constructor(notification: StatusBarNotification) {
         // Fetch the extensions if any, from a given notification.
-        NotificationCompat.getExtras(notification.notification)?.getBundle(EXTRA_NOTIFY_EXTENSIONS)?.let {
-            loadConfigurationFromBundle(it)
+        NotificationCompat.getExtras(notification.notification).let {
+            it.getBundle(EXTRA_NOTIFY_EXTENSIONS)?.let {
+                loadConfigurationFromBundle(it)
+            }
+            it.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES)?.let {
+                stackItems = ArrayList(it.toList())
+            }
         }
     }
 
@@ -90,22 +95,14 @@ internal class NotifyExtender : NotificationCompat.Extender {
         val notifyExtensions = builder.extras.getBundle(EXTRA_NOTIFY_EXTENSIONS) ?: Bundle()
         loadConfigurationFromBundle(notifyExtensions)
 
-        if (isValid) {
-            notifyExtensions.putBoolean(VALID, isValid)
-        }
+        notifyExtensions.putBoolean(VALID, valid)
 
         if (stackable) {
             notifyExtensions.putBoolean(STACKABLE, stackable)
+        }
 
-            if (stackKey.isNullOrBlank()) {
-                throw IllegalStateException("Specified stackable notification but failed to include stackKey.")
-            }
-
+        if (!stackKey.isNullOrBlank()) {
             notifyExtensions.putCharSequence(STACK_KEY, stackKey)
-        } else {
-            if (stacked) {
-                throw IllegalStateException("Specified as stacked but notification is not stackable.")
-            }
         }
 
         if (stacked) {
@@ -122,12 +119,11 @@ internal class NotifyExtender : NotificationCompat.Extender {
 
     private fun loadConfigurationFromBundle(bundle: Bundle) {
         // Perform an update if exists on all properties.
-        isValid = bundle.getBoolean(VALID, isValid)
+        valid = bundle.getBoolean(VALID, valid)
 
         stackable = bundle.getBoolean(STACKABLE, stackable)
         stacked = bundle.getBoolean(STACKED, stacked)
         stackKey = bundle.getCharSequence(STACK_KEY, stackKey)
-        stackItems = bundle.getCharSequenceArrayList(NotificationCompat.EXTRA_TEXT_LINES)
 
         summaryContent = bundle.getCharSequence(SUMMARY_CONTENT, summaryContent)
     }

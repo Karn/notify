@@ -15,7 +15,8 @@ import io.karn.notify.utils.NotifyScopeMarker
 class Creator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
 
     private var meta = Payload.Meta()
-    private var header = config.header
+    private var alerts = Payload.Alerts()
+    private var header = config.header.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
     private var stackable: Payload.Stackable? = null
@@ -26,6 +27,16 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      */
     fun meta(init: Payload.Meta.() -> Unit): Creator {
         this.meta.init()
+
+        return this
+    }
+
+    /**
+     * Scoped function for modifying the Alerting of a notification. This includes visibility,
+     * sounds, lights, etc.
+     */
+    fun alerting(init: Payload.Alerts.() -> Unit): Creator {
+        this.alerts.init()
 
         return this
     }
@@ -104,11 +115,11 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
         this.stackable = Payload.Stackable()
         (this.stackable as Payload.Stackable).init()
 
-        this.stackable.also {
-            it?.key.isNullOrBlank().let {
-                if (it) throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
-            }
-        }
+        this.stackable
+                ?.takeIf { it.key.isNullOrEmpty() }
+                ?.apply {
+                    throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
+                }
 
         return this
     }
@@ -118,7 +129,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      * transformations (if any) from the {@see Creator} builder object.
      */
     fun asBuilder(): NotificationCompat.Builder {
-        return notify.asBuilder(RawNotification(meta, header, content, stackable, actions))
+        return notify.asBuilder(RawNotification(meta, alerts, header, content, stackable, actions))
     }
 
     /**
@@ -132,5 +143,9 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      */
     fun show(): Int {
         return notify.show(asBuilder())
+    }
+
+    fun cancel(id: Int) {
+        return notify.cancel(id)
     }
 }
