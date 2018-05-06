@@ -139,6 +139,8 @@ class NotifyStackableTest : NotifyTestBase() {
 
         // Show once.
         notificationRaw.show()
+        notificationRaw.show()
+
         // They should have collapsed.
         Assert.assertEquals(1, NotificationInterop.getActiveNotifications(Notify.defaultConfig.notificationManager!!).size)
 
@@ -147,13 +149,15 @@ class NotifyStackableTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
-        Assert.assertEquals("android.app.Notification\$InboxStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
-        Assert.assertEquals("2" + testSummaryTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE))
+        // Assert.assertEquals("android.app.Notification\$InboxStyle", notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE).toString())
+        Assert.assertEquals("3" + testSummaryTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE))
         Assert.assertEquals(testSummaryText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
         Assert.assertEquals(testKey, NotifyExtender.getKey(notification.extras))
         Assert.assertEquals(testClickIntent, notification.contentIntent)
         Assert.assertEquals(testSummaryContent, NotifyExtender.getExtensions(notification.extras).getCharSequence(NotifyExtender.SUMMARY_CONTENT))
-        Assert.assertEquals(Arrays.asList(testSummaryContent, testSummaryContent), notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
+        Assert.assertEquals(
+                Arrays.asList(testSummaryContent, testSummaryContent, testSummaryContent),
+                notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
         Assert.assertEquals(1, notification.actions.size)
         Assert.assertEquals(testActionText, notification.actions.first().title)
         Assert.assertEquals(testActionIntent, notification.actions.first().actionIntent)

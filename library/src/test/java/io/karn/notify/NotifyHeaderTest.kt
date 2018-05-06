@@ -29,6 +29,7 @@ class NotifyHeaderTest : NotifyTestBase() {
                 String.format("#%06X", 0xFFFFFFFF and notification.color.toLong()))
         Assert.assertEquals(null, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(Notify.DEFAULT_CHANNEL_KEY, notification.channelId)
+        Assert.assertTrue(notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))
     }
 
     @Test
@@ -37,6 +38,7 @@ class NotifyHeaderTest : NotifyTestBase() {
         val testColor = android.R.color.holo_purple
         val testHeaderText = "New Menu!"
         val testChannel = "test_channel"
+        val testShowTimestamp = false
 
         val notification = Notify.with(this.context)
                 .header {
@@ -44,6 +46,7 @@ class NotifyHeaderTest : NotifyTestBase() {
                     color = testColor
                     headerText = testHeaderText
                     channel = testChannel
+                    showTimestamp = testShowTimestamp
                 }
                 .content {
                     title = "New dessert menu"
@@ -58,5 +61,6 @@ class NotifyHeaderTest : NotifyTestBase() {
                 String.format("#%06X", 0xFFFFFFFF and notification.color.toLong()))
         Assert.assertEquals(testHeaderText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(testChannel, notification.channelId)
+        Assert.assertEquals(testShowTimestamp, notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))
     }
 }

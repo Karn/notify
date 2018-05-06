@@ -16,7 +16,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
 
     private var meta = Payload.Meta()
     private var alerts = Payload.Alerts()
-    private var header = config.header
+    private var header = config.header.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
     private var stackable: Payload.Stackable? = null
@@ -115,11 +115,11 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
         this.stackable = Payload.Stackable()
         (this.stackable as Payload.Stackable).init()
 
-        this.stackable.also {
-            it?.key.isNullOrBlank().let {
-                if (it) throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
-            }
-        }
+        this.stackable
+                ?.takeIf { it.key.isNullOrEmpty() }
+                ?.apply {
+                    throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
+                }
 
         return this
     }

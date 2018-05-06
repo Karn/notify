@@ -56,15 +56,10 @@ internal object NotificationInterop {
                 .forEach {
                     // Handle case where we already have a stacked notification.
                     if (it.stacked) {
-
-                        it.stackItems?.forEach {
-                            lines.add(it.toString())
-                        }
-
-                        return@forEach
+                        it.stackItems?.forEach { lines.add(it.toString()) }
+                    } else {
+                        it.summaryContent?.let { lines.add(it) }
                     }
-
-                    it.summaryContent?.let { lines.add(it) }
                 }
 
         if (lines.size == 0) return null
