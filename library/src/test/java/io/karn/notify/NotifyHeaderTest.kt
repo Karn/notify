@@ -1,18 +1,14 @@
 package io.karn.notify
 
-import android.app.Application
 import android.support.v4.app.NotificationCompat
 import junit.framework.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
 @RunWith(RobolectricTestRunner::class)
-class NotifyHeaderTest {
-
-    private val context: Application = RuntimeEnvironment.application
+class NotifyHeaderTest : NotifyTestBase() {
 
     @Test
     @Ignore

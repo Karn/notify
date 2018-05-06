@@ -57,7 +57,7 @@ class Notify internal constructor(internal var context: Context) {
         }
 
         NotifyChannel.registerChannel(
-                this.context,
+                Companion.defaultConfig.notificationManager!!,
                 defaultConfig.defaultChannelKey,
                 defaultConfig.defaultChannelName,
                 defaultConfig.defaultChannelDescription)

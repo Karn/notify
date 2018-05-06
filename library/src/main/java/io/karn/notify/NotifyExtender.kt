@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.app.Notification
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import android.support.annotation.VisibleForTesting

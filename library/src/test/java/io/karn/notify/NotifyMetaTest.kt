@@ -12,9 +12,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 
 @RunWith(RobolectricTestRunner::class)
-class NotifyMetaTest {
-
-    private val context: Application = RuntimeEnvironment.application
+class NotifyMetaTest : NotifyTestBase() {
 
     @Test
     fun defaultMetadataTest() {

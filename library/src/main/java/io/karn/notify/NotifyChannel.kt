@@ -2,7 +2,6 @@ package io.karn.notify
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 
 /**
@@ -10,7 +9,7 @@ import android.os.Build
  */
 internal object NotifyChannel {
 
-    fun registerChannel(context: Context, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT): Boolean {
+    fun registerChannel(notificationManager: NotificationManager, channelKey: String, channelName: String, channelDescription: String, importance: Int = NotificationManager.IMPORTANCE_DEFAULT): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return false
         }
@@ -21,7 +20,6 @@ internal object NotifyChannel {
 
         channel.description = channelDescription
         // Register the channel with the system
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
 
         return true
