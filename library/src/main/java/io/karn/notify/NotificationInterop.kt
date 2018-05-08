@@ -178,7 +178,7 @@ internal object NotificationInterop {
                 builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
                         ?: "").toString()))
 
-                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
+                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.expandedText
                         ?: content.title) + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
 
                 NotificationCompat.BigTextStyle()
@@ -192,7 +192,7 @@ internal object NotificationInterop {
 
                 NotificationCompat.BigPictureStyle()
                         // This is the second line in the 'expanded' notification.
-                        .setSummaryText(content.collapsedText ?: content.text)
+                        .setSummaryText(content.expandedText ?: content.text)
                         // This is the picture below.
                         .bigPicture(content.image)
 

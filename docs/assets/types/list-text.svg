@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1007px" height="210px" viewBox="0 0 1007 210" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>type/list-text</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-3.8%" y="-15.4%" width="107.5%" height="133.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-3.8%" y="-13.2%" width="107.5%" height="128.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="type/list-text" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(50.000000, 50.000000)">
+            <g id="Group" filter="url(#filter-1)">
+                <rect id="Rectangle-4" fill="#FFFFFF" x="0" y="0" width="412" height="94"></rect>
+                <g id="notification/header" transform="translate(16.000000, 16.000000)">
+                    <text id="now" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#757575">
+                        <tspan x="67" y="13">now</tspan>
+                    </text>
+                    <circle id="Oval" fill="#757575" fill-rule="evenodd" cx="62" cy="10" r="1"></circle>
+                    <g id="expand" transform="translate(94.000000, 8.000000)" fill="#4A90E2" fill-rule="evenodd">
+                        <polygon id="Shape" points="0.5875 0.5 2.5 2.48784722 4.4125 0.5 5 1.11197917 2.5 3.71614583 0 1.11197917"></polygon>
+                    </g>
+                    <text id="Notify" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#4A90E2">
+                        <tspan x="24" y="13">Notify</tspan>
+                    </text>
+                    <g id="app_icon" fill="#4A90E2" fill-rule="evenodd" stroke-width="1">
+                        <g id="ic_notifications">
+                            <path d="M9,16 C9.825,16 10.5,15.55 10.5,15 L7.5,15 C7.5,15.55 8.175,16 9,16 L9,16 Z M13.5882353,11.8823529 L13.5882353,8 C13.5882353,5.83294118 12.0847059,4.01882353 10.0588235,3.53882353 L10.0588235,3.05882353 C10.0588235,2.47294118 9.58588235,2 9,2 C8.41411765,2 7.94117647,2.47294118 7.94117647,3.05882353 L7.94117647,3.53882353 C5.91529412,4.01882353 4.41176471,5.83294118 4.41176471,8 L4.41176471,11.8823529 L3,13.2941176 L3,14 L15,14 L15,13.2941176 L13.5882353,11.8823529 L13.5882353,11.8823529 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+                <g id="content" transform="translate(16.000000, 42.000000)" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal">
+                    <text id="New-menu-items!" letter-spacing="0.100000001" fill="#000000" fill-opacity="0.84">
+                        <tspan x="0" y="13">New menu items!</tspan>
+                    </text>
+                    <text id="3-new-dessert-menu-i" fill="#757575">
+                        <tspan x="0" y="33">3 new dessert menu items found.</tspan>
+                    </text>
+                </g>
+            </g>
+            <g id="Group" filter="url(#filter-2)" transform="translate(495.000000, 0.000000)">
+                <rect id="Rectangle-5" fill="#FFFFFF" x="0" y="0" width="412" height="110"></rect>
+                <g id="notification/header" transform="translate(16.000000, 16.000000)">
+                    <text id="now" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#757575">
+                        <tspan x="67" y="13">now</tspan>
+                    </text>
+                    <circle id="Oval" fill="#757575" fill-rule="evenodd" cx="62" cy="10" r="1"></circle>
+                    <g id="collapse" transform="translate(94.000000, 8.000000)" fill="#4A90E2" fill-rule="evenodd">
+                        <polygon id="Shape" transform="translate(2.500000, 2.108073) rotate(180.000000) translate(-2.500000, -2.108073) " points="0.5875 0.5 2.5 2.48784722 4.4125 0.5 5 1.11197917 2.5 3.71614583 0 1.11197917"></polygon>
+                    </g>
+                    <text id="Notify" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#4A90E2">
+                        <tspan x="24" y="13">Notify</tspan>
+                    </text>
+                    <g id="app_icon" fill="#4A90E2" fill-rule="evenodd" stroke-width="1">
+                        <g id="ic_notifications">
+                            <path d="M9,16 C9.825,16 10.5,15.55 10.5,15 L7.5,15 C7.5,15.55 8.175,16 9,16 L9,16 Z M13.5882353,11.8823529 L13.5882353,8 C13.5882353,5.83294118 12.0847059,4.01882353 10.0588235,3.53882353 L10.0588235,3.05882353 C10.0588235,2.47294118 9.58588235,2 9,2 C8.41411765,2 7.94117647,2.47294118 7.94117647,3.05882353 L7.94117647,3.53882353 C5.91529412,4.01882353 4.41176471,5.83294118 4.41176471,8 L4.41176471,11.8823529 L3,13.2941176 L3,14 L15,14 L15,13.2941176 L13.5882353,11.8823529 L13.5882353,11.8823529 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+                <g id="content" transform="translate(16.000000, 42.000000)" fill="#757575" font-family="Roboto-Regular, Roboto" font-size="14" font-weight="normal">
+                    <text id="New!-Fresh-Strawberr">
+                        <tspan x="0" y="13">New! Fresh Strawberry Cheesecake.</tspan>
+                        <tspan x="0" y="30.5">New! Salted Caramel Cheesecake.</tspan>
+                        <tspan x="0" y="48">New! OREO Dream Dessert.  </tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

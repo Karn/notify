@@ -118,7 +118,7 @@ class NotifyContentTest {
                 .asBigText {
                     title = testTitle
                     text = testText
-                    collapsedText = testExpandedText
+                    expandedText = testExpandedText
                     bigText = testBigText
                 }
                 .asBuilder()
@@ -143,7 +143,7 @@ class NotifyContentTest {
                     title = testTitle
                     text = testText
                     image = testImage
-                    collapsedText = testCollapsedText
+                    expandedText = testCollapsedText
                 }
                 .asBuilder()
                 .build()

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
-                    collapsedText = "Try our newest dessert option!"
+                    expandedText = "Mouthwatering deliciousness."
                     bigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
                             "\n" +
                             "Come try this delicious new dessert and get two for the price of one!"
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigPicture {
                     title = "Chocolate brownie sundae"
                     text = "Get a look at this amazing dessert!"
-                    collapsedText = "The delicious brownie sundae now available."
+                    expandedText = "The delicious brownie sundae now available."
                     image = BitmapFactory.decodeResource(this@MainActivity.resources, R.drawable.chocolate_brownie_sundae)
                 }
                 .show()

@@ -124,9 +124,9 @@ sealed class Payload {
          */
         interface Expandable {
             /**
-             * The content that is displayed when the notification is not expanded.
+             * The content that is displayed when the notification is expanded expanded.
              */
-            var collapsedText: CharSequence?
+            var expandedText: CharSequence?
         }
 
         /**
@@ -155,7 +155,7 @@ sealed class Payload {
         data class BigText(
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
-                override var collapsedText: CharSequence? = null,
+                override var expandedText: CharSequence? = null,
                 /**
                  * The large text associated with the notification.
                  */
@@ -168,7 +168,7 @@ sealed class Payload {
         data class BigPicture(
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
-                override var collapsedText: CharSequence? = null,
+                override var expandedText: CharSequence? = null,
                 /**
                  * The large image that appears when the notification is expanded.s
                  */
