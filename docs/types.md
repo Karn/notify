@@ -42,7 +42,7 @@ Notify
 
 #### BIG TEXT
 
-[[https://github.com/karn/notify/blob/develop/docs/assets/types/big-text.svg|alt=Big Text Notification]]
+![Big Text Notification](./assets/types/big-text.svg)
 
 For instances where you'd like to show a longer message you can use the `BigText` notification type. These kinds of messages are ideal for things such as email content, and news previews.
 
