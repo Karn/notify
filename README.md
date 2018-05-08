@@ -50,6 +50,8 @@ Notify
 
 If you run into a case in which the library does not provide the requisite builder functions you can get the `NotificationCompat.Builder` object and continue to use it as you would normally by calling `Creator#asBuilder()`.
 
+> **Tip:** You can view other notification styles on the [Notification Types](https://github.com/Karn/notify/wiki/Notification-types) wiki page.
+
 #### NOTIFICATION ANATOMY
 
 ![Anatory](./docs/assets/anatomy.svg)

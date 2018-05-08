@@ -41,8 +41,8 @@
                         <tspan x="67" y="13">now</tspan>
                     </text>
                     <circle id="Oval" fill="#757575" fill-rule="evenodd" cx="62" cy="10" r="1"></circle>
-                    <g id="expand" transform="translate(94.000000, 8.000000)" fill="#4A90E2" fill-rule="evenodd">
-                        <polygon id="Shape" points="0.5875 0.5 2.5 2.48784722 4.4125 0.5 5 1.11197917 2.5 3.71614583 0 1.11197917"></polygon>
+                    <g id="collapse" transform="translate(94.000000, 8.000000)" fill="#4A90E2" fill-rule="evenodd">
+                        <polygon id="Shape" transform="translate(2.500000, 2.108073) rotate(180.000000) translate(-2.500000, -2.108073) " points="0.5875 0.5 2.5 2.48784722 4.4125 0.5 5 1.11197917 2.5 3.71614583 0 1.11197917"></polygon>
                     </g>
                     <text id="Notify" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#4A90E2">
                         <tspan x="24" y="13">Notify</tspan>
