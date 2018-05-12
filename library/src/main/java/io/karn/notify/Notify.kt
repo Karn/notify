@@ -25,6 +25,11 @@ class Notify internal constructor(internal var context: Context) {
          */
         const val DEFAULT_CHANNEL_DESCRIPTION = "General application notifications."
 
+        /**
+         * The flag to disable notification lights.
+         */
+        const val NO_LIGHTS = -1
+
         // This is the initial configuration of the Notify Creator.
         internal var defaultConfig = NotifyConfig()
 
@@ -33,8 +38,8 @@ class Notify internal constructor(internal var context: Context) {
          *
          * Takes a receiver with the NotifyConfig immutable object which has mutable fields.
          */
-        fun defaultConfig(block: (NotifyConfig) -> Unit) {
-            block(defaultConfig)
+        fun defaultConfig(init: NotifyConfig.() -> Unit) {
+            defaultConfig.init()
         }
 
         /**
@@ -52,15 +57,11 @@ class Notify internal constructor(internal var context: Context) {
         this.context = context.applicationContext
 
         // Initialize notification manager instance.
-        if (Companion.defaultConfig.notificationManager == null) {
-            Companion.defaultConfig.notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (defaultConfig.notificationManager == null) {
+            defaultConfig.notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
 
-        NotifyChannel.registerChannel(
-                Companion.defaultConfig.notificationManager!!,
-                defaultConfig.defaultChannelKey,
-                defaultConfig.defaultChannelName,
-                defaultConfig.defaultChannelDescription)
+        NotificationChannelInterop.with(defaultConfig.alerting)
     }
 
     /**

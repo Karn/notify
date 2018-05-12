@@ -38,7 +38,7 @@ class NotifyMetaTest : NotifyTestBase() {
 
         val testCancelOnClick = false
         val testCategory = NotificationCompat.CATEGORY_STATUS
-        val testPriority = NotificationCompat.PRIORITY_MAX
+        val testTimeout = 5000L
 
         val notification = Notify.with(this.context)
                 .meta {
@@ -46,7 +46,7 @@ class NotifyMetaTest : NotifyTestBase() {
                     clearIntent = testClearIntent
                     cancelOnClick = testCancelOnClick
                     category = testCategory
-                    priority = testPriority
+                    timeout = testTimeout
                 }
                 .content {
                     title = "New dessert menu"
@@ -59,6 +59,6 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertEquals(testClearIntent, notification.deleteIntent)
         Assert.assertEquals(testCancelOnClick, (notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertEquals(testCategory, notification.category)
-        Assert.assertEquals(testPriority, notification.priority)
+        Assert.assertEquals(testTimeout, notification.timeoutAfter)
     }
 }

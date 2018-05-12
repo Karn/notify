@@ -20,18 +20,15 @@ class NotifyAlertingTest : NotifyTestBase() {
                 .build()
 
         Assert.assertEquals(0, notification.visibility)
-        Assert.assertEquals(0, notification.timeoutAfter)
     }
 
     @Test
     fun modifiedAlertingTest() {
         val testVisibility = NotificationCompat.VISIBILITY_PUBLIC
-        val testTimeout = 5000L
 
         val notification = Notify.with(this.context)
                 .alerting {
                     lockScreenVisibility = testVisibility
-                    timeout = testTimeout
                 }
                 .content {
                     title = "New dessert menu"
@@ -41,6 +38,5 @@ class NotifyAlertingTest : NotifyTestBase() {
                 .build()
 
         Assert.assertEquals(testVisibility, notification.visibility)
-        Assert.assertEquals(testTimeout, notification.timeoutAfter)
     }
 }

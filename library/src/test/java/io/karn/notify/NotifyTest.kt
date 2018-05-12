@@ -16,17 +16,20 @@ class NotifyTest {
     @Test
     fun initializationTest() {
         Notify.defaultConfig {
-            it.header.icon = R.drawable.ic_android_black
-            it.header.color = android.R.color.darker_gray
+
+            header {
+                icon = R.drawable.ic_android_black
+                color = android.R.color.darker_gray
+            }
         }
     }
 
     @Test
     fun showNotification() {
-        val notificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
+        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
 
         Notify.defaultConfig {
-            it.notificationManager = notificationManager
+            notificationManager = shadowNotificationManager
         }
 
         Notify.with(this.context)
@@ -36,16 +39,16 @@ class NotifyTest {
                 }
                 .show()
 
-        Assert.assertEquals(1, NotificationInterop.getActiveNotifications(notificationManager).size)
+        Assert.assertEquals(1, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
     }
 
     @Test
     fun cancelNotification() {
         // TODO: Inject existing notifications so there is no code duplication.
-        val notificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
+        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
 
         Notify.defaultConfig {
-            it.notificationManager = notificationManager
+            notificationManager = shadowNotificationManager
         }
 
         val notificationId = Notify.with(this.context)
@@ -55,11 +58,11 @@ class NotifyTest {
                 }
                 .show()
 
-        Assert.assertEquals(1, NotificationInterop.getActiveNotifications(notificationManager).size)
+        Assert.assertEquals(1, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
 
         Notify.with(this.context)
                 .cancel(notificationId)
 
-        Assert.assertEquals(0, NotificationInterop.getActiveNotifications(notificationManager).size)
+        Assert.assertEquals(0, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
     }
 }

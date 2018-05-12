@@ -11,10 +11,10 @@ open class NotifyTestBase {
 
     @Before
     fun resetNotificationManager() {
-        val notificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
+        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
 
         Notify.defaultConfig {
-            it.notificationManager = notificationManager
+            notificationManager = shadowNotificationManager
         }
     }
 }

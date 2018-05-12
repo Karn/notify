@@ -3,6 +3,7 @@ package io.karn.notify
 import android.app.NotificationManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import io.karn.notify.entities.Payload
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -28,14 +29,9 @@ class NotifyChannelTest : NotifyTestBase() {
 
         val notificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
 
-        val registeredChannel = NotifyChannel.registerChannel(notificationManager,
-                Notify.DEFAULT_CHANNEL_KEY,
-                Notify.DEFAULT_CHANNEL_NAME,
-                Notify.DEFAULT_CHANNEL_DESCRIPTION,
-                NotificationCompat.PRIORITY_DEFAULT)
+        val registeredChannel = NotificationChannelInterop.with(Payload.Alerts())
 
         Assert.assertTrue(registeredChannel)
-        Assert.assertNotNull(notificationManager.getNotificationChannel(Notify.DEFAULT_CHANNEL_KEY))
     }
 
     @Test
@@ -44,11 +40,7 @@ class NotifyChannelTest : NotifyTestBase() {
 
         val notificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
 
-        val registeredChannel = NotifyChannel.registerChannel(notificationManager,
-                Notify.DEFAULT_CHANNEL_KEY,
-                Notify.DEFAULT_CHANNEL_NAME,
-                Notify.DEFAULT_CHANNEL_DESCRIPTION,
-                NotificationCompat.PRIORITY_DEFAULT)
+        val registeredChannel = NotificationChannelInterop.with(Payload.Alerts())
 
         Assert.assertFalse(registeredChannel)
     }

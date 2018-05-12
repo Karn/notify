@@ -37,7 +37,6 @@ class NotifyHeaderTest : NotifyTestBase() {
         val testIcon = R.drawable.ic_android_black
         val testColor = android.R.color.holo_purple
         val testHeaderText = "New Menu!"
-        val testChannel = "test_channel"
         val testShowTimestamp = false
 
         val notification = Notify.with(this.context)
@@ -45,7 +44,6 @@ class NotifyHeaderTest : NotifyTestBase() {
                     icon = testIcon
                     color = testColor
                     headerText = testHeaderText
-                    channel = testChannel
                     showTimestamp = testShowTimestamp
                 }
                 .content {
@@ -60,7 +58,6 @@ class NotifyHeaderTest : NotifyTestBase() {
                 String.format("#%06X", context.resources.getColor(testColor, context.theme)),
                 String.format("#%06X", 0xFFFFFFFF and notification.color.toLong()))
         Assert.assertEquals(testHeaderText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
-        Assert.assertEquals(testChannel, notification.channelId)
         Assert.assertEquals(testShowTimestamp, notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))
     }
 }

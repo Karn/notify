@@ -1,15 +1,17 @@
 package io.karn.notify.entities
 
-import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.graphics.Bitmap
-import android.os.Build
+import android.net.Uri
+import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
+import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.utils.Action
-import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.
@@ -51,7 +53,11 @@ sealed class Payload {
              * Indicates whether the notification is sticky. If enabled, the notification is not
              * affected by the clear all and is not dismissible.
              */
-            var sticky: Boolean = false
+            var sticky: Boolean = false,
+            /**
+             * The duration of time in milliseconds after which the notification is automatically dismissed.
+             */
+            var timeout: Long = 0L
     )
 
     /**
@@ -61,16 +67,41 @@ sealed class Payload {
      * This configuration system may not work as expected on all devices. Refer to the Wiki for more
      * information.
      */
-    data class Alerts(
+    data class Alerts
+    (
             /**
              * The visibility of the notification as it appears on the lockscreen. By default it is
              * hidden.
              */
             @NotificationCompat.NotificationVisibility var lockScreenVisibility: Int = NotificationCompat.VISIBILITY_PRIVATE,
             /**
-             * The duration of time in milliseconds after which the notification is automatically dismissed.
+             * The default CHANNEL_ID for a notification on versions >= Android O.
              */
-            var timeout: Long = 0L
+            var channelKey: String = Notify.DEFAULT_CHANNEL_KEY,
+            /**
+             * The default CHANNEL_NAME for a notification on versions >= Android O.
+             */
+            var channelName: String = Notify.DEFAULT_CHANNEL_NAME,
+            /**
+             * The default CHANNEL_DESCRIPTION for a notification on versions >= Android O.
+             */
+            var channelDescription: String = Notify.DEFAULT_CHANNEL_DESCRIPTION,
+            /**
+             * The default IMPORTANCE for a notificaiton on versions >= Android O.
+             */
+            var channelImportance: Int = NotificationCompat.PRIORITY_DEFAULT,
+            /**
+             * The LED colors of the notification notifyChannel.
+             */
+            @ColorInt var lightColor: Int = Notify.NO_LIGHTS,
+            /**
+             * Vibration pattern for notification on this notifyChannel.
+             */
+            var vibrationPattern: List<Long>? = null,
+            /**
+             * A custom notification sound if any.
+             */
+            var sound: Uri? = null
     )
 
     /**
@@ -89,10 +120,6 @@ sealed class Payload {
              * The optional text that appears next to the appName of a notification.
              */
             var headerText: CharSequence? = null,
-            /**
-             * Manual override of channel on which this notification is broadcasted.
-             */
-            @TargetApi(Build.VERSION_CODES.O) var channel: String = "",
             /**
              * Setting this field to false results in the timestamp (now, 5m, ...) next to the
              * application name to be hidden.
