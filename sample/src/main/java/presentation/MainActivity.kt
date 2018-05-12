@@ -1,6 +1,5 @@
 package presentation
 
-import android.app.NotificationManager
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             header {
                 color = R.color.colorPrimaryDark
             }
-            defaultChannel {
+            channel {
                 lightColor = Color.RED
                 channelImportance = Notify.IMPORTANCE_HIGH
                 vibrationPattern = listOf(0, 200, 0, 200)
