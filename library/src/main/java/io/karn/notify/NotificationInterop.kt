@@ -145,19 +145,17 @@ internal object NotificationInterop {
 
             // The lights of the notification.
             if (lightColor != Notify.NO_LIGHTS) {
-                Log.d("NI", "Settings lights.")
                 builder.setLights(lightColor, 500, 2000)
             }
 
             // The vibration pattern.
-            vibrationPattern?.let {
-                Log.d("NI", "Setting vibration.")
+            vibrationPattern?.also {
                 builder.setVibrate(it.toLongArray())
             }
 
             // A custom alerting sound.
-            sound?.let {
-                builder.setSound(sound);
+            sound?.also {
+                builder.setSound(sound)
             }
 
             // Manual specification of the priority.

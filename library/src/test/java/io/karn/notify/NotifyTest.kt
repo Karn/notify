@@ -5,13 +5,10 @@ import junit.framework.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadow.api.Shadow
 
 @RunWith(RobolectricTestRunner::class)
-class NotifyTest {
-
-    private val context = RuntimeEnvironment.application
+class NotifyTest : NotifyTestBase() {
 
     @Test
     fun initializationTest() {
