@@ -18,15 +18,15 @@ data class NotifyConfig(
         /**
          * Specifies the default alerting configuration for notifications.
          */
-        internal var alerting: Payload.Alerts = Payload.Alerts()
+        internal var defaultAlerting: Payload.Alerts = Payload.Alerts()
 ) {
     fun header(init: Payload.Header.() -> Unit): NotifyConfig {
         defaultHeader.init()
         return this
     }
 
-    fun defaultChannel(init: Payload.Alerts.() -> Unit): NotifyConfig {
-        alerting.init()
+    fun channel(init: Payload.Alerts.() -> Unit): NotifyConfig {
+        defaultAlerting.init()
 
         return this
     }

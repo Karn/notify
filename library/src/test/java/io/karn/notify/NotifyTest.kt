@@ -15,13 +15,25 @@ class NotifyTest {
 
     @Test
     fun initializationTest() {
-        Notify.defaultConfig {
+        val testIcon = R.drawable.ic_android_black
+        val testColor = android.R.color.darker_gray
 
+        Notify.defaultConfig {
             header {
-                icon = R.drawable.ic_android_black
-                color = android.R.color.darker_gray
+                icon = testIcon
+                color = testColor
             }
         }
+
+        val notification = Notify.with(this.context)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .asBuilder()
+                .build()
+
+        Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), notification.smallIcon.loadDrawable(context))
     }
 
     @Test

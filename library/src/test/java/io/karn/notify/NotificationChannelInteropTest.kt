@@ -14,7 +14,7 @@ import org.robolectric.util.ReflectionHelpers
 
 
 @RunWith(RobolectricTestRunner::class)
-class NotifyChannelTest : NotifyTestBase() {
+class NotificationChannelInteropTest : NotifyTestBase() {
 
     private var currentSdkVersion = Build.VERSION.SDK_INT
 

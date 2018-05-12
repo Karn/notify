@@ -15,7 +15,7 @@ import io.karn.notify.utils.NotifyScopeMarker
 class Creator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
 
     private var meta = Payload.Meta()
-    private var alerts = config.alerting.copy()
+    private var alerts = config.defaultAlerting.copy()
     private var header = config.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null

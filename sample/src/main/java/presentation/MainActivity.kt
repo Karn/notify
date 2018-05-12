@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             }
             defaultChannel {
                 lightColor = Color.RED
-                channelImportance = NotificationManager.IMPORTANCE_HIGH
+                channelImportance = Notify.IMPORTANCE_HIGH
                 vibrationPattern = listOf(0, 200, 0, 200)
                 sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             }

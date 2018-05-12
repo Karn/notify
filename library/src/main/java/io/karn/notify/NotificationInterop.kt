@@ -116,8 +116,6 @@ internal object NotificationInterop {
                 // The category of the notification which allows android to prioritize the
                 // notification as required.
                 .setCategory(payload.meta.category)
-                // Manual specification of the priority.
-                .setPriority(payload.meta.priority)
                 // Set whether or not this notification is only relevant to the current device.
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
@@ -162,6 +160,7 @@ internal object NotificationInterop {
                 builder.setSound(sound);
             }
 
+            // Manual specification of the priority.
             builder.priority = channelImportance
         }
 

@@ -28,7 +28,7 @@ class NotifyHeaderTest : NotifyTestBase() {
                 String.format("#%06X", context.resources.getColor(R.color.notification_header_color, context.theme)),
                 String.format("#%06X", 0xFFFFFFFF and notification.color.toLong()))
         Assert.assertEquals(null, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
-        Assert.assertEquals(Notify.DEFAULT_CHANNEL_KEY, notification.channelId)
+        Assert.assertEquals(Notify.CHANNEL_DEFAULT_KEY, notification.channelId)
         Assert.assertTrue(notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))
     }
 

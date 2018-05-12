@@ -7,10 +7,10 @@ import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.utils.Action
+import io.karn.notify.utils.NotifyImportance
 import kotlin.collections.ArrayList
 
 /**
@@ -41,10 +41,6 @@ sealed class Payload {
              * notification as required.
              */
             var category: String? = null,
-            /**
-             * Manual specification of the priority of the notification.
-             */
-            var priority: Int = NotificationCompat.PRIORITY_DEFAULT,
             /**
              * Set whether or not this notification is only relevant to the current device.
              */
@@ -77,19 +73,19 @@ sealed class Payload {
             /**
              * The default CHANNEL_ID for a notification on versions >= Android O.
              */
-            var channelKey: String = Notify.DEFAULT_CHANNEL_KEY,
+            var channelKey: String = Notify.CHANNEL_DEFAULT_KEY,
             /**
              * The default CHANNEL_NAME for a notification on versions >= Android O.
              */
-            var channelName: String = Notify.DEFAULT_CHANNEL_NAME,
+            var channelName: String = Notify.CHANNEL_DEFAULT_NAME,
             /**
              * The default CHANNEL_DESCRIPTION for a notification on versions >= Android O.
              */
-            var channelDescription: String = Notify.DEFAULT_CHANNEL_DESCRIPTION,
+            var channelDescription: String = Notify.CHANNEL_DEFAULT_DESCRIPTION,
             /**
-             * The default IMPORTANCE for a notificaiton on versions >= Android O.
+             * The default IMPORTANCE for a notification.
              */
-            var channelImportance: Int = NotificationCompat.PRIORITY_DEFAULT,
+            @NotifyImportance var channelImportance: Int = Notify.IMPORTANCE_NORMAL,
             /**
              * The LED colors of the notification notifyChannel.
              */
