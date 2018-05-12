@@ -20,8 +20,8 @@ class NotificationInterlopTest : NotifyTestBase() {
     }
 
     @Test
-    fun getActiveNotifications_onAndroidN() {
-        ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.N_MR1)
+    fun getActiveNotifications_onAndroidLollipop() {
+        ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.LOLLIPOP_MR1)
 
         val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
         Notify.defaultConfig {
@@ -40,8 +40,8 @@ class NotificationInterlopTest : NotifyTestBase() {
     }
 
     @Test
-    fun getActiveNotifications_onAndroidO() {
-        ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.O)
+    fun getActiveNotifications_onAndroidM() {
+        ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.M)
 
         val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
         Notify.defaultConfig {
