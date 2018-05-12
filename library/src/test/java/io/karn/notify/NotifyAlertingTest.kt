@@ -1,6 +1,5 @@
 package io.karn.notify
 
-import android.app.NotificationManager
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
@@ -11,7 +10,6 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.shadow.api.Shadow
 import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)
@@ -36,6 +34,7 @@ class NotifyAlertingTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
+        Assert.assertNull(notification.channelId)
         Assert.assertEquals(testAlerting.lockScreenVisibility, notification.visibility)
         Assert.assertEquals(testAlerting.channelImportance, notification.priority)
         // Color comparison nonsense again.
@@ -47,11 +46,6 @@ class NotifyAlertingTest : NotifyTestBase() {
     @Test
     fun defaultAlertingTest_onAndroidO() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.O)
-
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
 
         val testAlerting = Payload.Alerts()
 
@@ -104,6 +98,7 @@ class NotifyAlertingTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
+        Assert.assertNull(notification.channelId)
         Assert.assertEquals(testVisibility, notification.visibility)
         Assert.assertEquals(testChannelImportance, notification.priority)
         // Color comparison nonsense again.
@@ -115,11 +110,6 @@ class NotifyAlertingTest : NotifyTestBase() {
     @Test
     fun modifiedAlertingTest_onAndroidO() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.O)
-
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
 
         val testVisibility = NotificationCompat.VISIBILITY_PUBLIC
         val testChannelKey = "test_key"

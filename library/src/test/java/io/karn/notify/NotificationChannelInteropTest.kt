@@ -15,7 +15,6 @@ import org.robolectric.util.ReflectionHelpers
 @RunWith(RobolectricTestRunner::class)
 class NotificationChannelInteropTest : NotifyTestBase() {
 
-
     @After
     fun runAfter() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, currentSdkVersion)
@@ -34,14 +33,7 @@ class NotificationChannelInteropTest : NotifyTestBase() {
     fun registerChannelTest_onAndroidO() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.O)
 
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
-
         val testAlerting = Payload.Alerts()
-
-
         val registeredChannel = NotificationChannelInterop.with(testAlerting)
 
         Assert.assertTrue(registeredChannel)

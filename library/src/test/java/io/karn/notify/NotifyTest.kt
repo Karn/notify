@@ -35,12 +35,6 @@ class NotifyTest : NotifyTestBase() {
 
     @Test
     fun showNotification() {
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
-
         Notify.with(this.context)
                 .content {
                     title = "New dessert menu"
@@ -53,13 +47,6 @@ class NotifyTest : NotifyTestBase() {
 
     @Test
     fun cancelNotification() {
-        // TODO: Inject existing notifications so there is no code duplication.
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
-
         val notificationId = Notify.with(this.context)
                 .content {
                     title = "New dessert menu"

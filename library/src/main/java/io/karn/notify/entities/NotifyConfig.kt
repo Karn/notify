@@ -25,7 +25,7 @@ data class NotifyConfig(
         return this
     }
 
-    fun channel(init: Payload.Alerts.() -> Unit): NotifyConfig {
+    fun alerting(init: Payload.Alerts.() -> Unit): NotifyConfig {
         defaultAlerting.init()
 
         return this

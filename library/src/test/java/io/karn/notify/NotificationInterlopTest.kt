@@ -23,11 +23,6 @@ class NotificationInterlopTest : NotifyTestBase() {
     fun getActiveNotifications_onAndroidLollipop() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.LOLLIPOP_MR1)
 
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
-
         Notify.with(this.context)
                 .content {
                     title = "New dessert menu"
@@ -42,11 +37,6 @@ class NotificationInterlopTest : NotifyTestBase() {
     @Test
     fun getActiveNotifications_onAndroidM() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.M)
-
-        val shadowNotificationManager = Shadow.newInstanceOf(NotificationManager::class.java)
-        Notify.defaultConfig {
-            notificationManager = shadowNotificationManager
-        }
 
         Notify.with(this.context)
                 .content {
