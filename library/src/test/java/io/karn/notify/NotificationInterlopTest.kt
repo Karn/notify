@@ -1,6 +1,5 @@
 package io.karn.notify
 
-import android.app.NotificationManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import junit.framework.Assert
@@ -8,7 +7,6 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.shadow.api.Shadow
 import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)

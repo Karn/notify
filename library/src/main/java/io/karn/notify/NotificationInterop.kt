@@ -5,7 +5,6 @@ import android.os.Build
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 import android.text.Html
-import android.util.Log
 import io.karn.notify.entities.Payload
 import io.karn.notify.entities.RawNotification
 import io.karn.notify.utils.Utils
@@ -149,9 +148,11 @@ internal object NotificationInterop {
             }
 
             // The vibration pattern.
-            vibrationPattern?.also {
-                builder.setVibrate(it.toLongArray())
-            }
+            vibrationPattern
+                    .takeIf { it.isNotEmpty() }
+                    ?.also {
+                        builder.setVibrate(it.toLongArray())
+                    }
 
             // A custom alerting sound.
             sound?.also {

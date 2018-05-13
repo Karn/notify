@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import io.karn.notify.entities.Payload
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -24,7 +23,7 @@ class NotifyAlertingTest : NotifyTestBase() {
     fun defaultAlertingTest_onAndroidN() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.N_MR1)
 
-        val testAlerting = Payload.Alerts()
+        val testAlerting = Notify.defaultConfig.defaultAlerting
 
         val notification = Notify.with(this.context)
                 .content {
@@ -47,7 +46,7 @@ class NotifyAlertingTest : NotifyTestBase() {
     fun defaultAlertingTest_onAndroidO() {
         ReflectionHelpers.setStaticField(Build.VERSION::class.java, SDK_INT, Build.VERSION_CODES.O)
 
-        val testAlerting = Payload.Alerts()
+        val testAlerting = Notify.defaultConfig.defaultAlerting
 
         Notify.with(this.context)
                 .content {

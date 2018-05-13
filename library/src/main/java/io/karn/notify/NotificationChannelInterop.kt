@@ -26,7 +26,7 @@ internal object NotificationChannelInterop {
                     && alerting.channelDescription == notificationChannel.description
                     && alerting.channelImportance == notificationChannel.importance
                     && alerting.lightColor == notificationChannel.lightColor
-                    && alerting.vibrationPattern?.equals(notificationChannel.vibrationPattern) == true
+                    && alerting.vibrationPattern.toLongArray().contentEquals(notificationChannel.vibrationPattern)
                     && alerting.sound == notificationChannel.sound) {
                 return true
             } else {
@@ -49,7 +49,7 @@ internal object NotificationChannelInterop {
                         lightColor = alerting.lightColor
                     }
 
-            alerting.vibrationPattern?.takeIf { it.isNotEmpty() }?.let {
+            alerting.vibrationPattern.takeIf { it.isNotEmpty() }?.let {
                 enableVibration(true)
                 vibrationPattern = it.toLongArray()
             }

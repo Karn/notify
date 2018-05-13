@@ -26,7 +26,6 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertNull(notification.deleteIntent)
         Assert.assertTrue((notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertNull(notification.category)
-        Assert.assertEquals(NotificationCompat.PRIORITY_DEFAULT, notification.priority)
     }
 
     @Test

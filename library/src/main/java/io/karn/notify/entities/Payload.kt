@@ -11,7 +11,6 @@ import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.utils.Action
 import io.karn.notify.utils.NotifyImportance
-import kotlin.collections.ArrayList
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.
@@ -93,7 +92,7 @@ sealed class Payload {
             /**
              * Vibration pattern for notification on this notifyChannel.
              */
-            var vibrationPattern: List<Long>? = null,
+            var vibrationPattern: List<Long> = ArrayList(),
             /**
              * A custom notification sound if any.
              */

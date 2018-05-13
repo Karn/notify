@@ -7,14 +7,14 @@ import android.app.NotificationManager
  */
 data class NotifyConfig(
         /**
+         * A reference to the notification manager.
+         */
+        internal var notificationManager: NotificationManager? = null,
+        /**
          * Specifies the default configuration of a notification (e.g the default notificationIcon,
          * and notification color.)
          */
         internal var defaultHeader: Payload.Header = Payload.Header(),
-        /**
-         * A reference to the notification manager.
-         */
-        internal var notificationManager: NotificationManager? = null,
         /**
          * Specifies the default alerting configuration for notifications.
          */
