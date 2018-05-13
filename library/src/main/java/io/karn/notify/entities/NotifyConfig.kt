@@ -1,7 +1,6 @@
 package io.karn.notify.entities
 
 import android.app.NotificationManager
-import android.os.Build
 import io.karn.notify.NotificationChannelInterop
 
 /**
@@ -28,15 +27,6 @@ data class NotifyConfig(
     }
 
     fun alerting(key: String, init: Payload.Alerts.() -> Unit): NotifyConfig {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannelInterop.getNotificationChannels()
-                    ?.filter {
-                        it.id == key
-                    }?.takeIf { it.isNotEmpty() }?.let {
-                        throw IllegalStateException(NotificationChannelInterop.ERROR_DUPLCIATE_KEY)
-                    }
-        }
-
         // Clone object and assign the key.
         this.defaultAlerting = this.defaultAlerting.copy(channelKey = key)
 

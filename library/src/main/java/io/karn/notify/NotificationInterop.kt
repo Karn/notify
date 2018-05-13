@@ -95,6 +95,8 @@ internal object NotificationInterop {
     }
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
+        NotificationChannelInterop.with(payload.alerting)
+
         val builder = NotificationCompat.Builder(notify.context, payload.alerting.channelKey)
                 // Ensures that this notification is marked as a Notify notification.
                 .extend(NotifyExtender())

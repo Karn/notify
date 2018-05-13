@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             header {
                 color = R.color.colorPrimaryDark
             }
-            alerting {
+            alerting(Notify.CHANNEL_DEFAULT_KEY) {
                 lightColor = Color.RED
                 channelImportance = Notify.IMPORTANCE_HIGH
                 vibrationPattern = listOf(0, 200, 0, 200)

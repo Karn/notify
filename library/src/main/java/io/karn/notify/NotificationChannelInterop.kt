@@ -32,19 +32,8 @@ internal object NotificationChannelInterop {
         val notificationManager = Notify.defaultConfig.notificationManager!!
 
         // Ensure that the alerting is not already registered -- return true if it exists.
-        val notificationChannel = notificationManager.getNotificationChannel(alerting.channelKey)
-        if (notificationChannel != null) {
-            // compare and rebuild if not the same.
-            if (alerting.channelName == notificationChannel.name
-                    && alerting.channelDescription == notificationChannel.description
-                    && alerting.channelImportance + 2 == notificationChannel.importance
-                    && alerting.lightColor == notificationChannel.lightColor
-                    // && (notificationChannel.vibrationPattern == null && alerting.vibrationPattern.isEmpty() || alerting.vibrationPattern.toLongArray().contentEquals(notificationChannel.vibrationPattern))
-                    && alerting.sound == notificationChannel.sound) {
-                return true
-            } else {
-                throw IllegalStateException(ERROR_DUPLCIATE_KEY)
-            }
+        notificationManager.getNotificationChannel(alerting.channelKey)?.run {
+            return true
         }
 
         // Create the NotificationChannel, but only on API 26+ because
