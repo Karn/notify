@@ -2,6 +2,7 @@ package io.karn.notify
 
 import android.os.Build
 import io.karn.notify.entities.Payload
+import io.karn.notify.internal.NotificationChannelInterop
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test

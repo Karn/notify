@@ -13,9 +13,9 @@ Simplified notification delivery for Android.
 
 
 #### GETTING STARTED
-You can install Notify using Jitpack while it is still in development.
+Notify (pre-)releases are available via JitPack. It is recommended that  a specific release version is selected when using the library in production as there may be breaking changes at anytime.
 
-As such there currently are pre-releases available until test coverage is improved.
+> **Tip:** Test out the canary channel to try out features by using the latest develop snapshot; `develop-SNAPSHOT`.
 
 ``` Groovy
 // Project level build.gradle
@@ -27,8 +27,8 @@ repositories {
 
 // Module level build.gradle
 dependencies {
-    // -SNAPSHOT (latest release)
-    implementation "io.karn:notify:-SNAPSHOT"
+    // Replace version with release version, e.g. 1.0.0-alpha, -SNAPSHOT
+    implementation "io.karn:notify:[VERSION]"
 }
 ```
 
@@ -48,9 +48,11 @@ Notify
 
 ![Basic usecase](./docs/assets/default.svg)
 
-If you run into a case in which the library does not provide the requisite builder functions you can get the `NotificationCompat.Builder` object and continue to use it as you would normally by calling `Creator#asBuilder()`.
+If you run into a case in which the library does not provide the requisite builder functions you can get the `NotificationCompat.Builder` object and continue to use it as you would normally by calling `NotifyCreator#asBuilder()`.
 
 > **Tip:** You can view other notification styles on the [Notification Types](./docs/types.md) docs page.
+
+> **Tip:** Advanced usage topics are documented [here](./docs/advanced.md).
 
 #### NOTIFICATION ANATOMY
 
@@ -63,8 +65,8 @@ If you run into a case in which the library does not provide the requisite build
 | 3    | Header Text  | Optional description text. Set using the `Header#headerText` field.                                     |
 | 4    | Timestamp    | Timestamp of the notification.                                                                          |
 | 5    | Expand Icon  | Indicates that the notification is expandable.                                                          |
-| 6    | Content      | The "meat" of the notification set using of of the `Creator#as[Type]((Type) -> Unit)` scoped functions. |
-| 7    | Actions      | Set using the `Creator#actions((ArrayList<Action>) -> Unit)` scoped function.                           |
+| 6    | Content      | The "meat" of the notification set using of of the `NotifyCreator#as[Type]((Type) -> Unit)` scoped functions. |
+| 7    | Actions      | Set using the `NotifyCreator#actions((ArrayList<Action>) -> Unit)` scoped function.                           |
 
 #### CONTRIBUTING
 There are many ways to [contribute](./.github/CONTRIBUTING.md), you can

@@ -1,8 +1,9 @@
-package io.karn.notify
+package io.karn.notify.internal
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.os.Build
+import io.karn.notify.Notify
 import io.karn.notify.entities.Payload
 
 /**

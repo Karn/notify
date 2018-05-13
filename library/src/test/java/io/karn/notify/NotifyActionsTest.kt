@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import io.karn.notify.utils.Action
+import io.karn.notify.internal.utils.Action
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

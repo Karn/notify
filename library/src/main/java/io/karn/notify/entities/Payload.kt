@@ -10,8 +10,8 @@ import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.Notify
 import io.karn.notify.R
-import io.karn.notify.utils.Action
-import io.karn.notify.utils.NotifyImportance
+import io.karn.notify.internal.utils.Action
+import io.karn.notify.internal.utils.NotifyImportance
 
 /**
  * Wrapper class to provide configurable options for a NotifcationCompact object.

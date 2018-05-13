@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationManager
 import android.os.Build
 import io.karn.notify.entities.Payload
+import io.karn.notify.internal.NotificationChannelInterop
 import org.junit.Before
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadow.api.Shadow

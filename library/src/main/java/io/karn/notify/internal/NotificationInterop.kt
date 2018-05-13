@@ -1,13 +1,13 @@
-package io.karn.notify
+package io.karn.notify.internal
 
 import android.app.NotificationManager
 import android.os.Build
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 import android.text.Html
+import io.karn.notify.Notify
 import io.karn.notify.entities.Payload
-import io.karn.notify.entities.RawNotification
-import io.karn.notify.utils.Utils
+import io.karn.notify.internal.utils.Utils
 
 internal object NotificationInterop {
 

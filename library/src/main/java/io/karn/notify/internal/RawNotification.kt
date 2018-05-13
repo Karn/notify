@@ -1,6 +1,7 @@
-package io.karn.notify.entities
+package io.karn.notify.internal
 
-import io.karn.notify.utils.Action
+import io.karn.notify.entities.Payload
+import io.karn.notify.internal.utils.Action
 
 internal data class RawNotification(
         internal val meta: Payload.Meta,

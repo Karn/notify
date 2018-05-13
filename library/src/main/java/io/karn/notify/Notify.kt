@@ -4,7 +4,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
-import io.karn.notify.entities.RawNotification
+import io.karn.notify.internal.RawNotification
+import io.karn.notify.internal.NotificationChannelInterop
+import io.karn.notify.internal.NotificationInterop
 
 /**
  * Simplified Notification delivery for Android.
@@ -55,7 +57,7 @@ class Notify internal constructor(internal var context: Context) {
          */
         const val NO_LIGHTS = 0
 
-        // This is the initial configuration of the Notify Creator.
+        // This is the initial configuration of the Notify NotifyCreator.
         internal var defaultConfig = NotifyConfig()
 
         /**
@@ -68,13 +70,13 @@ class Notify internal constructor(internal var context: Context) {
         }
 
         /**
-         * A new {@see Notify} and {@see Creator} instance.
+         * A new {@see Notify} and {@see NotifyCreator} instance.
          *
          * This object is automatically initialized with the singleton default configuration which can be modified using
          * {@see Notify#defaultConfig((NotifyConfig) -> Unit)}.
          */
-        fun with(context: Context): Creator {
-            return Creator(Notify(context), defaultConfig)
+        fun with(context: Context): NotifyCreator {
+            return NotifyCreator(Notify(context), defaultConfig)
         }
     }
 
@@ -91,7 +93,7 @@ class Notify internal constructor(internal var context: Context) {
 
     /**
      * Return the standard {@see NotificationCompat.Builder} after applying fluent API transformations (if any) from the
-     * {@see Creator} builder object.
+     * {@see NotifyCreator} builder object.
      */
     internal fun asBuilder(payload: RawNotification): NotificationCompat.Builder {
         return NotificationInterop.buildNotification(this, payload)

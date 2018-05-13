@@ -2,6 +2,7 @@ package io.karn.notify
 
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import io.karn.notify.internal.NotificationInterop
 import junit.framework.Assert
 import org.junit.After
 import org.junit.Test

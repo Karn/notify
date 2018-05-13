@@ -1,10 +1,9 @@
 package io.karn.notify.entities
 
 import android.app.NotificationManager
-import io.karn.notify.NotificationChannelInterop
 
 /**
- * Provider of the initial configuration of the Notify > Creator Fluent API.
+ * Provider of the initial configuration of the Notify > NotifyCreator Fluent API.
  */
 data class NotifyConfig(
         /**

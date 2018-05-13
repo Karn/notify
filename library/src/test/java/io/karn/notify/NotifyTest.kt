@@ -3,6 +3,7 @@ package io.karn.notify
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
+import io.karn.notify.internal.NotificationInterop
 import junit.framework.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
