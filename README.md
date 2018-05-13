@@ -7,7 +7,7 @@ Simplified notification delivery for Android.
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.2.21-blue.svg?style=flat-square)](http://kotlinlang.org)
 [![RxJava](https://img.shields.io/badge/Support-27.1.0-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
 [![Build Status](https://img.shields.io/travis/Karn/notify.svg?style=flat-square)](https://travis-ci.org/Karn/notify)
-[![Codecov](https://img.shields.io/codecov/c/github/karn/notify/master.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
+[![Codecov](https://img.shields.io/codecov/c/github/karn/notify.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
 [![GitHub (pre-)release](https://img.shields.io/github/release/karn/notify/all.svg?style=flat-square)
 ](./../../releases)
 
