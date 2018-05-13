@@ -95,8 +95,6 @@ internal object NotificationInterop {
     }
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
-        NotificationChannelInterop.with(payload.alerting)
-
         val builder = NotificationCompat.Builder(notify.context, payload.alerting.channelKey)
                 // Ensures that this notification is marked as a Notify notification.
                 .extend(NotifyExtender())
@@ -140,6 +138,7 @@ internal object NotificationInterop {
         // Attach alerting options.
         payload.alerting.apply {
             // Register the default alerting.
+            NotificationChannelInterop.with(this)
 
             // The visibility of the notification on the lockscreen.
             builder.setVisibility(lockScreenVisibility)
@@ -157,9 +156,7 @@ internal object NotificationInterop {
                     }
 
             // A custom alerting sound.
-            sound.also {
-                builder.setSound(sound)
-            }
+            builder.setSound(sound)
 
             // Manual specification of the priority.
             builder.priority = channelImportance

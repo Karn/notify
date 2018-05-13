@@ -28,10 +28,8 @@ data class NotifyConfig(
 
     fun alerting(key: String, init: Payload.Alerts.() -> Unit): NotifyConfig {
         // Clone object and assign the key.
-        this.defaultAlerting = this.defaultAlerting.copy(channelKey = key)
-
+        defaultAlerting = defaultAlerting.copy(channelKey = key)
         defaultAlerting.init()
-
         return this
     }
 }

@@ -9,20 +9,6 @@ import io.karn.notify.entities.Payload
  * Provides compatibility functionality for the Notification channels introduced in Android O.
  */
 internal object NotificationChannelInterop {
-
-    const val ERROR_DUPLCIATE_KEY = "Attempting to override notification channel. Please specify a unique key."
-
-    fun getNotificationChannels(): List<NotificationChannel>? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            // return false
-            return ArrayList()
-        }
-
-        val notificationManager = Notify.defaultConfig.notificationManager!!
-
-        return notificationManager.notificationChannels.toList()
-    }
-
     @SuppressLint("WrongConstant")
     fun with(alerting: Payload.Alerts): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
