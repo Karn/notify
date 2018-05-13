@@ -1,6 +1,7 @@
 package presentation
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Notify.defaultConfig {
-            it.header.color = R.color.colorPrimaryDark
+            header {
+                color = R.color.colorPrimaryDark
+            }
+            alerting(Notify.CHANNEL_DEFAULT_KEY) {
+                lightColor = Color.RED
+            }
         }
     }
 
@@ -56,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
-                    collapsedText = "Try our newest dessert option!"
+                    expandedText = "Mouthwatering deliciousness."
                     bigText = "Our own Fabulous Godiva Chocolate Brownie, Vanilla Ice Cream, Hot Fudge, Whipped Cream and Toasted Almonds.\n" +
                             "\n" +
                             "Come try this delicious new dessert and get two for the price of one!"
@@ -70,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 .asBigPicture {
                     title = "Chocolate brownie sundae"
                     text = "Get a look at this amazing dessert!"
-                    collapsedText = "The delicious brownie sundae now available."
+                    expandedText = "The delicious brownie sundae now available."
                     image = BitmapFactory.decodeResource(this@MainActivity.resources, R.drawable.chocolate_brownie_sundae)
                 }
                 .show()

@@ -1,4 +1,4 @@
-package io.karn.notify.utils
+package io.karn.notify.internal.utils
 
 import android.text.Html
 import java.util.*

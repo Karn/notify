@@ -3,6 +3,7 @@ package io.karn.notify
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
@@ -12,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 class NotifyContentTest {
@@ -63,11 +63,13 @@ class NotifyContentTest {
     fun defaultNotification() {
         val testTitle = "New dessert menu"
         val testText = "The Cheesecake Factory has a new dessert for you to try!"
+        val testLargeIconResID = R.drawable.notification_tile_bg
 
         val notification = Notify.with(this.context)
                 .content {
                     title = testTitle
                     text = testText
+                    largeIcon = BitmapFactory.decodeResource(context.resources, testLargeIconResID)
                 }
                 .asBuilder()
                 .build()
@@ -75,6 +77,7 @@ class NotifyContentTest {
         Assert.assertNull(notification.extras.getCharSequence(NotificationCompat.EXTRA_TEMPLATE))
         Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
         Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
+        Assert.assertEquals(context.resources.getDrawable(testLargeIconResID, context.theme), notification.getLargeIcon().loadDrawable(this.context))
     }
 
     @Test
@@ -118,7 +121,7 @@ class NotifyContentTest {
                 .asBigText {
                     title = testTitle
                     text = testText
-                    collapsedText = testExpandedText
+                    expandedText = testExpandedText
                     bigText = testBigText
                 }
                 .asBuilder()
@@ -135,6 +138,7 @@ class NotifyContentTest {
         val testTitle = "Chocolate brownie sundae"
         val testText = "Get a look at this amazing dessert!"
         val testCollapsedText = "The delicious brownie sundae now available."
+        val testLargeIconResID = R.drawable.notification_tile_bg
         val testImage = BitmapFactory.decodeResource(context.resources, R.drawable.notification_tile_bg)
         Assert.assertNotNull(testImage)
 
@@ -143,7 +147,8 @@ class NotifyContentTest {
                     title = testTitle
                     text = testText
                     image = testImage
-                    collapsedText = testCollapsedText
+                    expandedText = testCollapsedText
+                    largeIcon = BitmapFactory.decodeResource(context.resources, testLargeIconResID)
                 }
                 .asBuilder()
                 .build()
@@ -154,6 +159,11 @@ class NotifyContentTest {
         // This is an example of Notifications vague methods. The Builder#setSummaryText is
         // different from the Style#setSummaryText.
         Assert.assertEquals(testCollapsedText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUMMARY_TEXT))
+        Assert.assertEquals(context.resources.getDrawable(testLargeIconResID, context.theme), notification.getLargeIcon().loadDrawable(this.context))
+
+        val actualIcon: Icon = notification.extras.getParcelable(NotificationCompat.EXTRA_LARGE_ICON)
+        Assert.assertNotNull(actualIcon)
+
         val actualImage: Bitmap = notification.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
         Assert.assertNotNull(actualImage)
 

@@ -1,4 +1,4 @@
-package io.karn.notify
+package io.karn.notify.internal
 
 import android.os.Bundle
 import android.service.notification.StatusBarNotification

@@ -4,8 +4,10 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.provider.Settings
 import android.support.v4.app.NotificationCompat
-import io.karn.notify.utils.Action
-import io.karn.notify.utils.Errors
+import io.karn.notify.internal.NotificationInterop
+import io.karn.notify.internal.NotifyExtender
+import io.karn.notify.internal.utils.Action
+import io.karn.notify.internal.utils.Errors
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,13 +1,13 @@
-package io.karn.notify
+package io.karn.notify.internal
 
 import android.app.NotificationManager
 import android.os.Build
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.NotificationCompat
 import android.text.Html
+import io.karn.notify.Notify
 import io.karn.notify.entities.Payload
-import io.karn.notify.entities.RawNotification
-import io.karn.notify.utils.Utils
+import io.karn.notify.internal.utils.Utils
 
 internal object NotificationInterop {
 
@@ -95,7 +95,7 @@ internal object NotificationInterop {
     }
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(notify.context, payload.header.channel)
+        val builder = NotificationCompat.Builder(notify.context, payload.alerting.channelKey)
                 // Ensures that this notification is marked as a Notify notification.
                 .extend(NotifyExtender())
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
@@ -115,16 +115,17 @@ internal object NotificationInterop {
                 // The category of the notification which allows android to prioritize the
                 // notification as required.
                 .setCategory(payload.meta.category)
-                // Manual specification of the priority.
-                .setPriority(payload.meta.priority)
                 // Set whether or not this notification is only relevant to the current device.
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
                 .setOngoing(payload.meta.sticky)
-                // The visibility of the notification on the lockscreen.
-                .setVisibility(payload.alerting.lockScreenVisibility)
                 // The duration of time after which the notification is automatically dismissed.
-                .setTimeoutAfter(payload.alerting.timeout)
+                .setTimeoutAfter(payload.meta.timeout)
+
+        // Add contacts if any -- will help display prominently if possible.
+        payload.meta.contacts.takeIf { it.isNotEmpty() }?.forEach {
+            builder.addPerson(it)
+        }
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -134,9 +135,41 @@ internal object NotificationInterop {
                     .setContentText(payload.content.text)
         }
 
+        if (payload.content is Payload.Content.SupportsLargeIcon) {
+            // Sets the large icon of the notification.
+            builder.setLargeIcon(payload.content.largeIcon)
+        }
+
         // Attach all the actions.
         payload.actions?.forEach {
             builder.addAction(it)
+        }
+
+        // Attach alerting options.
+        payload.alerting.apply {
+            // Register the default alerting.
+            NotificationChannelInterop.with(this)
+
+            // The visibility of the notification on the lockscreen.
+            builder.setVisibility(lockScreenVisibility)
+
+            // The lights of the notification.
+            if (lightColor != Notify.NO_LIGHTS) {
+                builder.setLights(lightColor, 500, 2000)
+            }
+
+            // The vibration pattern.
+            vibrationPattern
+                    .takeIf { it.isNotEmpty() }
+                    ?.also {
+                        builder.setVibrate(it.toLongArray())
+                    }
+
+            // A custom alerting sound.
+            builder.setSound(sound)
+
+            // Manual specification of the priority.
+            builder.priority = channelImportance
         }
 
         var style: NotificationCompat.Style? = null
@@ -178,23 +211,19 @@ internal object NotificationInterop {
                 builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
                         ?: "").toString()))
 
-                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.collapsedText
+                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.expandedText
                         ?: content.title) + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
 
                 NotificationCompat.BigTextStyle()
                         .bigText(bigText)
             }
             is Payload.Content.BigPicture -> {
-                // Document these by linking to resource with labels. (1), (2), etc.
-
-                // This large icon is show in both expanded and collapsed views. Might consider creating a custom view for this.
-                // builder.setLargeIcon(content.image)
-
                 NotificationCompat.BigPictureStyle()
                         // This is the second line in the 'expanded' notification.
-                        .setSummaryText(content.collapsedText ?: content.text)
+                        .setSummaryText(content.expandedText ?: content.text)
                         // This is the picture below.
                         .bigPicture(content.image)
+                        .bigLargeIcon(null)
 
             }
             is Payload.Content.Message -> {
