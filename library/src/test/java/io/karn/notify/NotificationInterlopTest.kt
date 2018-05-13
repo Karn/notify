@@ -54,6 +54,5 @@ class NotificationInterlopTest : NotifyTestBase() {
         Assert.assertEquals(2, allNotfications.size)
         val notifyNotifications = NotificationInterop.getActiveNotifications(shadowNotificationManager)
         Assert.assertEquals(1, notifyNotifications.size)
-
     }
 }

@@ -53,7 +53,7 @@ class Notify internal constructor(internal var context: Context) {
         /**
          * The flag to disable notification lights.
          */
-        const val NO_LIGHTS = -1
+        const val NO_LIGHTS = 0
 
         // This is the initial configuration of the Notify Creator.
         internal var defaultConfig = NotifyConfig()

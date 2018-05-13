@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.os.Build
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
@@ -15,7 +16,7 @@ import io.karn.notify.utils.NotifyScopeMarker
 class Creator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
 
     private var meta = Payload.Meta()
-    private var alerts = config.defaultAlerting.copy()
+    private var alerts = config.defaultAlerting
     private var header = config.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
@@ -34,8 +35,33 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     /**
      * Scoped function for modifying the Alerting of a notification. This includes visibility,
      * sounds, lights, etc.
+     *
+     * If an existing key is provided the existing channel is retrieved (API >= AndroidO) and set as the alerting
+     * configuration. If the key is new, the channel is created and set as the alerting configuration.
      */
-    fun alerting(init: Payload.Alerts.() -> Unit): Creator {
+    fun alerting(key: String, init: Payload.Alerts.() -> Unit): Creator {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannelInterop.getNotificationChannels()
+                    ?.filter {
+                        it.id == key
+                    }?.takeIf { it.isNotEmpty() }?.first()?.let {
+                        this.alerts = Payload.Alerts(
+                                channelKey = it.id,
+                                channelName = it.name.toString(),
+                                channelDescription = it.description,
+                                channelImportance = it.importance - 2,
+                                lockScreenVisibility = it.lockscreenVisibility,
+                                lightColor = it.lightColor,
+                                vibrationPattern = it.vibrationPattern.toList(),
+                                sound = it.sound
+                        )
+                        return this
+                    }
+        }
+
+        // Clone object and assign the key.
+        this.alerts = this.alerts.copy(channelKey = key)
+
         this.alerts.init()
         NotificationChannelInterop.with(this.alerts)
 

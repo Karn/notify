@@ -2,6 +2,7 @@ package io.karn.notify.entities
 
 import android.app.PendingIntent
 import android.graphics.Bitmap
+import android.media.RingtoneManager
 import android.net.Uri
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
@@ -62,8 +63,7 @@ sealed class Payload {
      * This configuration system may not work as expected on all devices. Refer to the Wiki for more
      * information.
      */
-    data class Alerts
-    (
+    data class Alerts(
             /**
              * The visibility of the notification as it appears on the lockscreen. By default it is
              * hidden.
@@ -72,7 +72,7 @@ sealed class Payload {
             /**
              * The default CHANNEL_ID for a notification on versions >= Android O.
              */
-            var channelKey: String = Notify.CHANNEL_DEFAULT_KEY,
+            val channelKey: String = Notify.CHANNEL_DEFAULT_KEY,
             /**
              * The default CHANNEL_NAME for a notification on versions >= Android O.
              */
@@ -96,7 +96,7 @@ sealed class Payload {
             /**
              * A custom notification sound if any.
              */
-            var sound: Uri? = null
+            var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     )
 
     /**

@@ -10,6 +10,19 @@ import io.karn.notify.entities.Payload
  */
 internal object NotificationChannelInterop {
 
+    const val ERROR_DUPLCIATE_KEY = "Attempting to override notification channel. Please specify a unique key."
+
+    fun getNotificationChannels(): List<NotificationChannel>? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            // return false
+            return ArrayList()
+        }
+
+        val notificationManager = Notify.defaultConfig.notificationManager!!
+
+        return notificationManager.notificationChannels.toList()
+    }
+
     @SuppressLint("WrongConstant")
     fun with(alerting: Payload.Alerts): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -24,13 +37,13 @@ internal object NotificationChannelInterop {
             // compare and rebuild if not the same.
             if (alerting.channelName == notificationChannel.name
                     && alerting.channelDescription == notificationChannel.description
-                    && alerting.channelImportance == notificationChannel.importance
+                    && alerting.channelImportance + 2 == notificationChannel.importance
                     && alerting.lightColor == notificationChannel.lightColor
-                    && alerting.vibrationPattern.toLongArray().contentEquals(notificationChannel.vibrationPattern)
+                    // && (notificationChannel.vibrationPattern == null && alerting.vibrationPattern.isEmpty() || alerting.vibrationPattern.toLongArray().contentEquals(notificationChannel.vibrationPattern))
                     && alerting.sound == notificationChannel.sound) {
                 return true
             } else {
-                notificationManager.deleteNotificationChannel(alerting.channelKey)
+                throw IllegalStateException(ERROR_DUPLCIATE_KEY)
             }
         }
 
@@ -49,12 +62,12 @@ internal object NotificationChannelInterop {
                         lightColor = alerting.lightColor
                     }
 
-            alerting.vibrationPattern.takeIf { it.isNotEmpty() }?.let {
+            alerting.vibrationPattern.takeIf { it.isNotEmpty() }?.also {
                 enableVibration(true)
                 vibrationPattern = it.toLongArray()
             }
 
-            alerting.sound?.let {
+            alerting.sound.also {
                 setSound(it, android.media.AudioAttributes.Builder().build())
             }
 

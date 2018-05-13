@@ -155,7 +155,7 @@ internal object NotificationInterop {
                     }
 
             // A custom alerting sound.
-            sound?.also {
+            sound.also {
                 builder.setSound(sound)
             }
 

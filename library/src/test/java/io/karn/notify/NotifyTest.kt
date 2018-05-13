@@ -17,7 +17,7 @@ class NotifyTest : NotifyTestBase() {
         val testColor = android.R.color.darker_gray
 
         val testVisibility = NotificationCompat.VISIBILITY_PUBLIC
-        val testChannelKey = "test_key"
+        val testChannelKey = "test_key_alt"
         val testChannelName = "Test Channel"
         val testChannelDescription = "Test Channel Description"
         val testChannelImportance = Notify.IMPORTANCE_HIGH
@@ -31,9 +31,8 @@ class NotifyTest : NotifyTestBase() {
                 color = testColor
             }
 
-            alerting {
+            alerting(testChannelKey) {
                 lockScreenVisibility = testVisibility
-                channelKey = testChannelKey
                 channelName = testChannelName
                 channelDescription = testChannelDescription
                 channelImportance = testChannelImportance

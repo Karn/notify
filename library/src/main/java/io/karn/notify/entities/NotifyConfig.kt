@@ -1,6 +1,8 @@
 package io.karn.notify.entities
 
 import android.app.NotificationManager
+import android.os.Build
+import io.karn.notify.NotificationChannelInterop
 
 /**
  * Provider of the initial configuration of the Notify > Creator Fluent API.
@@ -25,7 +27,19 @@ data class NotifyConfig(
         return this
     }
 
-    fun alerting(init: Payload.Alerts.() -> Unit): NotifyConfig {
+    fun alerting(key: String, init: Payload.Alerts.() -> Unit): NotifyConfig {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannelInterop.getNotificationChannels()
+                    ?.filter {
+                        it.id == key
+                    }?.takeIf { it.isNotEmpty() }?.let {
+                        throw IllegalStateException(NotificationChannelInterop.ERROR_DUPLCIATE_KEY)
+                    }
+        }
+
+        // Clone object and assign the key.
+        this.defaultAlerting = this.defaultAlerting.copy(channelKey = key)
+
         defaultAlerting.init()
 
         return this

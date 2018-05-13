@@ -39,7 +39,7 @@ class NotifyAlertingTest : NotifyTestBase() {
         // Color comparison nonsense again.
         // Assert.assertEquals(testLightColor, notification.color)
         Assert.assertNull(notification.vibrate)
-        Assert.assertNull(notification.sound)
+        Assert.assertEquals(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), notification.sound)
     }
 
     @Test
@@ -80,9 +80,8 @@ class NotifyAlertingTest : NotifyTestBase() {
         val testSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
 
         val notification = Notify.with(this.context)
-                .alerting {
+                .alerting(testChannelKey) {
                     lockScreenVisibility = testVisibility
-                    channelKey = testChannelKey
                     channelName = testChannelName
                     channelDescription = testChannelDescription
                     channelImportance = testChannelImportance
@@ -120,9 +119,8 @@ class NotifyAlertingTest : NotifyTestBase() {
         val testSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
 
         Notify.with(this.context)
-                .alerting {
+                .alerting(testChannelKey) {
                     lockScreenVisibility = testVisibility
-                    channelKey = testChannelKey
                     channelName = testChannelName
                     channelDescription = testChannelDescription
                     channelImportance = testChannelImportance
