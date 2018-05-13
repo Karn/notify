@@ -1,6 +1,8 @@
 package presentation
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Notify.defaultConfig {
-            it.header.color = R.color.colorPrimaryDark
+            header {
+                color = R.color.colorPrimaryDark
+            }
+            alerting(Notify.CHANNEL_DEFAULT_KEY) {
+                lightColor = Color.RED
+                channelImportance = Notify.IMPORTANCE_HIGH
+                vibrationPattern = listOf(0, 200, 0, 200)
+                sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+            }
         }
     }
 

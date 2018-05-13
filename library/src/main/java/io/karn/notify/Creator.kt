@@ -15,8 +15,8 @@ import io.karn.notify.utils.NotifyScopeMarker
 class Creator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
 
     private var meta = Payload.Meta()
-    private var alerts = Payload.Alerts()
-    private var header = config.header.copy()
+    private var alerts = config.defaultAlerting
+    private var header = config.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
     private var stackable: Payload.Stackable? = null
@@ -34,8 +34,14 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     /**
      * Scoped function for modifying the Alerting of a notification. This includes visibility,
      * sounds, lights, etc.
+     *
+     * If an existing key is provided the existing channel is retrieved (API >= AndroidO) and set as the alerting
+     * configuration. If the key is new, the channel is created and set as the alerting configuration.
      */
-    fun alerting(init: Payload.Alerts.() -> Unit): Creator {
+    fun alerting(key: String, init: Payload.Alerts.() -> Unit = {}): Creator {
+        // Clone object and assign the key.
+        this.alerts = this.alerts.copy(channelKey = key)
+
         this.alerts.init()
 
         return this
@@ -44,7 +50,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     /**
      * Scoped function for modifying the Header of a notification. Specifically, it allows the
      * modification of the notificationIcon, color, the headerText (optional text next to the
-     * appName), and finally the channel of the notification if targeting Android O.
+     * appName), and finally the notifyChannel of the notification if targeting Android O.
      */
     fun header(init: Payload.Header.() -> Unit): Creator {
         this.header.init()

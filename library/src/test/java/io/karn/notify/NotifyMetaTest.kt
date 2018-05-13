@@ -1,6 +1,5 @@
 package io.karn.notify
 
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
 import android.provider.Settings
@@ -9,7 +8,6 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
 @RunWith(RobolectricTestRunner::class)
 class NotifyMetaTest : NotifyTestBase() {
@@ -28,7 +26,6 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertNull(notification.deleteIntent)
         Assert.assertTrue((notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertNull(notification.category)
-        Assert.assertEquals(NotificationCompat.PRIORITY_DEFAULT, notification.priority)
     }
 
     @Test
@@ -38,7 +35,7 @@ class NotifyMetaTest : NotifyTestBase() {
 
         val testCancelOnClick = false
         val testCategory = NotificationCompat.CATEGORY_STATUS
-        val testPriority = NotificationCompat.PRIORITY_MAX
+        val testTimeout = 5000L
 
         val notification = Notify.with(this.context)
                 .meta {
@@ -46,7 +43,7 @@ class NotifyMetaTest : NotifyTestBase() {
                     clearIntent = testClearIntent
                     cancelOnClick = testCancelOnClick
                     category = testCategory
-                    priority = testPriority
+                    timeout = testTimeout
                 }
                 .content {
                     title = "New dessert menu"
@@ -59,6 +56,6 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertEquals(testClearIntent, notification.deleteIntent)
         Assert.assertEquals(testCancelOnClick, (notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertEquals(testCategory, notification.category)
-        Assert.assertEquals(testPriority, notification.priority)
+        Assert.assertEquals(testTimeout, notification.timeoutAfter)
     }
 }

@@ -1,34 +1,35 @@
 package io.karn.notify.entities
 
-import android.annotation.TargetApi
 import android.app.NotificationManager
-import android.os.Build
-import android.support.v4.app.NotificationManagerCompat
-import io.karn.notify.Notify
+import io.karn.notify.NotificationChannelInterop
 
 /**
  * Provider of the initial configuration of the Notify > Creator Fluent API.
  */
 data class NotifyConfig(
         /**
-         * The default CHANNEL_ID for a notification on Android O.
+         * A reference to the notification manager.
          */
-        @TargetApi(Build.VERSION_CODES.O) val defaultChannelKey: String = Notify.DEFAULT_CHANNEL_KEY,
-        /**
-         * The default CHANNEL_NAME for a notification on Android O.
-         */
-        @TargetApi(Build.VERSION_CODES.O) val defaultChannelName: String = Notify.DEFAULT_CHANNEL_NAME,
-        /**
-         * The default CHANNEL_DESCRIPTION for a notification on Android O.
-         */
-        @TargetApi(Build.VERSION_CODES.O) val defaultChannelDescription: String = Notify.DEFAULT_CHANNEL_DESCRIPTION,
+        internal var notificationManager: NotificationManager? = null,
         /**
          * Specifies the default configuration of a notification (e.g the default notificationIcon,
          * and notification color.)
          */
-        @TargetApi(Build.VERSION_CODES.O) val header: Payload.Header = Payload.Header(channel = defaultChannelKey),
+        internal var defaultHeader: Payload.Header = Payload.Header(),
         /**
-         * A reference to the notification manager.
+         * Specifies the default alerting configuration for notifications.
          */
-        internal var notificationManager: NotificationManager? = null
-)
+        internal var defaultAlerting: Payload.Alerts = Payload.Alerts()
+) {
+    fun header(init: Payload.Header.() -> Unit): NotifyConfig {
+        defaultHeader.init()
+        return this
+    }
+
+    fun alerting(key: String, init: Payload.Alerts.() -> Unit): NotifyConfig {
+        // Clone object and assign the key.
+        defaultAlerting = defaultAlerting.copy(channelKey = key)
+        defaultAlerting.init()
+        return this
+    }
+}

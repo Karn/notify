@@ -95,7 +95,7 @@ internal object NotificationInterop {
     }
 
     fun buildNotification(notify: Notify, payload: RawNotification): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(notify.context, payload.header.channel)
+        val builder = NotificationCompat.Builder(notify.context, payload.alerting.channelKey)
                 // Ensures that this notification is marked as a Notify notification.
                 .extend(NotifyExtender())
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
@@ -115,16 +115,12 @@ internal object NotificationInterop {
                 // The category of the notification which allows android to prioritize the
                 // notification as required.
                 .setCategory(payload.meta.category)
-                // Manual specification of the priority.
-                .setPriority(payload.meta.priority)
                 // Set whether or not this notification is only relevant to the current device.
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
                 .setOngoing(payload.meta.sticky)
-                // The visibility of the notification on the lockscreen.
-                .setVisibility(payload.alerting.lockScreenVisibility)
                 // The duration of time after which the notification is automatically dismissed.
-                .setTimeoutAfter(payload.alerting.timeout)
+                .setTimeoutAfter(payload.meta.timeout)
 
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
@@ -137,6 +133,33 @@ internal object NotificationInterop {
         // Attach all the actions.
         payload.actions?.forEach {
             builder.addAction(it)
+        }
+
+        // Attach alerting options.
+        payload.alerting.apply {
+            // Register the default alerting.
+            NotificationChannelInterop.with(this)
+
+            // The visibility of the notification on the lockscreen.
+            builder.setVisibility(lockScreenVisibility)
+
+            // The lights of the notification.
+            if (lightColor != Notify.NO_LIGHTS) {
+                builder.setLights(lightColor, 500, 2000)
+            }
+
+            // The vibration pattern.
+            vibrationPattern
+                    .takeIf { it.isNotEmpty() }
+                    ?.also {
+                        builder.setVibrate(it.toLongArray())
+                    }
+
+            // A custom alerting sound.
+            builder.setSound(sound)
+
+            // Manual specification of the priority.
+            builder.priority = channelImportance
         }
 
         var style: NotificationCompat.Style? = null
