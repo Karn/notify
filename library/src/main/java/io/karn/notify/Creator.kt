@@ -41,9 +41,7 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
     fun alerting(key: String, init: Payload.Alerts.() -> Unit = {}): Creator {
         // Clone object and assign the key.
         this.alerts = this.alerts.copy(channelKey = key)
-
         this.alerts.init()
-
         return this
     }
 
@@ -54,7 +52,6 @@ class Creator internal constructor(private val notify: Notify, config: NotifyCon
      */
     fun header(init: Payload.Header.() -> Unit): Creator {
         this.header.init()
-
         return this
     }
 

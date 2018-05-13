@@ -122,12 +122,22 @@ internal object NotificationInterop {
                 // The duration of time after which the notification is automatically dismissed.
                 .setTimeoutAfter(payload.meta.timeout)
 
+        // Add contacts if any -- will help display prominently if possible.
+        payload.meta.contacts.takeIf { it.isNotEmpty() }?.forEach {
+            builder.addPerson(it)
+        }
+
         // Standard notifications have the collapsed title and text.
         if (payload.content is Payload.Content.Standard) {
             // This is the title of the RawNotification.
             builder.setContentTitle(payload.content.title)
                     // THis is the text of the 'collapsed' RawNotification.
                     .setContentText(payload.content.text)
+        }
+
+        if (payload.content is Payload.Content.SupportsLargeIcon) {
+            // Sets the large icon of the notification.
+            builder.setLargeIcon(payload.content.largeIcon)
         }
 
         // Attach all the actions.
@@ -208,16 +218,12 @@ internal object NotificationInterop {
                         .bigText(bigText)
             }
             is Payload.Content.BigPicture -> {
-                // Document these by linking to resource with labels. (1), (2), etc.
-
-                // This large icon is show in both expanded and collapsed views. Might consider creating a custom view for this.
-                // builder.setLargeIcon(content.image)
-
                 NotificationCompat.BigPictureStyle()
                         // This is the second line in the 'expanded' notification.
                         .setSummaryText(content.expandedText ?: content.text)
                         // This is the picture below.
                         .bigPicture(content.image)
+                        .bigLargeIcon(null)
 
             }
             is Payload.Content.Message -> {

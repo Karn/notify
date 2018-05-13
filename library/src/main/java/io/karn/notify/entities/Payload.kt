@@ -53,8 +53,27 @@ sealed class Payload {
             /**
              * The duration of time in milliseconds after which the notification is automatically dismissed.
              */
-            var timeout: Long = 0L
-    )
+            var timeout: Long = 0L,
+            /**
+             * Add a person that is relevant to this notification.
+             *
+             * Depending on user preferences, this may allow the notification to pass through interruption filters, and
+             * to appear more prominently in the user interface.
+             *
+             * The person should be specified by the {@code String} representation of a
+             * {@link android.provider.ContactsContract.Contacts#CONTENT_LOOKUP_URI}.
+             *
+             * The system will also attempt to resolve {@code mailto:} and {@code tel:} schema
+             * URIs.  The path part of these URIs must exist in the contacts database, in the
+             * appropriate column, or the reference will be discarded as invalid. Telephone schema
+             * URIs will be resolved by {@link android.provider.ContactsContract.PhoneLookup}.
+             */
+            internal val contacts: ArrayList<String> = ArrayList()
+    ) {
+        fun people(init: ArrayList<String>.() -> Unit) {
+            contacts.init()
+        }
+    }
 
     /**
      * Defines the alerting configuration for a particular notification. This includes notification
@@ -141,6 +160,13 @@ sealed class Payload {
             var text: CharSequence?
         }
 
+        interface SupportsLargeIcon {
+            /**
+             * The large icon of the notification.
+             */
+            var largeIcon: Bitmap?
+        }
+
         /**
          * Indicates whether a notification is expandable.
          */
@@ -156,8 +182,9 @@ sealed class Payload {
          */
         data class Default(
                 override var title: CharSequence? = null,
-                override var text: CharSequence? = null
-        ) : Content(), Standard
+                override var text: CharSequence? = null,
+                override var largeIcon: Bitmap? = null
+        ) : Content(), Standard, SupportsLargeIcon
 
         /**
          * The object representation of a 'TextList' notification.
@@ -165,11 +192,12 @@ sealed class Payload {
         data class TextList(
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
+                override var largeIcon: Bitmap? = null,
                 /**
                  * The lines of the notification.
                  */
                 var lines: List<CharSequence> = ArrayList()
-        ) : Content(), Standard
+        ) : Content(), Standard, SupportsLargeIcon
 
         /**
          * The object representation of a 'BigText' notification.
@@ -177,12 +205,13 @@ sealed class Payload {
         data class BigText(
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
+                override var largeIcon: Bitmap? = null,
                 override var expandedText: CharSequence? = null,
                 /**
                  * The large text associated with the notification.
                  */
                 var bigText: CharSequence? = null
-        ) : Content(), Standard, Expandable
+        ) : Content(), Standard, SupportsLargeIcon, Expandable
 
         /**
          * The object representation of a 'BigPicture' notification.
@@ -190,17 +219,19 @@ sealed class Payload {
         data class BigPicture(
                 override var title: CharSequence? = null,
                 override var text: CharSequence? = null,
+                override var largeIcon: Bitmap? = null,
                 override var expandedText: CharSequence? = null,
                 /**
                  * The large image that appears when the notification is expanded.s
                  */
                 var image: Bitmap? = null
-        ) : Content(), Standard, Expandable
+        ) : Content(), Standard, SupportsLargeIcon, Expandable
 
         /**
          * The object representaiton of a 'Message' notification.
          */
         data class Message(
+                override var largeIcon: Bitmap? = null,
                 /**
                  * The title of the conversation.
                  */
@@ -213,7 +244,7 @@ sealed class Payload {
                  * A collection of messages associated with a particualar conversation.
                  */
                 var messages: List<NotificationCompat.MessagingStyle.Message> = ArrayList()
-        ) : Content()
+        ) : Content(), SupportsLargeIcon
     }
 
     /**
