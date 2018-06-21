@@ -53,8 +53,8 @@ class NotifyHeaderTest : NotifyTestBase() {
 
         Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), notification.smallIcon.loadDrawable(context))
         Assert.assertEquals(
-                String.format("#%06X", context.resources.getColor(testColor, context.theme)),
-                String.format("#%06X", 0xFFFFFFFF and notification.color.toLong()))
+                String.format("#%06X", testColor),
+                String.format("#%06X", 0xFFFFFF and notification.color))
         Assert.assertEquals(testHeaderText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(testShowTimestamp, notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))
     }
