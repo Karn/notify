@@ -99,7 +99,7 @@ internal object NotificationInterop {
                 // Ensures that this notification is marked as a Notify notification.
                 .extend(NotifyExtender())
                 // The color of the RawNotification Icon, App_Name and the expanded chevron.
-                .setColor(notify.context.resources.getColor(payload.header.color))
+                .setColor(payload.header.color)
                 // The RawNotification icon.
                 .setSmallIcon(payload.header.icon)
                 // The text that is visible to the right of the app name in the notification header.

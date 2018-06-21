@@ -33,7 +33,7 @@ class NotifyHeaderTest : NotifyTestBase() {
     @Test
     fun modifiedHeaderTest() {
         val testIcon = R.drawable.ic_android_black
-        val testColor = android.R.color.holo_purple
+        val testColor = 0xAA66CC
         val testHeaderText = "New Menu!"
         val testShowTimestamp = false
 

@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.media.RingtoneManager
 import android.net.Uri
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.Notify
@@ -129,7 +128,7 @@ sealed class Payload {
             /**
              * The color of the notification items -- icon, appName, and expand indicator.
              */
-            @ColorRes var color: Int = R.color.notification_header_color,
+            @ColorInt var color: Int = 0x4A90E2,
             /**
              * The optional text that appears next to the appName of a notification.
              */
