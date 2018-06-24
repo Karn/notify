@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         targetSdkVersion config.build.targetSdk
-        minSdkVersion config.build.minSdk
+        minSdkVersion 21
 
         applicationId "io.karn.notify.sample"
         versionCode 1
