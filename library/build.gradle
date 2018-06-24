@@ -65,7 +65,7 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = config.build.jacocoVersion
+    toolVersion = config.build.jacocoAgentVersion
 }
 
 tasks.withType(Test) {

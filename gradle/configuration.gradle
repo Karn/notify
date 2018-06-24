@@ -19,7 +19,7 @@ def build = [
         targetSdk: 27,
         minSdk: 19,
 
-        jacocoVersion: '0.8.2',
+        jacocoAgentVersion: versions.jacoco,
 
         gradle: [
                 androidPlugin: 'com.android.tools.build:gradle:3.2.0-alpha18',
