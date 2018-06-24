@@ -3,24 +3,27 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.build.compileSdk
 
     defaultConfig {
-        applicationId "io.karn.notify.sample"
+        targetSdkVersion config.build.targetSdk
         minSdkVersion 21
-        targetSdkVersion 27
+
+        applicationId "io.karn.notify.sample"
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner config.testDeps.instrumentationRunner
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:support-compat:$support_version"
+
+    implementation config.deps.kotlin.stdlib
+
+    implementation config.deps.support.compat
+    implementation config.deps.support.appcompat
 
     implementation project(path: ':library')
 }

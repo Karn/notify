@@ -60,6 +60,7 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertEquals(testCancelOnClick, (notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertEquals(testCategory, notification.category)
         Assert.assertEquals(testTimeout, notification.timeoutAfter)
-        Assert.assertEquals(1, notification.extras.getStringArray(NotificationCompat.EXTRA_PEOPLE)?.size ?: 0)
+        Assert.assertEquals(1, notification.extras.getStringArray(NotificationCompat.EXTRA_PEOPLE)?.size
+                ?: 0)
     }
 }

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         Notify.defaultConfig {
             header {
-                color = R.color.colorPrimaryDark
+                color = resources.getColor(R.color.colorPrimaryDark)
             }
             alerting(Notify.CHANNEL_DEFAULT_KEY) {
                 lightColor = Color.RED
