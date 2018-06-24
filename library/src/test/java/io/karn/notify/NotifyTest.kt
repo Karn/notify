@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import io.karn.notify.internal.NotificationInterop
-import junit.framework.Assert
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -54,14 +54,14 @@ class NotifyTest : NotifyTestBase() {
         rawNotification.show()
 
         val shadowChannel = shadowNotificationManager.getNotificationChannel(testChannelKey)
-        org.junit.Assert.assertNotNull(shadowChannel)
-        org.junit.Assert.assertEquals(testVisibility, shadowChannel.lockscreenVisibility)
-        org.junit.Assert.assertEquals(testChannelName, shadowChannel.name)
-        org.junit.Assert.assertEquals(testChannelDescription, shadowChannel.description)
-        org.junit.Assert.assertEquals(testChannelImportance + 2, shadowChannel.importance)
+        Assert.assertNotNull(shadowChannel)
+        Assert.assertEquals(testVisibility, shadowChannel.lockscreenVisibility)
+        Assert.assertEquals(testChannelName, shadowChannel.name)
+        Assert.assertEquals(testChannelDescription, shadowChannel.description)
+        Assert.assertEquals(testChannelImportance + 2, shadowChannel.importance)
         // Assert.assertEquals(testLightColor, shadowChannel.lightColor)
-        org.junit.Assert.assertEquals(testVibrationPattern, shadowChannel.vibrationPattern.toList())
-        org.junit.Assert.assertEquals(testSound, shadowChannel.sound)
+        Assert.assertEquals(testVibrationPattern, shadowChannel.vibrationPattern.toList())
+        Assert.assertEquals(testSound, shadowChannel.sound)
     }
 
     @Test

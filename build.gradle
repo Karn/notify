@@ -2,42 +2,39 @@
 group = 'io.karn'
 version = '0.0.1'
 
-buildscript {
-    ext.kotlin_version = '1.2.21'
+subprojects {
+    apply from: rootProject.file('gradle/configuration.gradle')
 
-    ext {
-        kotlin_version = '1.2.21'
-        support_version = '27.1.1'
+    buildscript {
 
-        dokka_version = '0.9.16'
+        repositories {
+            google()
+            jcenter()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        }
+
+        dependencies {
+            classpath config.build.gradle.androidPlugin
+            classpath config.build.gradle.kotlin
+
+            // NOTE: Do not place your application configuration here; they belong
+            // in the individual module build.gradle files
+            classpath config.build.gradle.androidMaven
+            // Code coverage
+            classpath config.build.gradle.jacoco
+            // Library documentation
+            classpath config.build.gradle.dokka
+        }
     }
 
     repositories {
         google()
         jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha17'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        // Code coverage
-        classpath 'org.jacoco:org.jacoco.core:0.8.0'
-        // Library documentation
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+    gradleVersion = '4.7'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }

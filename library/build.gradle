@@ -7,15 +7,16 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'jacoco'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.build.compileSdk
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion config.build.targetSdk
+        minSdkVersion config.build.minSdk
+
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner config.testDeps.instrumentationRunner
     }
 
     buildTypes {
@@ -52,20 +53,19 @@ allprojects {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation config.deps.kotlin.stdlib
 
-    implementation "com.android.support:support-compat:$support_version"
+    implementation config.deps.support.compat
 
     // android.support.v4.media.app.NotificationCompat.MediaStyle()
     // implementation "com.android.support:support-media-compat:$support_version"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation config.testDeps.junit
+    testImplementation config.testDeps.robolectric
 }
 
 jacoco {
-    toolVersion = '0.8.0'
+    toolVersion = config.build.jacocoAgentVersion
 }
 
 tasks.withType(Test) {
