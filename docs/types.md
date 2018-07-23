@@ -49,7 +49,7 @@ For instances where you'd like to show a longer message you can use the `BigText
 ```Kotlin
 Notify
     .with(context)
-    .asBigText { // this: Payload.Content.TextList
+    .asBigText { // this: Payload.Content.BigText
         // The title of the notification.
         title = "Chocolate brownie sundae"
         // The second line of the (collapsed) notification.
@@ -75,7 +75,7 @@ The big picture allows an application to notify the user in a manner similar to 
 ```Kotlin
 Notify
     .with(context)
-    .asBigPicture {
+    .asBigPicture { // this: Payload.Content.BigPicture
         // The title of the notification.
         title = "Chocolate brownie sundae"
         // The second line of the (collapsed) notification.
@@ -99,7 +99,7 @@ The message notification is useful when displaying conversations within an appli
 ```Kotlin
 Notify
     .with(context)
-    .asMessage {
+    .asMessage { this: Payload.Content.Message
         userDisplayName = "Karn"
         conversationTitle = "Sundae chat"
         messages = Arrays.asList(
