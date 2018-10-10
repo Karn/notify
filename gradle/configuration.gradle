@@ -10,7 +10,7 @@ def versions = [
         kotlin: '1.2.41',
         support: '27.1.1',
 
-        jacoco: '0.8.2-SNAPSHOT',
+        jacoco: '0.8.2',
         dokka: '0.9.17'
 ]
 
