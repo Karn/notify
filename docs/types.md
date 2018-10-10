@@ -99,7 +99,7 @@ The message notification is useful when displaying conversations within an appli
 ```Kotlin
 Notify
     .with(context)
-    .asMessage { this: Payload.Content.Message
+    .asMessage { // this: Payload.Content.Message
         userDisplayName = "Karn"
         conversationTitle = "Sundae chat"
         messages = Arrays.asList(
