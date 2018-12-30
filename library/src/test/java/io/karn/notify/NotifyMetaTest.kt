@@ -1,5 +1,6 @@
 package io.karn.notify
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.provider.Settings
@@ -60,7 +61,7 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertEquals(testCancelOnClick, (notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertEquals(testCategory, notification.category)
         Assert.assertEquals(testTimeout, notification.timeoutAfter)
-        Assert.assertEquals(1, notification.extras.getStringArray(NotificationCompat.EXTRA_PEOPLE)?.size
+        Assert.assertEquals(1, notification.extras.getStringArrayList(Notification.EXTRA_PEOPLE_LIST)?.size
                 ?: 0)
     }
 }

@@ -4,9 +4,9 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
-import io.karn.notify.internal.RawNotification
 import io.karn.notify.internal.NotificationChannelInterop
 import io.karn.notify.internal.NotificationInterop
+import io.karn.notify.internal.RawNotification
 
 /**
  * Simplified Notification delivery for Android.

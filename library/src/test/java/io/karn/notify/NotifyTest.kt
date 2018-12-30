@@ -49,7 +49,7 @@ class NotifyTest : NotifyTestBase() {
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
 
-        Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), rawNotification.asBuilder().build().smallIcon.loadDrawable(context))
+        Assert.assertEquals(testIcon, rawNotification.asBuilder().build().smallIcon.resId)
 
         rawNotification.show()
 
