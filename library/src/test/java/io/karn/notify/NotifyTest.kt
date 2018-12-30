@@ -2,7 +2,7 @@ package io.karn.notify
 
 import android.graphics.Color
 import android.media.RingtoneManager
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import io.karn.notify.internal.NotificationInterop
 import org.junit.Assert
 import org.junit.Test

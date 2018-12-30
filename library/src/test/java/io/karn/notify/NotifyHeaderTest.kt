@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -7,7 +7,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

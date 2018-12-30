@@ -3,8 +3,8 @@ package presentation
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import io.karn.notify.Notify
 import io.karn.notify.sample.R

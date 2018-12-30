@@ -55,10 +55,7 @@ allprojects {
 dependencies {
     implementation config.deps.kotlin.stdlib
 
-    implementation config.deps.support.compat
-
-    // android.support.v4.media.app.NotificationCompat.MediaStyle()
-    // implementation "com.android.support:support-media-compat:$support_version"
+    implementation config.deps.androidx.core
 
     testImplementation config.testDeps.junit
     testImplementation config.testDeps.robolectric
