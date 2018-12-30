@@ -1,6 +1,6 @@
 package io.karn.notify.internal.utils
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import io.karn.notify.Notify
 
 @DslMarker

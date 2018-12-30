@@ -4,9 +4,9 @@ import android.app.PendingIntent
 import android.graphics.Bitmap
 import android.media.RingtoneManager
 import android.net.Uri
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.core.app.NotificationCompat
 import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.internal.utils.Action

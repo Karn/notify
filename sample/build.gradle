@@ -22,8 +22,8 @@ dependencies {
 
     implementation config.deps.kotlin.stdlib
 
-    implementation config.deps.support.compat
-    implementation config.deps.support.appcompat
+    implementation config.deps.androidx.core
+    implementation config.deps.androidx.appcompat
 
     implementation project(path: ':library')
 }

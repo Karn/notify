@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +19,7 @@ class NotifyHeaderTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
-        Assert.assertEquals(context.resources.getDrawable(R.drawable.ic_app_icon, context.theme), notification.smallIcon.loadDrawable(context))
+        Assert.assertEquals(R.drawable.ic_app_icon, notification.smallIcon.resId)
         // Validating color is not reliable. The notification color is randomly returned as ##FFAAAAAA
         Assert.assertEquals(0x4A90E2, 0xFFFFFF and notification.color)
         Assert.assertEquals(null, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
@@ -47,7 +47,7 @@ class NotifyHeaderTest : NotifyTestBase() {
                 .asBuilder()
                 .build()
 
-        Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), notification.smallIcon.loadDrawable(context))
+        Assert.assertEquals(testIcon, notification.smallIcon.resId)
         Assert.assertEquals(testColor, 0xFFFFFF and notification.color)
         Assert.assertEquals(testHeaderText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUB_TEXT))
         Assert.assertEquals(testShowTimestamp, notification.extras.getBoolean(NotificationCompat.EXTRA_SHOW_WHEN))

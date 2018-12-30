@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
 import io.karn.notify.internal.RawNotification

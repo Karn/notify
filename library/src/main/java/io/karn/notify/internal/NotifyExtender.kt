@@ -2,8 +2,8 @@ package io.karn.notify.internal
 
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
-import android.support.annotation.VisibleForTesting
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.VisibleForTesting
+import androidx.core.app.NotificationCompat
 
 /**
  * Helper class to add Notify Extensions to a notification. The extensions contain data specific to
@@ -81,11 +81,11 @@ internal class NotifyExtender : NotificationCompat.Extender {
      */
     constructor(notification: StatusBarNotification) {
         // Fetch the extensions if any, from a given notification.
-        NotificationCompat.getExtras(notification.notification).let {
-            it.getBundle(EXTRA_NOTIFY_EXTENSIONS)?.let {
+        NotificationCompat.getExtras(notification.notification)?.let { bundle ->
+            bundle.getBundle(EXTRA_NOTIFY_EXTENSIONS)?.let {
                 loadConfigurationFromBundle(it)
             }
-            it.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES)?.let {
+            bundle.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES)?.let {
                 stackItems = ArrayList(it.toList())
             }
         }
