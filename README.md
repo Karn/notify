@@ -2,15 +2,16 @@
 
 
 ## Notify
-Simplified notification delivery for Android.
+Simplified notification construction for Android.
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.2.41-blue.svg?style=flat-square)](http://kotlinlang.org)
-[![RxJava](https://img.shields.io/badge/Support-27.1.1-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.3.11-blue.svg?style=flat-square)](http://kotlinlang.org)
+[![AndroidX](https://img.shields.io/badge/AndroidX-1.0-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
 [![Build Status](https://img.shields.io/travis/Karn/notify.svg?style=flat-square)](https://travis-ci.org/Karn/notify)
 [![Codecov](https://img.shields.io/codecov/c/github/karn/notify.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
 [![GitHub (pre-)release](https://img.shields.io/github/release/karn/notify/all.svg?style=flat-square)
 ](./../../releases)
 
+Notify is a Fluent API for Android notifications which lets you build notifications without worrying how they'll look across devices or API versions. You can bring deterministic notifications to your Android projects with clarity & ease so you can finally stop fighting Developer documentation and get back to dev work that really matters.
 
 #### GETTING STARTED
 Notify (pre-)releases are available via JitPack. It is recommended that  a specific release version is selected when using the library in production as there may be breaking changes at anytime.
