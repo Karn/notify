@@ -5,7 +5,7 @@
 Simplified notification construction for Android.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.11-blue.svg?style=flat-square)](http://kotlinlang.org)
-[![AndroidX](https://img.shields.io/badge/AndroidX-1.0-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
+[![AndroidX](https://img.shields.io/badge/AndroidX-1.0-6ab344.svg?style=flat-square)](https://developer.android.com/jetpack/androidx/)
 [![Build Status](https://img.shields.io/travis/Karn/notify.svg?style=flat-square)](https://travis-ci.org/Karn/notify)
 [![Codecov](https://img.shields.io/codecov/c/github/karn/notify.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
 [![GitHub (pre-)release](https://img.shields.io/github/release/karn/notify/all.svg?style=flat-square)
@@ -18,7 +18,7 @@ Notify (pre-)releases are available via JitPack. It is recommended that  a speci
 
 > **Tip:** Test out the canary channel to try out features by using the latest develop snapshot; `develop-SNAPSHOT`.
 
-``` Groovy
+```Groovy
 // Project level build.gradle
 // ...
 repositories {
@@ -57,10 +57,10 @@ If you run into a case in which the library does not provide the requisite build
 
 #### NOTIFICATION ANATOMY
 
-![Anatory](./docs/assets/anatomy.svg)
+![Anatomy](./docs/assets/anatomy.svg)
 
 | ID   | Name         | Description                                                                                             |
-| ---- | ------------ | ------------------------------------------------------------------------------------------------------- |
+| --- | --- | --- |
 | 1    | Icon         | Set using the `Header#icon` field.                                                                      |
 | 2    | App Name     | Application name, immutable.                                                                            |
 | 3    | Header Text  | Optional description text. Set using the `Header#headerText` field.                                     |
