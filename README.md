@@ -55,19 +55,6 @@ If you run into a case in which the library does not provide the requisite build
 
 > **Tip:** Advanced usage topics are documented [here](./docs/advanced.md).
 
-#### NOTIFICATION ANATOMY
-
-![Anatomy](./docs/assets/anatomy.svg)
-
-| ID   | Name         | Description                                                                                             |
-| --- | --- | --- |
-| 1    | Icon         | Set using the `Header#icon` field.                                                                      |
-| 2    | App Name     | Application name, immutable.                                                                            |
-| 3    | Header Text  | Optional description text. Set using the `Header#headerText` field.                                     |
-| 4    | Timestamp    | Timestamp of the notification.                                                                          |
-| 5    | Expand Icon  | Indicates that the notification is expandable.                                                          |
-| 6    | Content      | The "meat" of the notification set using of of the `NotifyCreator#as[Type]((Type) -> Unit)` scoped functions. |
-| 7    | Actions      | Set using the `NotifyCreator#actions((ArrayList<Action>) -> Unit)` scoped function.                           |
 
 #### CONTRIBUTING
 There are many ways to [contribute](./.github/CONTRIBUTING.md), you can
