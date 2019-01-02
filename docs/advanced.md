@@ -3,7 +3,7 @@
 
 #### NOTIFICATION ANATOMY
 
-![Anatomy](./docs/assets/anatomy.svg)
+![Anatomy](./assets/anatomy.svg)
 
 | ID   | Name         | Description                                                                                             |
 | --- | --- | --- |
