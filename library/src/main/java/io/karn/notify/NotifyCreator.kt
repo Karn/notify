@@ -1,6 +1,6 @@
 package io.karn.notify
 
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
 import io.karn.notify.internal.RawNotification
@@ -148,7 +148,15 @@ class NotifyCreator internal constructor(private val notify: Notify, config: Not
         return notify.show(asBuilder())
     }
 
+    /**
+     * Cancel an existing notification given an ID.
+     *
+     * @deprecated Choose to instead use the static function {@see Notify#cancelNotification()} which provides the correct
+     * encapsulation of the this `cancel` function.
+     */
+    @Deprecated(message = "Exposes function under the incorrect API -- NotifyCreator is reserved strictly for notification construction.",
+            replaceWith = ReplaceWith("Notify.cancelNotification(id)", "io.karn.notify.Notify"))
     fun cancel(id: Int) {
-        return notify.cancel(id)
+        return Notify.cancelNotification(id)
     }
 }

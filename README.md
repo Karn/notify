@@ -2,22 +2,23 @@
 
 
 ## Notify
-Simplified notification delivery for Android.
+Simplified notification construction for Android.
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.2.41-blue.svg?style=flat-square)](http://kotlinlang.org)
-[![RxJava](https://img.shields.io/badge/Support-27.1.1-6ab344.svg?style=flat-square)](https://github.com/ReactiveX/RxJava/releases/tag/v2.1.10)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.3.11-blue.svg?style=flat-square)](http://kotlinlang.org)
+[![AndroidX](https://img.shields.io/badge/AndroidX-1.0-6ab344.svg?style=flat-square)](https://developer.android.com/jetpack/androidx/)
 [![Build Status](https://img.shields.io/travis/Karn/notify.svg?style=flat-square)](https://travis-ci.org/Karn/notify)
 [![Codecov](https://img.shields.io/codecov/c/github/karn/notify.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
 [![GitHub (pre-)release](https://img.shields.io/github/release/karn/notify/all.svg?style=flat-square)
 ](./../../releases)
 
+Notify is a Fluent API for Android notifications which lets you build notifications without worrying how they'll look across devices or API versions. You can bring deterministic notifications to your Android projects with clarity & ease so you can finally stop fighting Developer documentation and get back to dev work that really matters.
 
 #### GETTING STARTED
 Notify (pre-)releases are available via JitPack. It is recommended that  a specific release version is selected when using the library in production as there may be breaking changes at anytime.
 
 > **Tip:** Test out the canary channel to try out features by using the latest develop snapshot; `develop-SNAPSHOT`.
 
-``` Groovy
+```Groovy
 // Project level build.gradle
 // ...
 repositories {
@@ -54,19 +55,6 @@ If you run into a case in which the library does not provide the requisite build
 
 > **Tip:** Advanced usage topics are documented [here](./docs/advanced.md).
 
-#### NOTIFICATION ANATOMY
-
-![Anatory](./docs/assets/anatomy.svg)
-
-| ID   | Name         | Description                                                                                             |
-| ---- | ------------ | ------------------------------------------------------------------------------------------------------- |
-| 1    | Icon         | Set using the `Header#icon` field.                                                                      |
-| 2    | App Name     | Application name, immutable.                                                                            |
-| 3    | Header Text  | Optional description text. Set using the `Header#headerText` field.                                     |
-| 4    | Timestamp    | Timestamp of the notification.                                                                          |
-| 5    | Expand Icon  | Indicates that the notification is expandable.                                                          |
-| 6    | Content      | The "meat" of the notification set using of of the `NotifyCreator#as[Type]((Type) -> Unit)` scoped functions. |
-| 7    | Actions      | Set using the `NotifyCreator#actions((ArrayList<Action>) -> Unit)` scoped function.                           |
 
 #### CONTRIBUTING
 There are many ways to [contribute](./.github/CONTRIBUTING.md), you can

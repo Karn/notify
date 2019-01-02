@@ -7,22 +7,23 @@
 
 
 def versions = [
-        kotlin: '1.2.41',
-        support: '27.1.1',
+        kotlin: '1.3.11',
+        core: '1.0.1',
+        appcompat: '1.0.2',
 
         jacoco: '0.8.2',
         dokka: '0.9.17'
 ]
 
 def build = [
-        compileSdk: 27,
-        targetSdk: 27,
+        compileSdk: 28,
+        targetSdk: 28,
         minSdk: 19,
 
         jacocoAgentVersion: versions.jacoco,
 
         gradle: [
-                androidPlugin: 'com.android.tools.build:gradle:3.2.0-alpha18',
+                androidPlugin: 'com.android.tools.build:gradle:3.2.1',
                 androidMaven: 'com.github.dcendents:android-maven-gradle-plugin:2.0',
                 kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
                 jacoco: "org.jacoco:org.jacoco.core:${versions.jacoco}",
@@ -35,16 +36,16 @@ def dependencies = [
                 stdlib : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
                 reflect: "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
         ],
-        support: [
-                compat: "com.android.support:support-compat:${versions.support}",
-                appcompat: "com.android.support:appcompat-v7:${versions.support}"
+        androidx: [
+                core: "androidx.core:core:${versions.core}",
+                appcompat: "androidx.appcompat:appcompat:${versions.appcompat}"
         ]
 ]
 
 def testDependencies = [
-        instrumentationRunner: 'android.support.test.runner.AndroidJUnitRunner',
+        instrumentationRunner: 'androidx.test.runner.AndroidJUnitRunner',
         junit: 'junit:junit:4.12',
-        robolectric: 'org.robolectric:robolectric:3.8'
+        robolectric: 'org.robolectric:robolectric:4.0'
 ]
 
 ext.config = [

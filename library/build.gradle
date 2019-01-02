@@ -13,8 +13,8 @@ android {
         targetSdkVersion config.build.targetSdk
         minSdkVersion config.build.minSdk
 
-        versionCode 1
-        versionName "1.0"
+        versionCode 10
+        versionName "1.2.0"
 
         testInstrumentationRunner config.testDeps.instrumentationRunner
     }
@@ -55,10 +55,7 @@ allprojects {
 dependencies {
     implementation config.deps.kotlin.stdlib
 
-    implementation config.deps.support.compat
-
-    // android.support.v4.media.app.NotificationCompat.MediaStyle()
-    // implementation "com.android.support:support-media-compat:$support_version"
+    implementation config.deps.androidx.core
 
     testImplementation config.testDeps.junit
     testImplementation config.testDeps.robolectric

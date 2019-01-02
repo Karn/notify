@@ -2,7 +2,7 @@ package io.karn.notify
 
 import android.graphics.Color
 import android.media.RingtoneManager
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import io.karn.notify.internal.NotificationInterop
 import org.junit.Assert
 import org.junit.Test
@@ -49,7 +49,7 @@ class NotifyTest : NotifyTestBase() {
                     text = "The Cheesecake Factory has a new dessert for you to try!"
                 }
 
-        Assert.assertEquals(context.resources.getDrawable(testIcon, context.theme), rawNotification.asBuilder().build().smallIcon.loadDrawable(context))
+        Assert.assertEquals(testIcon, rawNotification.asBuilder().build().smallIcon.resId)
 
         rawNotification.show()
 
@@ -87,8 +87,7 @@ class NotifyTest : NotifyTestBase() {
 
         Assert.assertEquals(1, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
 
-        Notify.with(this.context)
-                .cancel(notificationId)
+        Notify.cancelNotification(notificationId)
 
         Assert.assertEquals(0, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
     }

@@ -2,9 +2,9 @@ package io.karn.notify.internal
 
 import android.app.NotificationManager
 import android.os.Build
-import android.support.annotation.VisibleForTesting
-import android.support.v4.app.NotificationCompat
 import android.text.Html
+import androidx.annotation.VisibleForTesting
+import androidx.core.app.NotificationCompat
 import io.karn.notify.Notify
 import io.karn.notify.entities.Payload
 import io.karn.notify.internal.utils.Utils
