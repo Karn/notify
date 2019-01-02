@@ -10,6 +10,7 @@ Simplified notification construction for Android.
 [![Codecov](https://img.shields.io/codecov/c/github/karn/notify.svg?style=flat-square)](https://codecov.io/gh/Karn/notify)
 [![GitHub (pre-)release](https://img.shields.io/github/release/karn/notify/all.svg?style=flat-square)
 ](./../../releases)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKarn%2Fnotify.svg?type=small)](https://app.fossa.io/projects/git%2Bgithub.com%2FKarn%2Fnotify?ref=badge_small)
 
 Notify is a Fluent API for Android notifications which lets you build notifications without worrying how they'll look across devices or API versions. You can bring deterministic notifications to your Android projects with clarity & ease so you can finally stop fighting Developer documentation and get back to dev work that really matters.
 
