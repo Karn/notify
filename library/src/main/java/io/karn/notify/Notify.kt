@@ -78,6 +78,13 @@ class Notify internal constructor(internal var context: Context) {
         fun with(context: Context): NotifyCreator {
             return NotifyCreator(Notify(context), defaultConfig)
         }
+
+        /**
+         * Cancel an existing notification with a particular id.
+         */
+        fun cancelNotification(id: Int) {
+            return NotificationInterop.cancelNotification(Notify.defaultConfig.notificationManager!!, id)
+        }
     }
 
     init {
@@ -110,12 +117,5 @@ class Notify internal constructor(internal var context: Context) {
      */
     internal fun show(builder: NotificationCompat.Builder): Int {
         return NotificationInterop.showNotification(Notify.defaultConfig.notificationManager!!, builder)
-    }
-
-    /**
-     * Cancel an existing notification with a particular id.
-     */
-    internal fun cancel(id: Int) {
-        return NotificationInterop.cancelNotification(Notify.defaultConfig.notificationManager!!, id)
     }
 }
