@@ -100,7 +100,7 @@ class Notify internal constructor(internal var context: Context) {
          * {@see Notify#defaultConfig((NotifyConfig) -> Unit)}.
          */
         fun with(context: Context): NotifyCreator {
-            return NotifyCreator(Notify(context), defaultConfig)
+            return NotifyCreator(Notify(context))
         }
 
         /**

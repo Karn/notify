@@ -25,7 +25,6 @@
 package io.karn.notify
 
 import androidx.core.app.NotificationCompat
-import io.karn.notify.entities.NotifyConfig
 import io.karn.notify.entities.Payload
 import io.karn.notify.internal.RawNotification
 import io.karn.notify.internal.utils.Action
@@ -36,11 +35,11 @@ import io.karn.notify.internal.utils.NotifyScopeMarker
  * Fluent API for creating a Notification object.
  */
 @NotifyScopeMarker
-class NotifyCreator internal constructor(private val notify: Notify, config: NotifyConfig = NotifyConfig()) {
+class NotifyCreator internal constructor(private val notify: Notify) {
 
     private var meta = Payload.Meta()
-    private var alerts = config.defaultAlerting
-    private var header = config.defaultHeader.copy()
+    private var alerts = Notify.defaultConfig.defaultAlerting
+    private var header = Notify.defaultConfig.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
     private var stackable: Payload.Stackable? = null
