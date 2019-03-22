@@ -35,7 +35,6 @@ android {
 
     defaultConfig {
         targetSdkVersion config.build.targetSdk
-        minSdkVersion config.build.minSdk
 
         versionCode 10
         versionName "1.2.0"
