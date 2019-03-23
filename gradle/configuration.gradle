@@ -18,7 +18,7 @@ def versions = [
 def build = [
         compileSdk: 28,
         targetSdk: 28,
-        minSdk: 19,
+        minSdk: 1,
 
         jacocoAgentVersion: versions.jacoco,
 
