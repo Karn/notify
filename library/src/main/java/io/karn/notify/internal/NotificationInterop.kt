@@ -171,7 +171,7 @@ internal object NotificationInterop {
 
         // Attach alerting options.
         payload.alerting.apply {
-            // Register the default alerting.
+            // Register the default alerting. Applies channel configuration on API >= 26.
             NotificationChannelInterop.with(this)
 
             // The visibility of the notification on the lockscreen.
@@ -182,18 +182,29 @@ internal object NotificationInterop {
                 builder.setLights(lightColor, 500, 2000)
             }
 
-            // The vibration pattern.
-            vibrationPattern
-                    .takeIf { it.isNotEmpty() }
-                    ?.also {
-                        builder.setVibrate(it.toLongArray())
-                    }
-
-            // A custom alerting sound.
-            builder.setSound(sound)
-
-            // Manual specification of the priority.
+            // Manual specification of the priority. According to the documentation, this is only
+            // one of the factors that affect the notifications priority and that this behaviour may
+            // differ on different platforms.
+            // It seems that the priority is also affected by the sound that is set for the
+            // notification as such we'll wrap the behaviour of the sound and also of the vibration
+            // to prevent the notification from being reclassified to a different priority.
+            // This doesn't seem to be the case for API >= 26, however, a future PR should tackle
+            // API nuances and ensure that behaviour has been tested.
+            // TODO: Test API nuances.
             builder.priority = channelImportance
+
+            // If the notification's importance is normal or greater then we configure
+            if (channelImportance >= Notify.IMPORTANCE_NORMAL) {
+                // The vibration pattern.
+                vibrationPattern
+                        .takeIf { it.isNotEmpty() }
+                        ?.also {
+                            builder.setVibrate(it.toLongArray())
+                        }
+
+                // A custom alerting sound.
+                builder.setSound(sound)
+            }
         }
 
         var style: NotificationCompat.Style? = null

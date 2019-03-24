@@ -49,7 +49,7 @@ internal object NotificationChannelInterop {
 
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        val channel = NotificationChannel(alerting.channelKey, alerting.channelName, alerting.channelImportance + 2).apply {
+        val channel = NotificationChannel(alerting.channelKey, alerting.channelName, alerting.channelImportance + 3).apply {
             description = alerting.channelDescription
 
             // Set the lockscreen visibility.
