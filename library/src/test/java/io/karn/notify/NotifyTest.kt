@@ -82,7 +82,7 @@ class NotifyTest : NotifyTestBase() {
         Assert.assertEquals(testVisibility, shadowChannel.lockscreenVisibility)
         Assert.assertEquals(testChannelName, shadowChannel.name)
         Assert.assertEquals(testChannelDescription, shadowChannel.description)
-        Assert.assertEquals(testChannelImportance + 2, shadowChannel.importance)
+        Assert.assertEquals(testChannelImportance + 3, shadowChannel.importance)
         // Assert.assertEquals(testLightColor, shadowChannel.lightColor)
         Assert.assertEquals(testVibrationPattern, shadowChannel.vibrationPattern.toList())
         Assert.assertEquals(testSound, shadowChannel.sound)

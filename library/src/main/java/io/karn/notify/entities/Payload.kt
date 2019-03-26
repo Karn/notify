@@ -132,11 +132,13 @@ sealed class Payload {
              */
             @ColorInt var lightColor: Int = Notify.NO_LIGHTS,
             /**
-             * Vibration pattern for notification on this notifyChannel.
+             * Vibration pattern for notification on this notifyChannel. This is only set on
+             * notifications with importance that is at least [Notify.IMPORTANCE_NORMAL] or higher.
              */
             var vibrationPattern: List<Long> = ArrayList(),
             /**
-             * A custom notification sound if any.
+             * A custom notification sound if any. This is only set on notifications with importance
+             * that is at least [Notify.IMPORTANCE_NORMAL] or higher.
              */
             var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     )
