@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 group = 'io.karn'
-version = '1.2.0'
 
 subprojects {
     apply from: rootProject.file('gradle/configuration.gradle')
