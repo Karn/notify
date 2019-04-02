@@ -24,14 +24,14 @@ Notify
     .with(context)
     .meta { // this: Payload.Meta
         // Launch the MainActivity once the notification is clicked.
-        clickIntent = PendingIntent.getActivity(this@MainActivity,
+        clickIntent = PendingIntent.getActivity(context,
                                                   0,
-                                                  Intent(this@MainActivity, MainActivity::class.java),
+                                                  Intent(context, MainActivity::class.java),
                                                   0)
         // Start a service which clears the badge count once the notification is dismissed.
-        clearIntent = PendingIntent.getService(this@MainActivity,
+        clearIntent = PendingIntent.getService(context,
                                                 0,
-                                                Intent(this@MainActivity, MyNotificationService::class.java)
+                                                Intent(context, MyNotificationService::class.java)
                                                         .putExtra("action", "clear_badges"),
                                                 0)
     }
@@ -61,9 +61,9 @@ Notify
                 // The text corresponding to the action -- this is what shows .
                 "Clear",
                 // Swap this PendingIntent for whatever Intent is to be processed when the action is clicked.
-                PendingIntent.getService(this@MainActivity,
+                PendingIntent.getService(context,
                         0,
-                        Intent(this@MainActivity, MyNotificationService::class.java)
+                        Intent(context, MyNotificationService::class.java)
                                 .putExtra("action", "clear_badges"),
                         0)
                 ))
@@ -79,7 +79,7 @@ This is a particularly effective method of reducing the clutter of the notificat
 
 ```Kotlin
 Notify
-        .with(this)
+        .with(context)
         .content { // this: Payload.Content.Default
             title = "New dessert menu"
             text = "The Cheesecake Factory has a new dessert for you to try!"

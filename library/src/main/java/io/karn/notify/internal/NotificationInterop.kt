@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Karn Saheb
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package io.karn.notify.internal
 
 import android.app.NotificationManager
@@ -147,7 +171,7 @@ internal object NotificationInterop {
 
         // Attach alerting options.
         payload.alerting.apply {
-            // Register the default alerting.
+            // Register the default alerting. Applies channel configuration on API >= 26.
             NotificationChannelInterop.with(this)
 
             // The visibility of the notification on the lockscreen.
@@ -158,18 +182,29 @@ internal object NotificationInterop {
                 builder.setLights(lightColor, 500, 2000)
             }
 
-            // The vibration pattern.
-            vibrationPattern
-                    .takeIf { it.isNotEmpty() }
-                    ?.also {
-                        builder.setVibrate(it.toLongArray())
-                    }
-
-            // A custom alerting sound.
-            builder.setSound(sound)
-
-            // Manual specification of the priority.
+            // Manual specification of the priority. According to the documentation, this is only
+            // one of the factors that affect the notifications priority and that this behaviour may
+            // differ on different platforms.
+            // It seems that the priority is also affected by the sound that is set for the
+            // notification as such we'll wrap the behaviour of the sound and also of the vibration
+            // to prevent the notification from being reclassified to a different priority.
+            // This doesn't seem to be the case for API >= 26, however, a future PR should tackle
+            // API nuances and ensure that behaviour has been tested.
+            // TODO: Test API nuances.
             builder.priority = channelImportance
+
+            // If the notification's importance is normal or greater then we configure
+            if (channelImportance >= Notify.IMPORTANCE_NORMAL) {
+                // The vibration pattern.
+                vibrationPattern
+                        .takeIf { it.isNotEmpty() }
+                        ?.also {
+                            builder.setVibrate(it.toLongArray())
+                        }
+
+                // A custom alerting sound.
+                builder.setSound(sound)
+            }
         }
 
         var style: NotificationCompat.Style? = null

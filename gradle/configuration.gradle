@@ -7,6 +7,9 @@
 
 
 def versions = [
+        libCode: 11,
+        libName: '1.2.1',
+
         kotlin: '1.3.11',
         core: '1.0.1',
         appcompat: '1.0.2',
@@ -49,6 +52,7 @@ def testDependencies = [
 ]
 
 ext.config = [
+        "versions": versions,
         "deps"    : dependencies,
         "testDeps": testDependencies,
         "build"   : build
