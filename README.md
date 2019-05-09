@@ -22,8 +22,11 @@ Notify (pre-)releases are available via JitPack. It is recommended that  a speci
 ```Groovy
 // Project level build.gradle
 // ...
-repositories {
-    maven { url 'https://jitpack.io' }
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 // ...
 
