@@ -58,21 +58,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
-        abortOnError false
-    }
+    lintOptions.abortOnError false
 
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
     }
 }
 
@@ -85,9 +76,7 @@ dependencies {
     testImplementation config.testDeps.robolectric
 }
 
-jacoco {
-    toolVersion = config.build.jacocoAgentVersion
-}
+jacoco.toolVersion = config.build.jacocoAgentVersion
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
@@ -104,9 +93,7 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-artifacts {
-    archives sourcesJar
-}
+artifacts.archives sourcesJar
 
 /**
  * Adapted from https://medium.com/@rafael_toledo/unified-code-coverage-for-android-revisited-44789c9b722f
