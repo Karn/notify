@@ -2,7 +2,6 @@ language: android
 
 before_install:
 - yes | sdkmanager --licenses
-- yes | sdkmanager --update
 
 script:
 - ./gradlew build jacocoTestReport
