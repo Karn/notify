@@ -6,9 +6,7 @@ android:
         - platform-tools
         - android-28
     licenses:
-        - 'android-sdk-preview-.+'
-        - 'android-sdk-license-.+'
-        - 'google-gdk-license-.+'
+        - '.+'
 
 script:
 - ./gradlew build jacocoTestReport
