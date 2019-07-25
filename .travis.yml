@@ -1,4 +1,5 @@
 language: android
+dist: truthy
 android:
   components:
     - tools
@@ -18,4 +19,4 @@ after_success:
 branches:
   only:
     - master
-    - develop
+     - develop
