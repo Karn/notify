@@ -9,7 +9,7 @@ android:
         - '.+'
 
 before_script:
-    - yes | /usr/local/android-sdk/tools/bin/sdkmanager --update
+    - echo yes | /usr/local/android-sdk/tools/bin/sdkmanager --update
 
 script:
 - ./gradlew build jacocoTestReport
