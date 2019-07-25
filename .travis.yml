@@ -5,6 +5,8 @@ android:
     - tools
     - platform-tools
     - android-28
+  licenses:
+    - '.+'
 
 before_script:
   - echo yes | /usr/local/android-sdk/tools/bin/sdkmanager --update
