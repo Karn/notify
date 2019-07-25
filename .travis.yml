@@ -9,7 +9,6 @@ android:
         - '.+'
 
 before_script:
-    - yes | /usr/local/android-sdk/tools/bin/sdkmanager --licenses
     - yes | /usr/local/android-sdk/tools/bin/sdkmanager --update
 
 script:
