@@ -1,7 +1,5 @@
 language: android
-
-before_install:
-- yes | sdkmanager --licenses
+dist: trusty
 
 script:
 - ./gradlew build jacocoTestReport
