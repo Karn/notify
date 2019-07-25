@@ -51,28 +51,30 @@ class Notify internal constructor(internal var context: Context) {
          */
         const val CHANNEL_DEFAULT_DESCRIPTION = "General application notifications."
         /**
-         * Lowest priority for a notification. These notifications might not be shown to the user except under special
-         * circumstances, such as detailed notification logs.
+         * Lowest priority for a notification. These notifications might not be shown to the user
+         * except under special circumstances, such as detailed notification logs.
          */
         const val IMPORTANCE_MIN = NotificationCompat.PRIORITY_MIN
         /**
-         * Lower priority for notifications that are deemed less important. The UI may choose to show these items
-         * smaller, or at a different position in the list, compared to notifications with normal importance.
+         * Lower priority for notifications that are deemed less important. The UI may choose to
+         * show these items smaller, or at a different position in the list, compared to
+         * notifications with normal importance.
          */
         const val IMPORTANCE_LOW = NotificationCompat.PRIORITY_LOW
         /**
-         * Default priority for notifications. If your application does not prioritize its own notifications, use this
-         * value for all notifications.
+         * Default priority for notifications. If your application does not prioritize its own
+         * notifications, use this value for all notifications.
          */
         const val IMPORTANCE_NORMAL = NotificationCompat.PRIORITY_DEFAULT
         /**
-         * Higher priority for notifications, for more important notifications or alerts. The UI may choose to show
-         * these items larger, or at a different position in notification lists, compared with your app's notifications
-         * of normal importance.
+         * Higher priority for notifications, for more important notifications or alerts. The UI may
+         * choose to show these items larger, or at a different position in notification lists,
+         * compared with your app's notifications of normal importance.
          */
         const val IMPORTANCE_HIGH = NotificationCompat.PRIORITY_HIGH
         /**
-         * Highest priority for notifications, use for notifications that require the user's prompt attention or input.
+         * Highest priority for notifications, use for notifications that require the user's prompt
+         * attention or input.
          */
         const val IMPORTANCE_MAX = NotificationCompat.PRIORITY_MAX
 
@@ -96,8 +98,8 @@ class Notify internal constructor(internal var context: Context) {
         /**
          * A new {@see Notify} and {@see NotifyCreator} instance.
          *
-         * This object is automatically initialized with the singleton default configuration which can be modified using
-         * {@see Notify#defaultConfig((NotifyConfig) -> Unit)}.
+         * This object is automatically initialized with the singleton default configuration which
+         * can be modified using {@see Notify#defaultConfig((NotifyConfig) -> Unit)}.
          */
         fun with(context: Context): NotifyCreator {
             return NotifyCreator(Notify(context))
@@ -123,23 +125,26 @@ class Notify internal constructor(internal var context: Context) {
     }
 
     /**
-     * Return the standard {@see NotificationCompat.Builder} after applying fluent API transformations (if any) from the
-     * {@see NotifyCreator} builder object.
+     * Return the standard {@see NotificationCompat.Builder} after applying fluent API
+     * transformations (if any) from the {@see NotifyCreator} builder object.
      */
     internal fun asBuilder(payload: RawNotification): NotificationCompat.Builder {
         return NotificationInterop.buildNotification(this, payload)
     }
 
     /**
-     * Delegate a {@see Notification.Builder} object to the Notify NotificationInterop class which builds and displays
-     * the notification.
+     * Delegate a {@see Notification.Builder} object to the Notify NotificationInterop class which
+     * builds and displays the notification.
      *
      * This is a terminal operation.
      *
-     * @return An integer corresponding to the ID of the system notification. Any updates should use this returned
-     * integer to make updates or to cancel the notification.
+     * @param id    An optional integer which will be used as the ID for the notification that is
+     *              shown. This argument is ignored if the notification is a NotifyCreator#stackable
+     *              receiver is set.
+     * @return An integer corresponding to the ID of the system notification. Any updates should use
+     * this returned integer to make updates or to cancel the notification.
      */
-    internal fun show(builder: NotificationCompat.Builder): Int {
-        return NotificationInterop.showNotification(Notify.defaultConfig.notificationManager!!, builder)
+    internal fun show(id: Int?, builder: NotificationCompat.Builder): Int {
+        return NotificationInterop.showNotification(Notify.defaultConfig.notificationManager!!, id, builder)
     }
 }
