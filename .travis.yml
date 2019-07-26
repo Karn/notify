@@ -1,15 +1,24 @@
 language: android
+dist: trusty
+android:
+  components:
+    - tools
+    - platform-tools
+    - android-28
+  licenses:
+    - '.+'
+
+before_script:
+  - echo yes | /usr/local/android-sdk/tools/bin/sdkmanager --update
 
 script:
-- ./gradlew build jacocoTestReport
-- ./gradlew connectedCheck
-after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - ./gradlew build jacocoTestReport
+  - ./gradlew connectedCheck
 
-before_install:
-- yes | sdkmanager "platforms;android-27"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 branches:
   only:
-  - master
-  - develop
+    - master
+    - develop
