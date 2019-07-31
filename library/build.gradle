@@ -58,21 +58,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
-        abortOnError false
-    }
+    lintOptions.abortOnError false
 
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
     }
 }
 
@@ -85,9 +76,7 @@ dependencies {
     testImplementation config.testDeps.robolectric
 }
 
-jacoco {
-    toolVersion = config.build.jacocoAgentVersion
-}
+jacoco.toolVersion = config.build.jacocoAgentVersion
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
@@ -95,6 +84,16 @@ tasks.withType(Test) {
     maxHeapSize = "1024m"
     jvmArgs "-Xmx1024m"
 }
+
+/**
+ * Generate sources. Adapted from https://stackoverflow.com/a/28969412/5037824
+ */
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts.archives sourcesJar
 
 /**
  * Adapted from https://medium.com/@rafael_toledo/unified-code-coverage-for-android-revisited-44789c9b722f

@@ -101,6 +101,20 @@ class NotifyTest : NotifyTestBase() {
     }
 
     @Test
+    fun showNotificationWithId() {
+        val expectedId = 10
+        val actualId = Notify.with(this.context)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .show(expectedId)
+
+        Assert.assertEquals(expectedId, actualId)
+        Assert.assertEquals(1, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
+    }
+
+    @Test
     fun cancelNotification() {
         val notificationId = Notify.with(this.context)
                 .content {

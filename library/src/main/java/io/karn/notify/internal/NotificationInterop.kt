@@ -35,9 +35,9 @@ import io.karn.notify.internal.utils.Utils
 
 internal object NotificationInterop {
 
-    fun showNotification(notificationManager: NotificationManager, notification: NotificationCompat.Builder): Int {
+    fun showNotification(notificationManager: NotificationManager, id: Int?, notification: NotificationCompat.Builder): Int {
         val key = NotifyExtender.getKey(notification.extras)
-        var id = Utils.getRandomInt()
+        var id = id ?: Utils.getRandomInt()
 
         if (key != null) {
             id = key.hashCode()

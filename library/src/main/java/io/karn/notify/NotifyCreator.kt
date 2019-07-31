@@ -164,18 +164,21 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      *
      * This is a terminal operation.
      *
+     * @param id    An optional integer which will be used as the ID for the notification that is
+     *              shown. This argument is ignored if the notification is a NotifyCreator#stackable
+     *              receiver is set.
      * @return An integer corresponding to the ID of the system notification. Any updates should use
      * this returned integer to make updates or to cancel the notification.
      */
-    fun show(): Int {
-        return notify.show(asBuilder())
+    fun show(id: Int? = null): Int {
+        return notify.show(id, asBuilder())
     }
 
     /**
      * Cancel an existing notification given an ID.
      *
-     * @deprecated Choose to instead use the static function {@see Notify#cancelNotification()} which provides the correct
-     * encapsulation of the this `cancel` function.
+     * @deprecated Choose to instead use the static function {@see Notify#cancelNotification()}
+     * which provides the correct encapsulation of the this `cancel` function.
      */
     @Deprecated(message = "Exposes function under the incorrect API -- NotifyCreator is reserved strictly for notification construction.",
             replaceWith = ReplaceWith("Notify.cancelNotification(id)", "io.karn.notify.Notify"))
