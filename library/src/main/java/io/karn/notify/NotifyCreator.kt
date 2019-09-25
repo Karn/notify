@@ -181,8 +181,14 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * which provides the correct encapsulation of the this `cancel` function.
      */
     @Deprecated(message = "Exposes function under the incorrect API -- NotifyCreator is reserved strictly for notification construction.",
-            replaceWith = ReplaceWith("Notify.cancelNotification(id)", "io.karn.notify.Notify"))
+            replaceWith = ReplaceWith(
+                    "Notify.cancelNotification(context, id)",
+                    "android.content.Context", "io.karn.notify.Notify"))
+    @Throws(NullPointerException::class)
     fun cancel(id: Int) {
+        // This should be safe to call from here because the Notify.with(context) function call
+        // would have initialized the NotificationManager object. In any case, the function has been
+        // annotated as one which can throw a NullPointerException.
         return Notify.cancelNotification(id)
     }
 }
