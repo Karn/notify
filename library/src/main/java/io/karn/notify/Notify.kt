@@ -119,9 +119,11 @@ class Notify internal constructor(internal var context: Context) {
          * Cancel an existing notification with a particular id.
          */
         fun cancelNotification(context: Context, id: Int) {
-            val notificationManager = context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (defaultConfig.notificationManager == null) {
+                defaultConfig.notificationManager = context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            }
 
-            return NotificationInterop.cancelNotification(notificationManager, id)
+            return NotificationInterop.cancelNotification(defaultConfig.notificationManager!!, id)
         }
     }
 
