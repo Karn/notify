@@ -28,8 +28,10 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -131,6 +133,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyBubble(view: View) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            Toast.makeText(this, "Notification Bubbles are only supported on a device running Android Q or later.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         Notify
                 .with(this)
                 .content {
@@ -142,8 +149,9 @@ class MainActivity : AppCompatActivity() {
                     val target = Intent(this@MainActivity, BubbleActivity::class.java)
                     val bubbleIntent = PendingIntent.getActivity(this@MainActivity, 0, target, 0 /* flags */)
 
-                    this.bubbleIcon = IconCompat.createWithResource(this@MainActivity, R.drawable.ic_app_icon)
-                    this.targetActivity = bubbleIntent
+                    bubbleIcon = IconCompat.createWithResource(this@MainActivity, R.drawable.ic_app_icon)
+                    targetActivity = bubbleIntent
+                    suppressInitialNotification = true
                 }
                 .show()
     }

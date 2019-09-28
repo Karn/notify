@@ -291,6 +291,10 @@ sealed class Payload {
              */
             var targetActivity: PendingIntent? = null,
             /**
+             * A pending intent which is to be fired when the Bubble is dismissed/closed.
+             */
+            var clearIntent: PendingIntent? = null,
+            /**
              * A configuration which defines the height of the container which holds the Activity
              * that is being show.
              */
@@ -301,11 +305,13 @@ sealed class Payload {
             var bubbleIcon: IconCompat? = null,
             /**
              * Flag to auto-expand the Bubble to create and display the Activity defined by the
-             * PendingIntent.
+             * PendingIntent. This flag has no effect when the app is in the background.
              */
             var autoExpand: Boolean = false,
             /**
-             * Flag to hide the initial notification which is shown when the Bubble is created.
+             * Flag to hide the initial notification in the notification shade which the
+             * notification is shown from the foreground. This flag has no effect when the app is in
+             * the background and the initial notification is shown regardless.
              */
             var suppressInitialNotification: Boolean = false
     )

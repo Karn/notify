@@ -210,15 +210,14 @@ internal object NotificationInterop {
         payload.bubblize
                 ?.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q }
                 ?.also {
-                    val bubbleData = NotificationCompat.BubbleMetadata.Builder()
+                    builder.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
                             .setDesiredHeight(it.desiredHeight)
                             .setIntent(it.targetActivity!!)
                             .setIcon(it.bubbleIcon!!)
                             .setAutoExpandBubble(it.autoExpand)
                             .setSuppressNotification(it.suppressInitialNotification)
+                            .setDeleteIntent(it.clearIntent)
                             .build()
-
-                    builder.bubbleMetadata = bubbleData
                 }
 
         var style: NotificationCompat.Style? = null

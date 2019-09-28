@@ -144,6 +144,14 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      *
      * In addition, the 'Bubbles' flag has to be enabled from the Android Developer Options in the
      * Settings of the Device for the notifications to be shown as Bubbles.
+     *
+     * Finally, the 'targetActivity' should also have the following attributes to correctly show a
+     * Bubble notification.
+     *
+     *      android:documentLaunchMode="always"
+     *      android:resizeableActivity="true"
+     *      android:screenOrientation="portrait"
+     *
      */
     @Experimental
     @TargetApi(Build.VERSION_CODES.Q)
