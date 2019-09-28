@@ -24,6 +24,8 @@
 
 package io.karn.notify
 
+import android.annotation.TargetApi
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import io.karn.notify.entities.Payload
 import io.karn.notify.internal.RawNotification
@@ -42,6 +44,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
     private var header = Notify.defaultConfig.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
+    private var bubblize: Payload.BubbleView? = null
     private var stackable: Payload.Stackable? = null
 
     /**
@@ -63,8 +66,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      */
     fun alerting(key: String, init: Payload.Alerts.() -> Unit): NotifyCreator {
         // Clone object and assign the key.
-        this.alerts = this.alerts.copy(channelKey = key)
-        this.alerts.init()
+        this.alerts = this.alerts.copy(channelKey = key).also(init)
         return this
     }
 
@@ -82,8 +84,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * Scoped function for modifying the content of a 'Default' notification.
      */
     fun content(init: Payload.Content.Default.() -> Unit): NotifyCreator {
-        this.content = Payload.Content.Default()
-        (this.content as Payload.Content.Default).init()
+        this.content = Payload.Content.Default().also(init)
         return this
     }
 
@@ -91,8 +92,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * Scoped function for modifying the content of a 'TextList' notification.
      */
     fun asTextList(init: Payload.Content.TextList.() -> Unit): NotifyCreator {
-        this.content = Payload.Content.TextList()
-        (this.content as Payload.Content.TextList).init()
+        this.content = Payload.Content.TextList().also(init)
         return this
     }
 
@@ -100,8 +100,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * Scoped function for modifying the content of a 'BigText' notification.
      */
     fun asBigText(init: Payload.Content.BigText.() -> Unit): NotifyCreator {
-        this.content = Payload.Content.BigText()
-        (this.content as Payload.Content.BigText).init()
+        this.content = Payload.Content.BigText().also(init)
         return this
     }
 
@@ -109,8 +108,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * Scoped function for modifying the content of a 'BigPicture' notification.
      */
     fun asBigPicture(init: Payload.Content.BigPicture.() -> Unit): NotifyCreator {
-        this.content = Payload.Content.BigPicture()
-        (this.content as Payload.Content.BigPicture).init()
+        this.content = Payload.Content.BigPicture().also(init)
         return this
     }
 
@@ -118,8 +116,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * Scoped function for modifying the content of a 'Message' notification.
      */
     fun asMessage(init: Payload.Content.Message.() -> Unit): NotifyCreator {
-        this.content = Payload.Content.Message()
-        (this.content as Payload.Content.Message).init()
+        this.content = Payload.Content.Message().also(init)
         return this
     }
 
@@ -128,8 +125,22 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * relies on adding standard notification Action objects.
      */
     fun actions(init: ArrayList<Action>.() -> Unit): NotifyCreator {
-        this.actions = ArrayList()
-        (this.actions as ArrayList<Action>).init()
+        this.actions = ArrayList<Action>().also(init)
+        return this
+    }
+
+    @TargetApi(Build.VERSION_CODES.Q)
+    fun bubblize(init: Payload.BubbleView.() -> Unit): NotifyCreator {
+        this.bubblize = Payload.BubbleView().also(init)
+
+        this.bubblize!!
+                .takeUnless { it.bubbleIcon == null }
+                ?: throw IllegalArgumentException(Errors.INVALID_BUBBLE_ICON_ERROR)
+
+        this.bubblize!!
+                .takeUnless { it.targetActivityIntent == null }
+                ?: throw IllegalArgumentException(Errors.INVALID_BUBBLE_TARGET_ACTIVITY_ERROR)
+
         return this
     }
 
@@ -138,14 +149,11 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * relies on the 'summaryText' of a stackable notification.
      */
     fun stackable(init: Payload.Stackable.() -> Unit): NotifyCreator {
-        this.stackable = Payload.Stackable()
-        (this.stackable as Payload.Stackable).init()
+        this.stackable = Payload.Stackable().also(init)
 
-        this.stackable
-                ?.takeIf { it.key.isNullOrEmpty() }
-                ?.apply {
-                    throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
-                }
+        this.stackable!!
+                .takeUnless { it.key.isNullOrEmpty() }
+                ?: throw IllegalArgumentException(Errors.INVALID_STACK_KEY_ERROR)
 
         return this
     }
@@ -155,7 +163,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * transformations (if any) from the {@see NotifyCreator} builder object.
      */
     fun asBuilder(): NotificationCompat.Builder {
-        return notify.asBuilder(RawNotification(meta, alerts, header, content, stackable, actions))
+        return notify.asBuilder(RawNotification(meta, alerts, header, content, bubblize, stackable, actions))
     }
 
     /**

@@ -31,6 +31,7 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.IconCompat
 import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.internal.utils.Action
@@ -271,6 +272,14 @@ sealed class Payload {
                 var messages: List<NotificationCompat.MessagingStyle.Message> = ArrayList()
         ) : Content(), SupportsLargeIcon
     }
+
+    data class BubbleView(
+            var targetActivityIntent: PendingIntent? = null,
+            var desiredHeight: Int = 600,
+            var bubbleIcon: IconCompat? = null,
+            var autoExpand: Boolean = false,
+            var suppressInitialNotification: Boolean = false
+    )
 
     /**
      * Contains configuration specific to the manual stacking behaviour of a notification.

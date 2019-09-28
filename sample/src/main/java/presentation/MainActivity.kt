@@ -24,15 +24,18 @@
 
 package presentation
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.IconCompat
 import io.karn.notify.Notify
 import io.karn.notify.sample.R
-import java.util.*
+import java.util.Arrays
 
 class MainActivity : AppCompatActivity() {
 
@@ -123,6 +126,24 @@ class MainActivity : AppCompatActivity() {
                                     System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
                                     "Moez")
                     )
+                }
+                .show()
+    }
+
+    fun notifyBubble(view: View) {
+        Notify
+                .with(this)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .bubblize {
+                    // Create bubble intent
+                    val target = Intent(this@MainActivity, BubbleActivity::class.java)
+                    val bubbleIntent = PendingIntent.getActivity(this@MainActivity, 0, target, 0 /* flags */)
+
+                    this.bubbleIcon = IconCompat.createWithResource(this@MainActivity, R.drawable.ic_app_icon)
+                    this.targetActivityIntent = bubbleIntent
                 }
                 .show()
     }

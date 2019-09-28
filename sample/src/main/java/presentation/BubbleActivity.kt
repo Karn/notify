@@ -22,17 +22,16 @@
  * SOFTWARE.
  */
 
-package io.karn.notify.internal
+package presentation
 
-import io.karn.notify.entities.Payload
-import io.karn.notify.internal.utils.Action
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import io.karn.notify.sample.R
 
-internal data class RawNotification(
-        internal val meta: Payload.Meta,
-        internal val alerting: Payload.Alerts,
-        internal val header: Payload.Header,
-        internal val content: Payload.Content,
-        internal val bubblize: Payload.BubbleView?,
-        internal val stackable: Payload.Stackable?,
-        internal val actions: ArrayList<Action>?
-)
+class BubbleActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bubble)
+    }
+}

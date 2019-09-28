@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2018 Karn Saheb
@@ -26,8 +25,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.karn.notify.sample">
 
-    <supports-screens android:xlargeScreens="false" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_app_icon"
@@ -44,6 +41,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="presentation.BubbleActivity"
+            android:allowEmbedded="true"
+            android:documentLaunchMode="always"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait" />
     </application>
+
+    <supports-screens android:xlargeScreens="false" />
 
 </manifest>
