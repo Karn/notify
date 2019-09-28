@@ -27,6 +27,11 @@ package io.karn.notify.internal.utils
 import androidx.annotation.IntDef
 import io.karn.notify.Notify
 
+/**
+ * Denotes features which are considered experimental and are subject to change without notice.
+ */
+annotation class Experimental
+
 @DslMarker
 annotation class NotifyScopeMarker
 

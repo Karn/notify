@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                     val bubbleIntent = PendingIntent.getActivity(this@MainActivity, 0, target, 0 /* flags */)
 
                     this.bubbleIcon = IconCompat.createWithResource(this@MainActivity, R.drawable.ic_app_icon)
-                    this.targetActivityIntent = bubbleIntent
+                    this.targetActivity = bubbleIntent
                 }
                 .show()
     }

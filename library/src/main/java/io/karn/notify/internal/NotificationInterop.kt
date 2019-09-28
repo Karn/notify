@@ -212,7 +212,7 @@ internal object NotificationInterop {
                 ?.also {
                     val bubbleData = NotificationCompat.BubbleMetadata.Builder()
                             .setDesiredHeight(it.desiredHeight)
-                            .setIntent(it.targetActivityIntent!!)
+                            .setIntent(it.targetActivity!!)
                             .setIcon(it.bubbleIcon!!)
                             .setAutoExpandBubble(it.autoExpand)
                             .setSuppressNotification(it.suppressInitialNotification)

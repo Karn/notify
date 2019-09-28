@@ -273,11 +273,40 @@ sealed class Payload {
         ) : Content(), SupportsLargeIcon
     }
 
-    data class BubbleView(
-            var targetActivityIntent: PendingIntent? = null,
+    /**
+     * Contains configuration for Android Q Bubbles which are a native implementation of the
+     * chatheads functionality pioneered by Facebook. The documentation around Bubbles describes
+     * them as follows:
+     * "Bubbles let users easily multi-task from anywhere on their device. They are designed to be
+     * an alternative to using SYSTEM_ALERT_WINDOW."
+     *
+     * <a href="https://developer.android.com/guide/topics/ui/bubbles">Bubbles | Android Developers</a>
+     *
+     * Note that you can only have a total of five Bubbles being shown at any time.
+     */
+    data class Bubble(
+            /**
+             * A pending intent which contains a reference to the Activity that is being created
+             * once the bubble has been created.
+             */
+            var targetActivity: PendingIntent? = null,
+            /**
+             * A configuration which defines the height of the container which holds the Activity
+             * that is being show.
+             */
             var desiredHeight: Int = 600,
+            /**
+             * The icon which will be used by the bubble.
+             */
             var bubbleIcon: IconCompat? = null,
+            /**
+             * Flag to auto-expand the Bubble to create and display the Activity defined by the
+             * PendingIntent.
+             */
             var autoExpand: Boolean = false,
+            /**
+             * Flag to hide the initial notification which is shown when the Bubble is created.
+             */
             var suppressInitialNotification: Boolean = false
     )
 

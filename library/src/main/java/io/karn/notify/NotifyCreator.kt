@@ -31,6 +31,7 @@ import io.karn.notify.entities.Payload
 import io.karn.notify.internal.RawNotification
 import io.karn.notify.internal.utils.Action
 import io.karn.notify.internal.utils.Errors
+import io.karn.notify.internal.utils.Experimental
 import io.karn.notify.internal.utils.NotifyScopeMarker
 
 /**
@@ -44,7 +45,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
     private var header = Notify.defaultConfig.defaultHeader.copy()
     private var content: Payload.Content = Payload.Content.Default()
     private var actions: ArrayList<Action>? = null
-    private var bubblize: Payload.BubbleView? = null
+    private var bubblize: Payload.Bubble? = null
     private var stackable: Payload.Stackable? = null
 
     /**
@@ -129,16 +130,32 @@ class NotifyCreator internal constructor(private val notify: Notify) {
         return this
     }
 
+    /**
+     * Scoped function for modifying the behaviour of 'Bubble' notifications. The transformation
+     * relies on the 'bubbleIcon' and 'targetActivity' values which are used to create the Bubble.
+     *
+     * Note that Bubbles have very specific restrictions in terms of when they can be shown to the
+     * user. In particular, at least one of the following conditions must be met before the
+     * notification is shown.
+     * - The notification uses MessagingStyle, and has a Person added.
+     * - The notification is from a call to Service.startForeground, has a category of
+     *   CATEGORY_CALL, and has a Person added.
+     * - The app is in the foreground when the notification is sent.
+     *
+     * In addition, the 'Bubbles' flag has to be enabled from the Android Developer Options in the
+     * Settings of the Device for the notifications to be shown as Bubbles.
+     */
+    @Experimental
     @TargetApi(Build.VERSION_CODES.Q)
-    fun bubblize(init: Payload.BubbleView.() -> Unit): NotifyCreator {
-        this.bubblize = Payload.BubbleView().also(init)
+    fun bubblize(init: Payload.Bubble.() -> Unit): NotifyCreator {
+        this.bubblize = Payload.Bubble().also(init)
 
         this.bubblize!!
                 .takeUnless { it.bubbleIcon == null }
                 ?: throw IllegalArgumentException(Errors.INVALID_BUBBLE_ICON_ERROR)
 
         this.bubblize!!
-                .takeUnless { it.targetActivityIntent == null }
+                .takeUnless { it.targetActivity == null }
                 ?: throw IllegalArgumentException(Errors.INVALID_BUBBLE_TARGET_ACTIVITY_ERROR)
 
         return this
