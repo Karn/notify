@@ -129,7 +129,7 @@ class NotifyContentTest {
         Assert.assertEquals(testTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_TITLE).toString())
         Assert.assertEquals(testText, notification.extras.getCharSequence(NotificationCompat.EXTRA_TEXT).toString())
 
-        Assert.assertEquals(testLines, notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES).toList())
+        Assert.assertEquals(testLines, notification.extras.getCharSequenceArray(NotificationCompat.EXTRA_TEXT_LINES)?.toList())
     }
 
     @Test
@@ -185,10 +185,10 @@ class NotifyContentTest {
         Assert.assertEquals(testCollapsedText, notification.extras.getCharSequence(NotificationCompat.EXTRA_SUMMARY_TEXT))
         // Assert.assertEquals(context.resources.getDrawable(testLargeIconResID, context.theme), notification.getLargeIcon().loadDrawable(this.context))
 
-        val actualIcon: Icon = notification.extras.getParcelable(NotificationCompat.EXTRA_LARGE_ICON)
+        val actualIcon: Icon? = notification.extras.getParcelable(NotificationCompat.EXTRA_LARGE_ICON)
         Assert.assertNotNull(actualIcon)
 
-        val actualImage: Bitmap = notification.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
+        val actualImage: Bitmap? = notification.extras.getParcelable(NotificationCompat.EXTRA_PICTURE)
         Assert.assertNotNull(actualImage)
 
         Assert.assertEquals(testImage, actualImage)
@@ -227,8 +227,9 @@ class NotifyContentTest {
         Assert.assertEquals(testUserDisplayName, notification.extras.getCharSequence(NotificationCompat.EXTRA_SELF_DISPLAY_NAME))
         Assert.assertEquals(testConversationTitle, notification.extras.getCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE))
 
-        val actualMessages = getMessagesFromBundleArray(notification.extras.getParcelableArray(NotificationCompat.EXTRA_MESSAGES))
-        Assert.assertEquals(testMessages.size, actualMessages.size)
+        val actualMessages = notification.extras.getParcelableArray(NotificationCompat.EXTRA_MESSAGES)?.let { getMessagesFromBundleArray(it) }
+        Assert.assertNotNull(actualMessages)
+        Assert.assertEquals(testMessages.size, actualMessages!!.size)
 
         actualMessages.forEach { message ->
             testMessages[actualMessages.indexOf(message)].let {

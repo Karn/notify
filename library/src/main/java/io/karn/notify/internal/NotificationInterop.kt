@@ -207,6 +207,19 @@ internal object NotificationInterop {
             }
         }
 
+        payload.bubblize
+                ?.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q }
+                ?.also {
+                    builder.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
+                            .setDesiredHeight(it.desiredHeight)
+                            .setIntent(it.targetActivity!!)
+                            .setIcon(it.bubbleIcon!!)
+                            .setAutoExpandBubble(it.autoExpand)
+                            .setSuppressNotification(it.suppressInitialNotification)
+                            .setDeleteIntent(it.clearIntent)
+                            .build()
+                }
+
         var style: NotificationCompat.Style? = null
 
         payload.stackable?.let {
