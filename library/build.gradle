@@ -56,7 +56,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        kotlinOptions.freeCompilerArgs += ['-module-name', "io.karn.notify"]
+    }
+    // For Kotlin projects
+    kotlinOptions {
+        freeCompilerArgs += ['-module-name', "io.karn.notify"]
+        jvmTarget = "1.8"
     }
 
     lintOptions.abortOnError false
