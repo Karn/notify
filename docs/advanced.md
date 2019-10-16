@@ -28,7 +28,8 @@ Notify
                                                   0,
                                                   Intent(context, MainActivity::class.java),
                                                   0)
-        // Start a service which clears the badge count once the notification is dismissed.
+        // Start a service which clears the badge count once the notification
+        // is dismissed.
         clearIntent = PendingIntent.getService(context,
                                                 0,
                                                 Intent(context, MyNotificationService::class.java)
@@ -58,9 +59,11 @@ Notify
         add(Action(
                 // The icon corresponding to the action.
                 R.drawable.ic_app_icon,
-                // The text corresponding to the action -- this is what shows .
+                // The text corresponding to the action -- this is what shows
+                // below the notification.
                 "Clear",
-                // Swap this PendingIntent for whatever Intent is to be processed when the action is clicked.
+                // Swap this PendingIntent for whatever Intent is to be
+                // processed when the action is clicked.
                 PendingIntent.getService(context,
                         0,
                         Intent(context, MyNotificationService::class.java)
@@ -84,20 +87,23 @@ Notify
             title = "New dessert menu"
             text = "The Cheesecake Factory has a new dessert for you to try!"
         }
-        // Define the notification as being stackable. This block should be the same for all notifications which
-        // are to be grouped together.
+        // Define the notification as being stackable. This block should be the
+        // same for all notifications which are to be grouped together.
         .stackable { // this: Payload.Stackable
-            // In particular, this key should be the same. The properties of this stackable notification as
-            // taken from the latest stackable notification's stackable block.
+            // In particular, this key should be the same. The properties of
+            // this stackable notification as taken from the latest stackable
+            // notification's stackable block.
             key = "test_key"
-            // This is the summary of this notification as it appears when it is as part of a stacked notification. This
-            // String value is what is shown as a single line in the stacked notification.
+            // This is the summary of this notification as it appears when it
+            // is as part of a stacked notification. This String value is what
+            // is shown as a single line in the stacked notification.
             summaryContent = "test summary content"
-            // The number of notifications with the same key is passed as the 'count' argument. We happen not to
-            // use it, but it is there if needed.
+            // The number of notifications with the same key is passed as the
+            // 'count' argument. We happen not to use it, but it is there if
+            // needed.
             summaryTitle = { count -> "Summary title" }
-            // ... here as well, but we instead choose to use to to update the summary for when the notification
-            // is collapsed.
+            // ... here as well, but we instead choose to use to to update the
+            // summary for when the notification is collapsed.
             summaryDescription = { count -> count.toString() + " new notifications." }
         }
         .show()
@@ -135,14 +141,18 @@ Notify.with(context)
     // Define the Notification as supporting a Bubble format. This style can
     // be applied to any notification.
     .bubblize { // this: Payload.Bubble
-        // Configure the target Intent for the Notification to launch when it is expanded.
+        // Configure the target Intent for the Notification to launch when it
+        // is expanded.
         val target = Intent(context, BubbleActivity::class.java)
-        // Provide a PendingIntent to launch the above target once the Bubble is expanded.
-        val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0 /* flags */)
+        // Provide a PendingIntent to launch the above target once the Bubble
+        // is expanded.
+        val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0)
 
-        // Set the image for the Bubble, this uses the IconCompat class to build the icon being shown within the bubble
+        // Set the image for the Bubble, this uses the IconCompat class to
+        // build the icon being shown within the bubble
         bubbleIcon = IconCompat.createWithResource(context, R.drawable.ic_app_icon)
-        // Set the activity that is being shown when the Bubble is expanded to the PendingIntent created above.
+        // Set the activity that is being shown when the Bubble is expanded to
+        // the PendingIntent created above.
         targetActivity = bubbleIntent
     }
     .show()
