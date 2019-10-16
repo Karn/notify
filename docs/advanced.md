@@ -102,3 +102,48 @@ Notify
         }
         .show()
 ```
+
+
+#### BUBBLE NOTIFICATIONS
+
+With the release of Android 10, Notify now also supports [Notification Bubbles](https://developer.android.com/guide/topics/ui/bubbles) on devices with the `Notification Bubbles` enabled through the Developer Settings. This new form of notification allows an application to display rich content from an activity at a glance to a user.
+
+Begin by first creating an activity and adding the following permissions to that activity within your `AndroidManifest.xml`:
+
+```xml
+<application
+        ...>
+
+    <!-- Find the Activity being used for the Bubble Notification -->
+    <activity
+        ...
+        <!-- Add the three lines below to the activity being used -->
+        android:allowEmbedded="true"
+        android:documentLaunchMode="always"
+        android:resizeableActivity="true" />
+</application>
+```
+
+Then you can target that activity from the notification.
+
+```kotlin
+Notify.with(context)
+    .content { // this: Payload.Content.Default
+        title = "New dessert menu"
+        text = "The Cheesecake Factory has a new dessert for you to try!"
+    }
+    // Define the Notification as supporting a Bubble format. This style can
+    // be applied to any notification.
+    .bubblize { // this: Payload.Bubble
+        // Configure the target Intent for the Notification to launch when it is expanded.
+        val target = Intent(context, BubbleActivity::class.java)
+        // Provide a PendingIntent to launch the above target once the Bubble is expanded.
+        val bubbleIntent = PendingIntent.getActivity(context, 0, target, 0 /* flags */)
+
+        // Set the image for the Bubble, this uses the IconCompat class to build the icon being shown within the bubble
+        bubbleIcon = IconCompat.createWithResource(context, R.drawable.ic_app_icon)
+        // Set the activity that is being shown when the Bubble is expanded to the PendingIntent created above.
+        targetActivity = bubbleIntent
+    }
+    .show()
+```
