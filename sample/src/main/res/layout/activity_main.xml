@@ -79,4 +79,11 @@
         android:layout_height="wrap_content"
         android:onClick="notifyBubble"
         android:text="Notify bubble!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyProgress"
+        android:text="Notify Progress!" />
 </LinearLayout>

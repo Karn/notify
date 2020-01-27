@@ -168,6 +168,19 @@ sealed class Payload {
     )
 
     /**
+     * Contains configuration that is specific to the progress of a notification.
+     */
+    class Progress constructor(
+
+            open var showIndeterminate: Boolean = true,
+
+            open var determinateProgress: Int = 1,
+
+            open var showProgress: Boolean = false
+
+    )
+
+    /**
      * Deterministic property assignment for a notification type.
      */
     sealed class Content {

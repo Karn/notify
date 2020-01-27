@@ -155,4 +155,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
     }
+
+    fun notifyProgress(view: View) {
+
+        Notify
+                .with(this)
+                .content {
+                    title = "Uploading files"
+                    text = "The files are being uploaded!"
+                }
+                .progress {
+                    showProgress = true
+                    showIndeterminate = true
+                }
+                .show()
+    }
 }
