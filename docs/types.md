@@ -118,3 +118,32 @@ Notify
     }
     .show()
 ```
+
+#### PROGRESS NOTIFICATION
+
+![Progress notification](./assets/types/progress.png)
+
+The message notification is useful when displaying conversations within an application. It can also be useful to set the `headerText` field of the `Header` block with the number of messages outside the scope (list.size - 6).
+
+```Kotlin
+Notify
+    .with(context)
+    .asMessage { // this: Payload.Content.Message
+        userDisplayName = "Karn"
+        conversationTitle = "Sundae chat"
+        messages = Arrays.asList(
+                       NotificationCompat.MessagingStyle.Message(
+                           "Are you guys ready to try the Strawberry sundae?",
+                           System.currentTimeMillis() - (6 * 60 * 1000), // 6 Mins ago
+                           "Karn"),
+                       NotificationCompat.MessagingStyle.Message(
+                           "Yeah! I've heard great things about this place.",
+                           System.currentTimeMillis() - (5 * 60 * 1000), // 5 Mins ago
+                           "Nitish"),
+                       NotificationCompat.MessagingStyle.Message("What time are you getting there Karn?",
+                           System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
+                           "Moez")
+                    )
+    }
+    .show()
+```
