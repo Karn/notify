@@ -84,6 +84,13 @@
         style="@style/DefaultTheme.TextButton.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="notifyProgress"
-        android:text="Notify Progress!" />
+        android:onClick="notifyIndeterminateProgress"
+        android:text="Notify Indeterminate Progress!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyDeterminateProgress"
+        android:text="Notify Determinate Progress!" />
 </LinearLayout>

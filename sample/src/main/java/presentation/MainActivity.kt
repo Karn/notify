@@ -156,18 +156,35 @@ class MainActivity : AppCompatActivity() {
                 .show()
     }
 
-    fun notifyProgress(view: View) {
+    fun notifyIndeterminateProgress(view: View) {
 
         Notify
                 .with(this)
-                .content {
+                .asBigText  {
                     title = "Uploading files"
-                    text = "The files are being uploaded!"
+                    expandedText = "The files are being uploaded!"
+                    bigText = "Daft Punk - Get Lucky.flac is uploading to server /music/favorites"
                 }
                 .progress {
                     showProgress = true
-                    showIndeterminate = true
                 }
                 .show()
+    }
+
+    fun notifyDeterminateProgress(view: View) {
+
+        Notify
+            .with(this)
+            .asBigText {
+                title = "Bitcoin payment processing"
+                expandedText = "Your payment was sent to the Bitcoin network"
+                bigText = "Your payment #0489 is being confirmed 2/4"
+            }
+            .progress {
+                showProgress = true
+                enablePercentage = true
+                progressPercent = 30
+            }
+            .show()
     }
 }
