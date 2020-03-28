@@ -47,6 +47,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
     private var actions: ArrayList<Action>? = null
     private var bubblize: Payload.Bubble? = null
     private var stackable: Payload.Stackable? = null
+    private var progress: Payload.Progress = Payload.Progress()
 
     /**
      * Scoped function for modifying the Metadata of a notification, such as click intents,
@@ -78,6 +79,11 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      */
     fun header(init: Payload.Header.() -> Unit): NotifyCreator {
         this.header.init()
+        return this
+    }
+
+    fun progress(init: Payload.Progress.() -> Unit): NotifyCreator {
+        this.progress.init()
         return this
     }
 
@@ -188,7 +194,7 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * transformations (if any) from the {@see NotifyCreator} builder object.
      */
     fun asBuilder(): NotificationCompat.Builder {
-        return notify.asBuilder(RawNotification(meta, alerts, header, content, bubblize, stackable, actions))
+        return notify.asBuilder(RawNotification(meta, alerts, header, content, bubblize, stackable, actions, progress))
     }
 
     /**

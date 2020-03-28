@@ -146,6 +146,11 @@ internal object NotificationInterop {
                 // The duration of time after which the notification is automatically dismissed.
                 .setTimeoutAfter(payload.meta.timeout)
 
+        if (payload.progress.showProgress) {
+            if (payload.progress.enablePercentage) builder.setProgress(100,payload.progress.progressPercent,false)
+            else builder.setProgress(0,0,true)
+        }
+
         // Add contacts if any -- will help display prominently if possible.
         payload.meta.contacts.takeIf { it.isNotEmpty() }?.forEach {
             builder.addPerson(it)

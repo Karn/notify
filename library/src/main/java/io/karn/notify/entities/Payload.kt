@@ -168,6 +168,30 @@ sealed class Payload {
     )
 
     /**
+     * Contains configuration that is specific to the progress of a notification, inder
+     */
+    class Progress constructor(
+
+            /**
+             * The default false for a indeterminate horizontal progress in notification.
+             * If this is true the notification show horizontal progress with exact value
+             */
+            var enablePercentage: Boolean = false,
+
+            /*
+            * The value of progress percent
+            * */
+            var progressPercent: Int = 0,
+
+            /**
+             * The default false for simple notiffication
+             * If this is true the notification show progress
+             */
+            var showProgress: Boolean = false
+
+    )
+
+    /**
      * Deterministic property assignment for a notification type.
      */
     sealed class Content {
