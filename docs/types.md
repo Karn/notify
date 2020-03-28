@@ -123,27 +123,22 @@ Notify
 
 ![Progress notification](./assets/types/progress.png)
 
-The message notification is useful when displaying conversations within an application. It can also be useful to set the `headerText` field of the `Header` block with the number of messages outside the scope (list.size - 6).
+Progress notification is useful when you need to display information about the detail of a process such as uploading a file to a server, or some calculation that takes time and you want to keep the user informed. You can ser `showProgress` true to display it, and if you need determinate progress you can set `enablePercentage` true and specify `progressPercent` to your current value
 
 ```Kotlin
 Notify
     .with(context)
-    .asMessage { // this: Payload.Content.Message
-        userDisplayName = "Karn"
-        conversationTitle = "Sundae chat"
-        messages = Arrays.asList(
-                       NotificationCompat.MessagingStyle.Message(
-                           "Are you guys ready to try the Strawberry sundae?",
-                           System.currentTimeMillis() - (6 * 60 * 1000), // 6 Mins ago
-                           "Karn"),
-                       NotificationCompat.MessagingStyle.Message(
-                           "Yeah! I've heard great things about this place.",
-                           System.currentTimeMillis() - (5 * 60 * 1000), // 5 Mins ago
-                           "Nitish"),
-                       NotificationCompat.MessagingStyle.Message("What time are you getting there Karn?",
-                           System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
-                           "Moez")
-                    )
+    .asBigText  {
+        title = "Uploading files"
+        expandedText = "The files are being uploaded!"
+        bigText = "Daft Punk - Get Lucky.flac is uploading to server /music/favorites"
+    }
+    .progress {
+        showProgress = true
+        
+        //For determinate progress
+        //enablePercentage = true
+        //progressPercent = 27
     }
     .show()
 ```
