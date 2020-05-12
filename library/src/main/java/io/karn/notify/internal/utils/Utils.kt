@@ -25,11 +25,11 @@
 package io.karn.notify.internal.utils
 
 import android.text.Html
-import java.util.*
+import java.util.Random
 
 internal object Utils {
     fun getRandomInt(): Int {
-        return Random().nextInt(Int.MAX_VALUE - 100) + 100
+        return Random(System.currentTimeMillis()).nextInt()
     }
 
     fun getAsSecondaryFormattedText(str: String?): CharSequence? {

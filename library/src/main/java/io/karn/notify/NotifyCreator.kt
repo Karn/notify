@@ -198,8 +198,8 @@ class NotifyCreator internal constructor(private val notify: Notify) {
     }
 
     /**
-     * Delegate a {@see Notification.Builder} object to the Notify NotificationInterop class which
-     * builds and displays the notification.
+     * Delegate a {@see Notification.Builder} object to the NotificationInterop class which builds
+     * and displays the notification.
      *
      * This is a terminal operation.
      *
@@ -209,8 +209,25 @@ class NotifyCreator internal constructor(private val notify: Notify) {
      * @return An integer corresponding to the ID of the system notification. Any updates should use
      * this returned integer to make updates or to cancel the notification.
      */
-    fun show(id: Int? = null): Int {
+    @Deprecated(message = "Removed optional argument to alleviate confusion on ID that is used to create notification",
+            replaceWith = ReplaceWith(
+                    "Notify.show()",
+                    "io.karn.notify.Notify"))
+    fun show(id: Int?): Int {
         return notify.show(id, asBuilder())
+    }
+
+    /**
+     * Delegate a @see{ Notification.Builder} object to the NotificationInterop class which builds
+     * and displays the notification.
+     *
+     * This is a terminal operation.
+     *
+     * @return An integer corresponding to the ID of the system notification. Any updates should use
+     * this returned integer to make updates or to cancel the notification.
+     */
+    fun show(): Int {
+        return notify.show(null, asBuilder())
     }
 
     /**
