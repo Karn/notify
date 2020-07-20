@@ -27,6 +27,7 @@ package io.karn.notify
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import org.junit.After
 import org.junit.Assert
@@ -87,6 +88,8 @@ class NotifyAlertingTest : NotifyTestBase() {
         Assert.assertEquals(testAlerting.channelImportance + 3, shadowChannel.importance)
         // Assert.assertEquals(testLightColor, shadowChannel.lightColor)
         Assert.assertNull(shadowChannel.vibrationPattern)
+        Assert.assertEquals(Settings.System.DEFAULT_NOTIFICATION_URI, shadowChannel.sound)
+        Assert.assertTrue(shadowChannel.canShowBadge())
         Assert.assertEquals(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), shadowChannel.sound)
     }
 
@@ -112,6 +115,7 @@ class NotifyAlertingTest : NotifyTestBase() {
                     lightColor = testLightColor
                     vibrationPattern = testVibrationPattern
                     sound = testSound
+                    // 'group' not available in N
                 }
                 .content {
                     title = "New dessert menu"
@@ -151,6 +155,7 @@ class NotifyAlertingTest : NotifyTestBase() {
                     lightColor = testLightColor
                     vibrationPattern = testVibrationPattern
                     sound = testSound
+                    showBadge = false
                 }
                 .content {
                     title = "New dessert menu"
@@ -167,5 +172,6 @@ class NotifyAlertingTest : NotifyTestBase() {
         // Assert.assertEquals(testLightColor, shadowChannel.lightColor)
         Assert.assertEquals(testVibrationPattern, shadowChannel.vibrationPattern.toList())
         Assert.assertEquals(testSound, shadowChannel.sound)
+        Assert.assertFalse(shadowChannel.canShowBadge())
     }
 }

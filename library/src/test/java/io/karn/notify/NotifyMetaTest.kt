@@ -60,6 +60,7 @@ class NotifyMetaTest : NotifyTestBase() {
 
         val testCancelOnClick = false
         val testCategory = NotificationCompat.CATEGORY_STATUS
+        val testGroup = "test_group"
         val testTimeout = 5000L
 
         val notification = Notify.with(this.context)
@@ -68,6 +69,7 @@ class NotifyMetaTest : NotifyTestBase() {
                     clearIntent = testClearIntent
                     cancelOnClick = testCancelOnClick
                     category = testCategory
+                    group = testGroup
                     timeout = testTimeout
                     people {
                         add("mailto:hello@test.com")
@@ -84,6 +86,7 @@ class NotifyMetaTest : NotifyTestBase() {
         Assert.assertEquals(testClearIntent, notification.deleteIntent)
         Assert.assertEquals(testCancelOnClick, (notification.flags and NotificationCompat.FLAG_AUTO_CANCEL) != 0)
         Assert.assertEquals(testCategory, notification.category)
+        Assert.assertEquals(testGroup, notification.group)
         Assert.assertEquals(testTimeout, notification.timeoutAfter)
         Assert.assertEquals(1, notification.extras.getStringArrayList(Notification.EXTRA_PEOPLE_LIST)?.size
                 ?: 0)

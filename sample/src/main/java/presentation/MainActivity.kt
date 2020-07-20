@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyDefault(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .content {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
@@ -72,8 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyTextList(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asTextList {
                     lines = Arrays.asList("New! Fresh Strawberry Cheesecake.",
                             "New! Salted Caramel Cheesecake.",
@@ -86,8 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyBigText(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
@@ -100,8 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyBigPicture(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asBigPicture {
                     title = "Chocolate brownie sundae"
                     text = "Get a look at this amazing dessert!"
@@ -112,8 +108,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyMessage(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asMessage {
                     userDisplayName = "Karn"
                     conversationTitle = "Sundae chat"
@@ -138,8 +133,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        Notify
-                .with(this)
+        Notify.with(this)
                 .content {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
@@ -158,9 +152,8 @@ class MainActivity : AppCompatActivity() {
 
     fun notifyIndeterminateProgress(view: View) {
 
-        Notify
-                .with(this)
-                .asBigText  {
+        Notify.with(this)
+                .asBigText {
                     title = "Uploading files"
                     expandedText = "The files are being uploaded!"
                     bigText = "Daft Punk - Get Lucky.flac is uploading to server /music/favorites"
@@ -173,18 +166,17 @@ class MainActivity : AppCompatActivity() {
 
     fun notifyDeterminateProgress(view: View) {
 
-        Notify
-            .with(this)
-            .asBigText {
-                title = "Bitcoin payment processing"
-                expandedText = "Your payment was sent to the Bitcoin network"
-                bigText = "Your payment #0489 is being confirmed 2/4"
-            }
-            .progress {
-                showProgress = true
-                enablePercentage = true
-                progressPercent = 30
-            }
-            .show()
+        Notify.with(this)
+                .asBigText {
+                    title = "Bitcoin payment processing"
+                    expandedText = "Your payment was sent to the Bitcoin network"
+                    bigText = "Your payment #0489 is being confirmed 2/4"
+                }
+                .progress {
+                    showProgress = true
+                    enablePercentage = true
+                    progressPercent = 30
+                }
+                .show()
     }
 }

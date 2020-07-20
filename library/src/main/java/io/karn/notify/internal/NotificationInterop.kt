@@ -105,9 +105,7 @@ internal object NotificationInterop {
                 .setContentText(Utils.getAsSecondaryFormattedText(payload.stackable.summaryDescription?.invoke(lines.size)))
                 // Attach the stack click handler.
                 .setContentIntent(payload.stackable.clickIntent)
-                .extend(
-                        NotifyExtender().setStacked(true)
-                )
+                .extend(NotifyExtender().setStacked(true))
 
         // Clear the current set of actions and re-apply the stackable actions.
         builder.mActions.clear()
@@ -139,6 +137,8 @@ internal object NotificationInterop {
                 // The category of the notification which allows android to prioritize the
                 // notification as required.
                 .setCategory(payload.meta.category)
+                // Set the key by which this notification will be grouped.
+                .setGroup(payload.meta.group)
                 // Set whether or not this notification is only relevant to the current device.
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.

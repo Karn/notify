@@ -71,6 +71,8 @@ internal object NotificationChannelInterop {
                 setSound(it, android.media.AudioAttributes.Builder().build())
             }
 
+            setShowBadge(alerting.showBadge)
+
             Unit
         }
 

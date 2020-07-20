@@ -24,10 +24,12 @@
 
 package io.karn.notify.entities
 
+import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.graphics.Bitmap
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
@@ -65,6 +67,10 @@ sealed class Payload {
              * notification as required.
              */
             var category: String? = null,
+            /**
+             * A string value by which the system with decide how to group messages.
+             */
+            var group: String? = null,
             /**
              * Set whether or not this notification is only relevant to the current device.
              */
@@ -141,7 +147,12 @@ sealed class Payload {
              * A custom notification sound if any. This is only set on notifications with importance
              * that is at least [Notify.IMPORTANCE_NORMAL] or higher.
              */
-            var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+            /**
+             * A Boolean that indicates whether a notification channel
+             */
+            @TargetApi(Build.VERSION_CODES.O)
+            var showBadge: Boolean = true
     )
 
     /**
