@@ -105,7 +105,6 @@ class NotifyAlertingTest : NotifyTestBase() {
         val testLightColor = Color.CYAN
         val testVibrationPattern = listOf<Long>(0, 200, 0, 200)
         val testSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-        val testGroup = "test_group"
 
         val notification = Notify.with(this.context)
                 .alerting(testChannelKey) {
@@ -116,6 +115,7 @@ class NotifyAlertingTest : NotifyTestBase() {
                     lightColor = testLightColor
                     vibrationPattern = testVibrationPattern
                     sound = testSound
+                    // 'group' not available in N
                 }
                 .content {
                     title = "New dessert menu"
