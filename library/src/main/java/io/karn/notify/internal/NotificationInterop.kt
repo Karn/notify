@@ -264,8 +264,11 @@ internal object NotificationInterop {
                 builder.setContentText(Utils.getAsSecondaryFormattedText((content.text
                         ?: "").toString()))
 
-                val bigText: CharSequence = Html.fromHtml("<font color='#3D3D3D'>" + (content.expandedText
-                        ?: content.title) + "</font><br>" + content.bigText?.replace("\n".toRegex(), "<br>"))
+                val formattedExpandedText = content.expandedText?.let {
+                    "<font color='#3D3D3D'>$it</font><br>"
+                } ?: ""
+
+                val bigText: CharSequence = Html.fromHtml(formattedExpandedText + content.bigText?.replace("\n".toRegex(), "<br>"))
 
                 NotificationCompat.BigTextStyle()
                         .bigText(bigText)
