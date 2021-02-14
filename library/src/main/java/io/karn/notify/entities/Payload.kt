@@ -24,13 +24,16 @@
 
 package io.karn.notify.entities
 
+import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.graphics.Bitmap
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.IconCompat
 import io.karn.notify.Notify
 import io.karn.notify.R
 import io.karn.notify.internal.utils.Action
@@ -64,6 +67,10 @@ sealed class Payload {
              * notification as required.
              */
             var category: String? = null,
+            /**
+             * A string value by which the system with decide how to group messages.
+             */
+            var group: String? = null,
             /**
              * Set whether or not this notification is only relevant to the current device.
              */
@@ -140,7 +147,12 @@ sealed class Payload {
              * A custom notification sound if any. This is only set on notifications with importance
              * that is at least [Notify.IMPORTANCE_NORMAL] or higher.
              */
-            var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            var sound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+            /**
+             * A Boolean that indicates whether a notification channel
+             */
+            @TargetApi(Build.VERSION_CODES.O)
+            var showBadge: Boolean = true
     )
 
     /**
@@ -164,6 +176,30 @@ sealed class Payload {
              * application name to be hidden.
              */
             var showTimestamp: Boolean = true
+    )
+
+    /**
+     * Contains configuration that is specific to the progress of a notification, inder
+     */
+    class Progress constructor(
+
+            /**
+             * The default false for a indeterminate horizontal progress in notification.
+             * If this is true the notification show horizontal progress with exact value
+             */
+            var enablePercentage: Boolean = false,
+
+            /*
+            * The value of progress percent
+            * */
+            var progressPercent: Int = 0,
+
+            /**
+             * The default false for simple notiffication
+             * If this is true the notification show progress
+             */
+            var showProgress: Boolean = false
+
     )
 
     /**
@@ -271,6 +307,49 @@ sealed class Payload {
                 var messages: List<NotificationCompat.MessagingStyle.Message> = ArrayList()
         ) : Content(), SupportsLargeIcon
     }
+
+    /**
+     * Contains configuration for Android Q Bubbles which are a native implementation of the
+     * chatheads functionality pioneered by Facebook. The documentation around Bubbles describes
+     * them as follows:
+     * "Bubbles let users easily multi-task from anywhere on their device. They are designed to be
+     * an alternative to using SYSTEM_ALERT_WINDOW."
+     *
+     * <a href="https://developer.android.com/guide/topics/ui/bubbles">Bubbles | Android Developers</a>
+     *
+     * Note that you can only have a total of five Bubbles being shown at any time.
+     */
+    data class Bubble(
+            /**
+             * A pending intent which contains a reference to the Activity that is being created
+             * once the bubble has been created.
+             */
+            var targetActivity: PendingIntent? = null,
+            /**
+             * A pending intent which is to be fired when the Bubble is dismissed/closed.
+             */
+            var clearIntent: PendingIntent? = null,
+            /**
+             * A configuration which defines the height of the container which holds the Activity
+             * that is being show.
+             */
+            var desiredHeight: Int = 600,
+            /**
+             * The icon which will be used by the bubble.
+             */
+            var bubbleIcon: IconCompat? = null,
+            /**
+             * Flag to auto-expand the Bubble to create and display the Activity defined by the
+             * PendingIntent. This flag has no effect when the app is in the background.
+             */
+            var autoExpand: Boolean = false,
+            /**
+             * Flag to hide the initial notification in the notification shade which the
+             * notification is shown from the foreground. This flag has no effect when the app is in
+             * the background and the initial notification is shown regardless.
+             */
+            var suppressInitialNotification: Boolean = false
+    )
 
     /**
      * Contains configuration specific to the manual stacking behaviour of a notification.

@@ -72,4 +72,25 @@
         android:layout_height="wrap_content"
         android:onClick="notifyMessage"
         android:text="Notify messages!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyBubble"
+        android:text="Notify bubble!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyIndeterminateProgress"
+        android:text="Notify Indeterminate Progress!" />
+
+    <TextView
+        style="@style/DefaultTheme.TextButton.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="notifyDeterminateProgress"
+        android:text="Notify Determinate Progress!" />
 </LinearLayout>

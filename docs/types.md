@@ -118,3 +118,27 @@ Notify
     }
     .show()
 ```
+
+#### PROGRESS NOTIFICATION
+
+![Progress notification](./assets/types/progress.png)
+
+Progress notification is useful when you need to display information about the detail of a process such as uploading a file to a server, or some calculation that takes time and you want to keep the user informed. You can ser `showProgress` true to display it, and if you need determinate progress you can set `enablePercentage` true and specify `progressPercent` to your current value
+
+```Kotlin
+Notify
+    .with(context)
+    .asBigText  {
+        title = "Uploading files"
+        expandedText = "The files are being uploaded!"
+        bigText = "Daft Punk - Get Lucky.flac is uploading to server /music/favorites"
+    }
+    .progress {
+        showProgress = true
+        
+        //For determinate progress
+        //enablePercentage = true
+        //progressPercent = 27
+    }
+    .show()
+```

@@ -7,11 +7,11 @@
 
 
 def versions = [
-        libCode: 12,
-        libName: '1.3.0',
+        libCode: 13,
+        libName: '1.4.0',
 
         kotlin: '1.3.11',
-        core: '1.0.1',
+        core: '1.2.0-alpha04',
         appcompat: '1.0.2',
 
         jacoco: '0.8.2',
@@ -19,8 +19,8 @@ def versions = [
 ]
 
 def build = [
-        compileSdk: 28,
-        targetSdk: 28,
+        compileSdk: 29,
+        targetSdk: 29,
         minSdk: 19,
 
         jacocoAgentVersion: versions.jacoco,
@@ -40,7 +40,7 @@ def dependencies = [
                 reflect: "org.jetbrains.kotlin:kotlin-reflect:${versions.kotlin}"
         ],
         androidx: [
-                core: "androidx.core:core:${versions.core}",
+                core: "androidx.core:core-ktx:${versions.core}",
                 appcompat: "androidx.appcompat:appcompat:${versions.appcompat}"
         ]
 ]
@@ -48,7 +48,7 @@ def dependencies = [
 def testDependencies = [
         instrumentationRunner: 'androidx.test.runner.AndroidJUnitRunner',
         junit: 'junit:junit:4.12',
-        robolectric: 'org.robolectric:robolectric:4.0'
+        robolectric: 'org.robolectric:robolectric:4.3'
 ]
 
 ext.config = [

@@ -125,7 +125,7 @@ class NotifyTest : NotifyTestBase() {
 
         Assert.assertEquals(1, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
 
-        Notify.cancelNotification(notificationId)
+        Notify.cancelNotification(context, notificationId)
 
         Assert.assertEquals(0, NotificationInterop.getActiveNotifications(shadowNotificationManager).size)
     }

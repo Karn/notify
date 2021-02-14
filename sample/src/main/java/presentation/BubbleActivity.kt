@@ -22,23 +22,16 @@
  * SOFTWARE.
  */
 
-package io.karn.notify.internal.utils
+package presentation
 
-import androidx.annotation.IntDef
-import io.karn.notify.Notify
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import io.karn.notify.sample.R
 
-/**
- * Denotes features which are considered experimental and are subject to change without notice.
- */
-annotation class Experimental
+class BubbleActivity : AppCompatActivity() {
 
-@DslMarker
-annotation class NotifyScopeMarker
-
-@Retention(AnnotationRetention.SOURCE)
-@IntDef(Notify.IMPORTANCE_MIN,
-        Notify.IMPORTANCE_LOW,
-        Notify.IMPORTANCE_NORMAL,
-        Notify.IMPORTANCE_HIGH,
-        Notify.IMPORTANCE_MAX)
-annotation class NotifyImportance
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bubble)
+    }
+}

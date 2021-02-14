@@ -24,15 +24,20 @@
 
 package presentation
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.IconCompat
 import io.karn.notify.Notify
 import io.karn.notify.sample.R
-import java.util.*
+import java.util.Arrays
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,8 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyDefault(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .content {
                     title = "New dessert menu"
                     text = "The Cheesecake Factory has a new dessert for you to try!"
@@ -67,8 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyTextList(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asTextList {
                     lines = Arrays.asList("New! Fresh Strawberry Cheesecake.",
                             "New! Salted Caramel Cheesecake.",
@@ -81,8 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyBigText(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asBigText {
                     title = "Chocolate brownie sundae"
                     text = "Try our newest dessert option!"
@@ -95,8 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyBigPicture(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asBigPicture {
                     title = "Chocolate brownie sundae"
                     text = "Get a look at this amazing dessert!"
@@ -107,8 +108,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notifyMessage(view: View) {
-        Notify
-                .with(this)
+        Notify.with(this)
                 .asMessage {
                     userDisplayName = "Karn"
                     conversationTitle = "Sundae chat"
@@ -123,6 +123,59 @@ class MainActivity : AppCompatActivity() {
                                     System.currentTimeMillis() - (1 * 60 * 1000), // 1 Mins ago
                                     "Moez")
                     )
+                }
+                .show()
+    }
+
+    fun notifyBubble(view: View) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            Toast.makeText(this, "Notification Bubbles are only supported on a device running Android Q or later.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Notify.with(this)
+                .content {
+                    title = "New dessert menu"
+                    text = "The Cheesecake Factory has a new dessert for you to try!"
+                }
+                .bubblize {
+                    // Create bubble intent
+                    val target = Intent(this@MainActivity, BubbleActivity::class.java)
+                    val bubbleIntent = PendingIntent.getActivity(this@MainActivity, 0, target, 0 /* flags */)
+
+                    bubbleIcon = IconCompat.createWithResource(this@MainActivity, R.drawable.ic_app_icon)
+                    targetActivity = bubbleIntent
+                    suppressInitialNotification = true
+                }
+                .show()
+    }
+
+    fun notifyIndeterminateProgress(view: View) {
+
+        Notify.with(this)
+                .asBigText {
+                    title = "Uploading files"
+                    expandedText = "The files are being uploaded!"
+                    bigText = "Daft Punk - Get Lucky.flac is uploading to server /music/favorites"
+                }
+                .progress {
+                    showProgress = true
+                }
+                .show()
+    }
+
+    fun notifyDeterminateProgress(view: View) {
+
+        Notify.with(this)
+                .asBigText {
+                    title = "Bitcoin payment processing"
+                    expandedText = "Your payment was sent to the Bitcoin network"
+                    bigText = "Your payment #0489 is being confirmed 2/4"
+                }
+                .progress {
+                    showProgress = true
+                    enablePercentage = true
+                    progressPercent = 30
                 }
                 .show()
     }

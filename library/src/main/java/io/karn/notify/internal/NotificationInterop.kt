@@ -105,9 +105,7 @@ internal object NotificationInterop {
                 .setContentText(Utils.getAsSecondaryFormattedText(payload.stackable.summaryDescription?.invoke(lines.size)))
                 // Attach the stack click handler.
                 .setContentIntent(payload.stackable.clickIntent)
-                .extend(
-                        NotifyExtender().setStacked(true)
-                )
+                .extend(NotifyExtender().setStacked(true))
 
         // Clear the current set of actions and re-apply the stackable actions.
         builder.mActions.clear()
@@ -139,12 +137,19 @@ internal object NotificationInterop {
                 // The category of the notification which allows android to prioritize the
                 // notification as required.
                 .setCategory(payload.meta.category)
+                // Set the key by which this notification will be grouped.
+                .setGroup(payload.meta.group)
                 // Set whether or not this notification is only relevant to the current device.
                 .setLocalOnly(payload.meta.localOnly)
                 // Set whether this notification is sticky.
                 .setOngoing(payload.meta.sticky)
                 // The duration of time after which the notification is automatically dismissed.
                 .setTimeoutAfter(payload.meta.timeout)
+
+        if (payload.progress.showProgress) {
+            if (payload.progress.enablePercentage) builder.setProgress(100,payload.progress.progressPercent,false)
+            else builder.setProgress(0,0,true)
+        }
 
         // Add contacts if any -- will help display prominently if possible.
         payload.meta.contacts.takeIf { it.isNotEmpty() }?.forEach {
@@ -206,6 +211,19 @@ internal object NotificationInterop {
                 builder.setSound(sound)
             }
         }
+
+        payload.bubblize
+                ?.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q }
+                ?.also {
+                    builder.bubbleMetadata = NotificationCompat.BubbleMetadata.Builder()
+                            .setDesiredHeight(it.desiredHeight)
+                            .setIntent(it.targetActivity!!)
+                            .setIcon(it.bubbleIcon!!)
+                            .setAutoExpandBubble(it.autoExpand)
+                            .setSuppressNotification(it.suppressInitialNotification)
+                            .setDeleteIntent(it.clearIntent)
+                            .build()
+                }
 
         var style: NotificationCompat.Style? = null
 

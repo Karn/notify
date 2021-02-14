@@ -108,8 +108,22 @@ class Notify internal constructor(internal var context: Context) {
         /**
          * Cancel an existing notification with a particular id.
          */
+        @Deprecated(message = "NotificationManager might not have been initialized and can throw a NullPointerException -- provide a context.",
+                replaceWith = ReplaceWith("Notify.cancelNotification(context, id)"))
+        @Throws(NullPointerException::class)
         fun cancelNotification(id: Int) {
-            return NotificationInterop.cancelNotification(Notify.defaultConfig.notificationManager!!, id)
+            return NotificationInterop.cancelNotification(defaultConfig.notificationManager!!, id)
+        }
+
+        /**
+         * Cancel an existing notification with a particular id.
+         */
+        fun cancelNotification(context: Context, id: Int) {
+            if (defaultConfig.notificationManager == null) {
+                defaultConfig.notificationManager = context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            }
+
+            return NotificationInterop.cancelNotification(defaultConfig.notificationManager!!, id)
         }
     }
 
@@ -145,6 +159,6 @@ class Notify internal constructor(internal var context: Context) {
      * this returned integer to make updates or to cancel the notification.
      */
     internal fun show(id: Int?, builder: NotificationCompat.Builder): Int {
-        return NotificationInterop.showNotification(Notify.defaultConfig.notificationManager!!, id, builder)
+        return NotificationInterop.showNotification(defaultConfig.notificationManager!!, id, builder)
     }
 }

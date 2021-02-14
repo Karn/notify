@@ -40,6 +40,10 @@ data class NotifyConfig(
          */
         internal var defaultHeader: Payload.Header = Payload.Header(),
         /**
+         * Specifies the default configuration of a progress (e.g the default progress type)
+         */
+        internal var defaultProgress: Payload.Progress = Payload.Progress(),
+        /**
          * Specifies the default alerting configuration for notifications.
          */
         internal var defaultAlerting: Payload.Alerts = Payload.Alerts()
@@ -53,6 +57,11 @@ data class NotifyConfig(
         // Clone object and assign the key.
         defaultAlerting = defaultAlerting.copy(channelKey = key)
         defaultAlerting.init()
+        return this
+    }
+
+    fun progress(init: Payload.Progress.() -> Unit): NotifyConfig {
+        defaultProgress.init()
         return this
     }
 }
