@@ -1,0 +1,144 @@
+name: "Gradle GitHub Publish"
+description: "Publish to a local"
+inputs:
+  publishing-directory:
+    required: false
+    default: "releases"
+  publishing-project-name:
+    required: false
+    default: ""
+  publishing-project-description:
+    required: false
+    default: ""
+  publishing-project-url:
+    required: false
+    default: ""
+  publishing-artifact-group:
+    required: false
+    default: ""
+  publishing-artifact-id:
+    required: false
+    default: ""
+  publishing-artifact-version:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Initialize publish script
+      id: initialize-publish-script
+      run: |
+        cat <<EOF > ./publish.gradle.kts
+        logger.quiet("Running publish.gradle.kts to create publishing configuration")
+
+        /**
+          * Publishes to a file
+          * Run:
+          *  ./gradlew --init-script publish.gradle.kts :publishLocalPublicationToLocalRepository \\
+          *      -Ppublishing.dir=releases \\
+          *      -Ppublishing.project.name=project-name \\
+          *      -Ppublishing.project.description="project description" \\
+          *      -Ppublishing.project.url="https://example.com/project-name" \\
+          *      -Ppublishing.artifact.group=com.example" \\
+          *      -Ppublishing.artifact.id=sample \\
+          *      -Ppublishing.artifact.version=1.0.0
+          */
+        rootProject {
+          apply(plugin = "maven-publish")
+
+          afterEvaluate {
+            // Configure release output path
+            val releaseDir = findProperty("publishing.dir")?.toString() ?: "releases"
+
+            // Configure POM settings
+            val projectName = findProperty("publishing.project.name")?.toString().takeUnless { it.isNullOrBlank() } ?: project.name
+            val projectDescription = findProperty("publishing.project.description")?.toString().takeUnless { it.isNullOrBlank() } ?: project.description
+            val projectUrl = findProperty("publishing.project.url")?.toString().takeUnless { it.isNullOrBlank() } ?: ""
+
+            // Configure the artifact to publish
+            val targetGroupId = findProperty("publishing.artifact.group")?.toString().takeUnless { it.isNullOrBlank() } ?: project.group.toString()
+            val targetArtifactId = findProperty("publishing.artifact.id")?.toString().takeUnless { it.isNullOrBlank() } ?: project.name.toString()
+            val targetVersion = findProperty("publishing.artifact.version")?.toString().takeUnless { it.isNullOrBlank() } ?: project.version.toString()
+
+            logger.quiet("Publishing \$projectName to \$targetGroupId:\$targetArtifactId:$targetVersion")
+
+            configure<PublishingExtension> {
+              publications {
+                create<MavenPublication>("local") {
+                  pom {
+                    name.set(projectName)
+                    description.set(projectDescription)
+
+                    if (projectUrl.isNotEmpty()) {
+                      url.set(projectUrl)
+                    }
+                  }
+
+                  groupId = targetGroupId
+                  artifactId = targetArtifactId
+                  version = targetVersion
+
+                  if (project.pluginManager.hasPlugin("com.android.library")) {
+                    // Handle Android Library
+                    from(components["release"])
+                  } else {
+                    // Default to the standard project
+                    from(project.components["java"])
+                  }
+                }
+              }
+              repositories {
+                // publishLocalPublicationToLocalRepository
+                maven {
+                  name = "local"
+                  url = uri("file://\$rootDir/\$releaseDir")
+                }
+              }
+            }
+          }
+        }
+        EOF
+      shell: bash
+    - name: list after script
+      run: |
+        ls -al
+      shell: bash
+
+    - name: Verify output directory exists
+      id: verify-release-directory
+      run: |
+        if [ -d "${{ inputs.publishing-directory }}" ]; then
+            echo "Release directory exists." 
+        else
+            mkdir -p "${{ inputs.publishing-directory }}"
+            echo "Created release directory."
+        fi
+      shell: bash
+    - name: Publish using init script
+      id: publish
+      run: |
+        ls -al
+        ./gradlew -q --init-script publish.gradle.kts :publishLocalPublicationToLocalRepository \
+          -Ppublishing.dir="${{ inputs.publishing-directory }}" \
+          -Ppublishing.project.name="${{ inputs.publishing-project-name }}" \
+          -Ppublishing.project.description="${{ inputs.publishing-project-description }}" \
+          -Ppublishing.project.url="${{ inputs.publishing-project-url }}" \
+          -Ppublishing.artifact.group="${{ inputs.publishing-artifact-group }}" \
+          -Ppublishing.artifact.id="${{ inputs.publishing-artifact-id }}" \
+          -Ppublishing.artifact.version="${{ inputs.publishing-artifact-version }}"
+      shell: bash
+    - name: Show built files
+      id: list
+      run: |
+        sudo apt-get update && sudo apt-get install tree
+        tree ${{ inputs.publishing-directory }}
+      shell: bash
+    - name: Commit
+      # TODO(karn): Check if the artifact branch is the default branch
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add ${{ inputs.publishing-directory }}
+        git commit -m "Create release ${{ inputs.publishing-artifact-version }}"
+        git push
+      shell: bash

@@ -24,7 +24,7 @@ jobs:
       # #   uses: gradle/wrapper-validation-action@v1
 
       - name: Setup Gradle
-        uses: karn/gradle-github-publish@v1
+        uses: ./.github/actions/gradle-github-publish
         with:
           publishing-directory: "releases"
           publishing-project-name: "notify"
